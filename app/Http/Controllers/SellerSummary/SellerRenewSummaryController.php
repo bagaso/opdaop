@@ -85,7 +85,7 @@ class SellerRenewSummaryController extends Controller
 //            ->rawColumns(['group', 'renewal_qualified'])
 //            ->make(true);
 
-        $query = User::with('group', 'upline', 'previousMonthRenew', 'previousMonthRenew.user_related')
+        $query = User::with('group', 'upline', 'previousMonthRenew', 'previousMonthRenew.user_related', 'latestRenew')
             ->selectRaw('users.id, users.username, users.group_id, users.parent_id, users.seller_first_applied_credit')
             ->whereIn('group_id', [2,3,4])
             ->where('status_id', '=', 2)
@@ -99,6 +99,9 @@ class SellerRenewSummaryController extends Controller
             })
             ->addColumn('credit_accumulated', function (User $user) {
                 return ($user->previousMonthRenew->sum('credit_used') >= app('settings')->renewal_qualified) ? ($user->previousMonthRenew->sum('credit_used')) : ($user->currentMonthRenew->sum('credit_used'));
+            })
+            ->addColumn('latest_renew', function (User $user) {
+                return $user->upline->latestRenew->created_at;
             })
             ->addColumn('status', function (User $user) {
                 return (($user->previousMonthRenew->sum('credit_used') >= app('settings')->renewal_qualified) ? ($user->previousMonthRenew->sum('credit_used')) : ($user->currentMonthRenew->sum('credit_used')) >= app('settings')->renewal_qualified) ? '<i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>' : '<i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>';

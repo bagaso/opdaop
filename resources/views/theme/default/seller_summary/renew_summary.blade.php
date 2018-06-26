@@ -29,6 +29,7 @@
                                         <th>Upline</th>
                                         <th>Credit Accumulated</th>
                                         <th>Date 1st Applied Credit</th>
+                                        <th>Last Renew Date</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -79,6 +80,7 @@
                     { data: 'upline', name: 'upline' },
                     { data: 'credit_accumulated', name: 'credit_accumulated' },
                     { data: 'seller_first_applied_credit', name: 'seller_first_applied_credit' },
+                    { data: 'latest_renew', name: 'latest_renew' },
                     { data: 'status', name: 'status' },
                 ]
             });
