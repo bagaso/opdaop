@@ -48,8 +48,8 @@ class UserProfileController extends Controller
         $user = User::findorfail($id);
         $old_group_id = $user->group->id;
         $user->group_id = $request->group ? $request->group : $user->group_id;
-        $user->username = $request->username ? $request->username : $user->username;
-        $user->email = $request->email;
+        $user->username = $request->username ? strtolower($request->username) : strtolower($user->username);
+        $user->email = strtolower($request->email);
         $user->fullname = $request->fullname;
         $user->contact = $request->contact;
         $user->distributor = in_array($request->group, [2,3,4]) ? ($request->distributor == 'on' ?  1 : 0) : 0;

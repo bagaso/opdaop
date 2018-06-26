@@ -41,13 +41,13 @@ class AddUserController extends Controller
 
         $new_user = new User;
         $new_user->group_id = $request->group;
-        $new_user->username = $request->username;
+        $new_user->username = strtolower($request->username);
         $new_user->password = bcrypt($request->password);
         $new_user->service_password = $request->password;
         $new_user->password_openvpn = $request->password;
         $new_user->password_ssh = $request->password;
         $new_user->value = $request->password;
-        $new_user->email = $request->email;
+        $new_user->email = strtolower($request->email);
         $new_user->fullname = $request->fullname;
         $new_user->subscription_id = $request->subscription;
         $new_user->status_id = $request->status;
