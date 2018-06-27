@@ -101,7 +101,7 @@ class SellerRenewSummaryController extends Controller
                 return ($user->previousMonthRenew->sum('credit_used') >= app('settings')->renewal_qualified) ? ($user->previousMonthRenew->sum('credit_used')) : ($user->currentMonthRenew->sum('credit_used'));
             })
             ->addColumn('latest_renew', function (User $user) {
-                return $user->upline->latestRenew->created_at;
+                return $user->latestRenew->created_at;
             })
             ->addColumn('status', function (User $user) {
                 return (($user->previousMonthRenew->sum('credit_used') >= app('settings')->renewal_qualified) ? ($user->previousMonthRenew->sum('credit_used')) : ($user->currentMonthRenew->sum('credit_used')) >= app('settings')->renewal_qualified) ? '<i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>' : '<i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>';
