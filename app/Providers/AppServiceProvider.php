@@ -65,7 +65,8 @@ class AppServiceProvider extends ServiceProvider
                     Config::set('backup.backup.destination.filename_prefix', app('settings')->backup_filename_prefix ? app('settings')->backup_filename_prefix : '');
                     Config::set('backup.backup.destination.disks', app('settings')->backup_disks ? app('settings')->backup_disks : '');
                     Config::set('backup.monitorBackups.name', app('settings')->backup_disks ? app('settings')->backup_disks : '');
-                    //Config::set('backup.monitorBackups.disks', app('settings')->backup_disks ? ['dropbox'] : []);
+                    $disks[] = app('settings')->backup_disks;
+                    Config::set('backup.monitorBackups.disks', $disks ? [] : []);
                 }
             }
         } catch (\Exception $e) {
