@@ -2,10 +2,8 @@
 
 namespace App\Console;
 
-use App\Setting;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -40,13 +38,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         try {
-            DB::connection()->getPdo();
-            if(Schema::hasTable('settings')) {
-                if(app('settings')->enable_backup) {
-                    $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);
-                }
-                $schedule->command('backup:clean')->daily();
-            }
+//            DB::connection()->getPdo();
+//            if(Schema::hasTable('settings')) {
+//                if(app('settings')->enable_backup) {
+//                    $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);
+//                }
+//                $schedule->command('backup:clean')->daily();
+//            }
         } catch (\Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
         }
