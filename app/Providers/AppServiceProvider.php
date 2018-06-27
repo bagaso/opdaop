@@ -47,6 +47,19 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.s3.bucket', app('settings')->backup_aws_bucket ? app('settings')->backup_aws_bucket : '');
                     }
 
+                    if(app('settings')->backup_disks == 'rackspace') {
+                        Config::set('filesystems.disks.rackspace.username', app('settings')->backup_rackspace_username ? app('settings')->backup_rackspace_username : '');
+                        Config::set('filesystems.disks.rackspace.key', app('settings')->backup_rackspace_key ? app('settings')->backup_rackspace_key : '');
+                        Config::set('filesystems.disks.rackspace.container', app('settings')->backup_rackspace_container ? app('settings')->backup_rackspace_container : '');
+                        Config::set('filesystems.disks.rackspace.endpoint', app('settings')->backup_rackspace_endpoint ? app('settings')->backup_rackspace_endpoint : '');
+                        Config::set('filesystems.disks.rackspace.region', app('settings')->backup_rackspace_region ? app('settings')->backup_rackspace_region : '');
+                        Config::set('filesystems.disks.rackspace.url_type', app('settings')->backup_rackspace_url_type ? app('settings')->backup_rackspace_url_type : '');
+                    }
+
+                    if(app('settings')->backup_disks == 'dropbox') {
+                        Config::set('filesystems.disks.dropbox.authorizationToken', app('settings')->backup_dropbox_token ? app('settings')->backup_dropbox_token : '');
+                    }
+
                     Config::set('backup.backup.name', app('settings')->site_name);
                     Config::set('backup.backup.gzip_database_dump', app('settings')->backup_gzip_database_dump ? app('settings')->backup_gzip_database_dump : '');
                     Config::set('backup.backup.destination.filename_prefix', app('settings')->backup_filename_prefix ? app('settings')->backup_filename_prefix : '');
