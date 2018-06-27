@@ -38,13 +38,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         try {
-//            DB::connection()->getPdo();
-//            if(Schema::hasTable('settings')) {
+            DB::connection()->getPdo();
+            if(Schema::hasTable('settings')) {
 //                if(app('settings')->enable_backup) {
-//                    $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);
-//                }
-//                $schedule->command('backup:clean')->daily();
-//            }
+////                    $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);
+////                }
+                $schedule->command('backup:clean')->daily();
+            }
         } catch (\Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
         }
