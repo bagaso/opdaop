@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
                     Config::set('backup.backup.destination.disks', app('settings')->backup_disks ? app('settings')->backup_disks : '');
                     Config::set('backup.monitorBackups.name', app('settings')->backup_disks ? app('settings')->backup_disks : '');
                     $disks[] = app('settings')->backup_disks;
-                    Config::set('backup.monitorBackups.disks', $disks ? [] : []);
+                    Config::set('backup.monitorBackups.disks', app('settings')->backup_disks ?  $disks : []);
                 }
             }
         } catch (\Exception $e) {
