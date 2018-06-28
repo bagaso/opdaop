@@ -37,9 +37,12 @@ Route::get('/files', function () {
         $file_dt = Carbon::createFromTimestamp(Storage::disk('s3')->lastModified($file));
         $dt = Carbon::now();
         echo $file  . ' - ' . $dt->diffInDays($file_dt) . '</br>';
+        $ctr = 0;
         if($dt->diffInDays($file_dt) == 2) {
             Storage::delete($file);
+            $ctr++;
         }
+        echo $ctr . ' Files Deleted.';
     }
 })->name('files');
 
