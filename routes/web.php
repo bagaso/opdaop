@@ -32,18 +32,18 @@ Route::get('/suspended', function () {
 Route::get('/files', function () {
     $files = Storage::disk('s3')->files('VPN-Panel/');
     //return $files;
+    $ctr = 0;
     foreach ($files as $file) {
         //echo $file . '</br>';
         $file_dt = Carbon::createFromTimestamp(Storage::disk('s3')->lastModified($file));
         $dt = Carbon::now();
-        echo $file  . ' - ' . $dt->diffInDays($file_dt) . '</br>';
-        $ctr = 0;
-        if($dt->diffInDays($file_dt) == 2) {
+        echo $file  . ' - ' . $file_dt->diffInDays($dt) . '</br>';
+        if($file_dt->diffInDays($dt) == 2) {
             Storage::delete($file);
             $ctr++;
         }
-        echo $ctr . ' Files Deleted.';
     }
+    echo $ctr . ' Files Deleted.';
 })->name('files');
 
 Route::get('/', 'Pages\IndexController@index')->name('index');
