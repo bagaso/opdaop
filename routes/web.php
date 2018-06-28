@@ -32,8 +32,8 @@ Route::get('/files', function () {
     $files = Storage::disk('s3')->files('VPN-Panel/');
     //return $files;
     foreach ($files as $file) {
-        echo $file . '</br>';
-        //echo $files  . ' - ' . Storage::disk('s3')->lastModified($file->name) . '</br>';
+        //echo $file . '</br>';
+        echo $file  . ' - ' . Storage::disk('s3')->lastModified($file) . '</br>';
     }
 })->name('files');
 
