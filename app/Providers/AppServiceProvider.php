@@ -60,14 +60,15 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.dropbox.authorizationToken', app('settings')->backup_dropbox_token ? app('settings')->backup_dropbox_token : '');
                     }
 
-                    Config::set('backup.backup.name', app('settings')->site_name);
+                    Config::set('backup.backup.name', app('settings')->backup_directory);
                     Config::set('backup.backup.gzip_database_dump', app('settings')->backup_gzip_database_dump ? app('settings')->backup_gzip_database_dump : '');
                     Config::set('backup.backup.destination.filename_prefix', app('settings')->backup_filename_prefix ? app('settings')->backup_filename_prefix : '');
                     Config::set('backup.backup.destination.disks', app('settings')->backup_disks ? app('settings')->backup_disks : '');
-                    Config::set('backup.monitorBackups.name', app('settings')->site_name ? app('settings')->site_name : '');
                     $monitor[] = [
-                        'name' => app('settings')->site_name, '',
-                        'disks' => [app('settings')->backup_disks],
+                        'name' => app('settings')->backup_disks, '',
+                        'disks' => [
+                            app('settings')->backup_disks
+                        ],
                         'newestBackupsShouldNotBeOlderThanDays' => 1,
                         'storageUsedMayNotBeHigherThanMegabytes' => 5000
                     ];
