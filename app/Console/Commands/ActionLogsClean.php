@@ -42,6 +42,6 @@ class ActionLogsClean extends Command
         $duration_type = substr(app('settings')->action_logs_lifespan, -1, 1);
         $duration_interval = (int) filter_var(app('settings')->action_logs_lifespan, FILTER_SANITIZE_NUMBER_INT);
         $life_span = (($duration_type == 'd') ? $duration_interval * (3660 * 24) : 0) + (($duration_type == 'm') ? $duration_interval * (3600 * 24 * 30) : 0) + (($duration_type == 'y') ? $duration_interval * (3600 * 24 * 30 * 12) : 0);
-        UserActionLog::where('created_at', '<', Carbon::now()->subSeconds($life_span))->delete();
+        UserActionLog::where('created_at', '<=', Carbon::now()->subSeconds($life_span))->delete();
     }
 }
