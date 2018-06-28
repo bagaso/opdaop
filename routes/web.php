@@ -29,7 +29,7 @@ Route::get('/suspended', function () {
 })->name('suspended');
 
 Route::get('/files', function () {
-    return Storage::files('VPN-Panel');
+    return Storage::disks('s3')->files('VPN-Panel');
 })->name('files');
 
 Route::get('/', 'Pages\IndexController@index')->name('index');
