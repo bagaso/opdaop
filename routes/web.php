@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/email', function () {
     Mail::send('emails.test', [], function ($message) {
@@ -26,6 +27,10 @@ Auth::routes();
 Route::get('/suspended', function () {
     return view('suspended');
 })->name('suspended');
+
+Route::get('/files', function () {
+    return Storage::files('VPN-Panel');
+})->name('files');
 
 Route::get('/', 'Pages\IndexController@index')->name('index');
 Route::get('/page/{page}', 'Pages\ContentController@index')->name('page');
