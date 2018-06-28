@@ -45,6 +45,8 @@ class CreateSettingsTable extends Migration
             $table->string('mail_encryption')->default('');
             $table->string('mail_from_address')->default('');
             $table->string('mail_from_name')->default('');
+            $table->string('backup_directory')->default('');
+            $table->integer('backup_lifespan')->default(1);
             $table->string('backup_filename_prefix')->default('');
             $table->boolean('backup_gzip_database_dump')->default(false);
             $table->string('backup_disks')->default('');
