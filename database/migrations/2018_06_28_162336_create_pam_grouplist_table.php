@@ -16,7 +16,7 @@ class CreatePamGrouplistTable extends Migration
         Schema::create('pam_grouplist', function (Blueprint $table) {
             $table->increments('dbid');
             $table->integer('gid');
-            $table->integer('gid');
+            $table->integer('uid');
             $table->string("username");
         });
     }
