@@ -41,7 +41,7 @@ class BackupClean extends Command
     {
         $files = Storage::disk(app('settings')->backup_disks)->files(app('settings')->backup_directory);
         foreach ($files as $file) {
-            $file_dt = Carbon::createFromTimestamp(Storage::disk('s3')->lastModified($file));
+            $file_dt = Carbon::createFromTimestamp(Storage::disk(app('settings')->backup_disks)->lastModified($file));
             $dt = Carbon::now();
             if($file_dt->diffInDays($dt) == app('settings')->backup_lifespan) {
                 Storage::disk(app('settings')->backup_disks)->delete($file);
