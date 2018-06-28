@@ -34,7 +34,9 @@ Route::get('/files', function () {
     //return $files;
     foreach ($files as $file) {
         //echo $file . '</br>';
-        echo $file  . ' - ' . Carbon::createFromTimestamp(Storage::disk('s3')->lastModified($file))->toDateTimeString() . '</br>';
+        $file_dt = Carbon::createFromTimestamp(Storage::disk('s3')->lastModified($file));
+        $dt = Carbon::now();
+        echo $file  . ' - ' . $dt->diffInDays($file_dt) . '</br>';
     }
 })->name('files');
 
