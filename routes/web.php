@@ -31,7 +31,7 @@ Route::get('/suspended', function () {
 Route::get('/files', function () {
     $files = Storage::disk('s3')->files('VPN-Panel/');
     foreach ($files as $file) {
-        echo $files  . ' - ' . Storage::disk('s3')->lastModified($file) . '</br>';
+        echo $files  . ' - ' . Storage::disk('s3')->lastModified($file->name) . '</br>';
     }
 })->name('files');
 
