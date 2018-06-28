@@ -11,6 +11,7 @@
 |
 */
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +34,7 @@ Route::get('/files', function () {
     //return $files;
     foreach ($files as $file) {
         //echo $file . '</br>';
-        echo $file  . ' - ' . Storage::disk('s3')->lastModified($file) . '</br>';
+        echo $file  . ' - ' . Carbon::createFromTimestamp(Storage::disk('s3')->lastModified($file))->toDateTimeString() . '</br>';
     }
 })->name('files');
 
