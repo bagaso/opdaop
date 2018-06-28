@@ -38,6 +38,8 @@ class CreateSettingsTable extends Migration
             $table->integer('renewal_qualified')->default(10);
             $table->integer('max_time_lapse_renewal')->default(30);
             $table->integer('max_vacation_input')->default(3);
+            $table->string('action_logs_lifespan')->default('30d');
+            $table->string('credit_logs_lifespan')->default('30d');
             $table->string('mail_driver')->default('');
             $table->string('mail_host')->default('');
             $table->integer('mail_port')->default(0);
