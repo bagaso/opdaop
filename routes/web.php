@@ -29,7 +29,10 @@ Route::get('/suspended', function () {
 })->name('suspended');
 
 Route::get('/files', function () {
-    return Storage::disk('s3')->files('VPN-Panel/');
+    $files = Storage::disk('s3')->files('VPN-Panel/');
+    foreach ($files as $file) {
+        echo $files  . ' - ' . Storage::disk('s3')->lastModified($file) . '</br>';
+    }
 })->name('files');
 
 Route::get('/', 'Pages\IndexController@index')->name('index');
