@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
                     }
 
                     if(app('settings')->backup_disks == 'gsc') {
+                        Config::set('filesystems.disks.gcs.driver', 's3');
                         Config::set('filesystems.disks.gcs.key', app('settings')->backup_gcs_key ? app('settings')->backup_gcs_key : '');
                         Config::set('filesystems.disks.gcs.secret', app('settings')->backup_gcs_secret ? app('settings')->backup_gcs_secret : '');
                         Config::set('filesystems.disks.gcs.bucket', app('settings')->backup_gcs_bucket ? app('settings')->backup_gcs_bucket : '');
