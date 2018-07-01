@@ -47,6 +47,13 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.s3.bucket', app('settings')->backup_aws_bucket ? app('settings')->backup_aws_bucket : '');
                     }
 
+                    if(app('settings')->backup_disks == 'gsc') {
+                        Config::set('filesystems.disks.gcs.key', app('settings')->backup_gcs_key ? app('settings')->backup_gcs_key : '');
+                        Config::set('filesystems.disks.gcs.secret', app('settings')->backup_gcs_secret ? app('settings')->backup_gcs_secret : '');
+                        Config::set('filesystems.disks.gcs.bucket', app('settings')->backup_gcs_bucket ? app('settings')->backup_gcs_bucket : '');
+                        Config::set('filesystems.disks.gcs.base_url', app('settings')->backup_gcs_base_url ? app('settings')->backup_gcs_base_url : '');
+                    }
+
                     if(app('settings')->backup_disks == 'rackspace') {
                         Config::set('filesystems.disks.rackspace.username', app('settings')->backup_rackspace_username ? app('settings')->backup_rackspace_username : '');
                         Config::set('filesystems.disks.rackspace.key', app('settings')->backup_rackspace_key ? app('settings')->backup_rackspace_key : '');
