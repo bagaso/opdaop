@@ -64,10 +64,11 @@ return [
         ],
 
         'gcs' => [
-            'driver' => 's3',
-            'key'    =>  env('GCS_ACCESS_KEY_ID', ''),
-            'secret'    =>  env('GCS_ACCESS_SECRET', ''),
-            'bucket' => env('GCS_BUCKET', ''),
+            'driver'   => 's3',
+            'key'      =>  env('GCS_ACCESS_KEY_ID', ''),
+            'secret'   =>  env('GCS_ACCESS_SECRET', ''),
+            'region'   => env('GCS_DEFAULT_REGION', ''),
+            'bucket'   => env('GCS_BUCKET', ''),
             'base_url' => env('GCS_BASE_URL', ''),
         ],
 
