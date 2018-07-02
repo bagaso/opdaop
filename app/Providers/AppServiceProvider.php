@@ -40,6 +40,12 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.ftp.password', app('settings')->backup_ftp_password ? app('settings')->backup_ftp_password : '');
                     }
 
+                    if(app('settings')->backup_disks == 'sftp') {
+                        Config::set('filesystems.disks.sftp.host', app('settings')->backup_sftp_host ? app('settings')->backup_sftp_host : '');
+                        Config::set('filesystems.disks.sftp.username', app('settings')->backup_sftp_username ? app('settings')->backup_sftp_username : '');
+                        Config::set('filesystems.disks.sftp.password', app('settings')->backup_sftp_password ? app('settings')->backup_sftp_password : '');
+                    }
+
                     if(app('settings')->backup_disks == 's3') {
                         Config::set('filesystems.disks.s3.key', app('settings')->backup_aws_key ? app('settings')->backup_aws_key : '');
                         Config::set('filesystems.disks.s3.secret', app('settings')->backup_aws_secret ? app('settings')->backup_aws_secret : '');
