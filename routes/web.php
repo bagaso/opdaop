@@ -327,6 +327,11 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                 return 'Account is not activated.';
             }
 
+            if($account->freeze_mode) {
+                Log::info('Account is in freeze mode: ' . $username);
+                return 'Account is in freeze mode.';
+            }
+
             if($server->server_access->is_paid && $current->gte($dt)) {
                 Log::info('Account is already expired: ' . $username);
                 return 'Account is already expired.';
