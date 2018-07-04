@@ -267,6 +267,7 @@ Route::get('/vpn_auth', function (Request $request) {
         Log::info('AUTH_FAILED: ' . $username);
         return '0';
     } catch (ModelNotFoundException $ex) {
+        Log::info('AUTH_FAILED: ' . $request->username);
         return '0';
     }
 });
