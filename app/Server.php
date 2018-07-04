@@ -30,6 +30,14 @@ class Server extends Model
         return $this->belongsToMany('App\Subscription')->orderBy('subscription_id');
     }
 
+    public function users()
+    {
+        return $this->hasManyThrough(
+            'App\User', 'App\OnlineUser',
+            'server_id', 'id', 'id'
+        );
+    }
+
     public function online_users()
     {
         return $this->hasMany('App\OnlineUser');

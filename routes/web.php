@@ -19,6 +19,7 @@
 //  });
 //});
 
+use App\OnlineUser;
 use App\Server;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -284,20 +285,39 @@ Route::get('/vpn_auth_connect', function (Request $request) {
         $account = User::where('username', $username)->firstorfail();
         $server = Server::where('server_key', $server_key)->firstorfail();
 
-        if(!$server->is_active || !$server->server_access->is_active) {
-            if(!$server->is_active) {
-                return 'Server ' . $server->server_name . ' is down.';
+        if(!$account->isAdmin()) {
+            if(!$server->is_active || !$server->server_access->is_active) {
+                if(!$server->is_active) {
+                    return 'Server ' . $server->server_name . ' is down.';
+                }
+                if(!$server->server_access->is_active) {
+                    return 'Server ' . $server->server_name . ' access on ' . $server->server_access->name . ' is disabled.';
+                }
             }
-            if(!$server->server_access->is_active) {
-                return 'Server ' . $server->server_name . ' access on ' . $server->server_access->name . ' is disabled.';
+
+            if($server->users()->where('username', $account->username)->exists()) {
+                Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
+                return 'You have active device on ' . $server->server_name . ' server.';
             }
         }
 
-        $dl_speed = $account->dl_speed_openvpn ? $account->dl_speed_openvpn : '0kbit';
-        $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
-        $dl_speed = $dl_speed == '0kbit' ? '150mbit' : $dl_speed;
-        $up_speed = $up_speed == '0kbit' ? '150mbit' : $up_speed;
-        return '1;' . $dl_speed  . ';' . $up_speed;
+        $vpn = new OnlineUser;
+        $vpn->user_id = $account->id;
+        $vpn->user_ip = $request->trusted_ip ? $request->trusted_ip : '0.0.0.0';
+        $vpn->user_port = $request->trusted_port ? $request->trusted_port : '0';
+        $vpn->server_id = $server->id;
+        $vpn->byte_sent = 0;
+        $vpn->byte_received = 0;
+        $vpn->data_available = $server->limit_bandwidth ? $account->getOriginal('consumable_data') : 0;
+        if($vpn->save()) {
+            $dl_speed = $account->dl_speed_openvpn ? $account->dl_speed_openvpn : '0kbit';
+            $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
+            $dl_speed = $dl_speed == '0kbit' ? '150mbit' : $dl_speed;
+            $up_speed = $up_speed == '0kbit' ? '150mbit' : $up_speed;
+            return '1;' . $dl_speed  . ';' . $up_speed;
+        }
+
+        return 'Server Error.';
 
     } catch (ModelNotFoundException $ex) {
         return '0';
@@ -306,15 +326,14 @@ Route::get('/vpn_auth_connect', function (Request $request) {
 
 Route::get('/vpn_auth_disconnect', function (Request $request) {
     try {
-        #$username = trim($request->username);
-        #$server_key = trim($request->server_key);
+        $username = trim($request->username);
+        $server_key = trim($request->server_key);
+        $bytes_sent = trim($request->bytes_sent);
+        $bytes_received = trim($request->bytes_received);
 
-        #if($username == '' || $server_key == '') return '0';
+        $server = \App\VpnServer::where('server_key', $server_key)->firstorfail();
+        $account = $server->users()->where('username', $username)->firstorfail();
 
-        #$account = User::where('username', $username)->firstorfail();
-
-        #$dl_speed = $account->dl_speed_openvpn ? $account->dl_spee_openvpn : '0kbit';
-        #$up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
         return '1';
 
     } catch (ModelNotFoundException $ex) {

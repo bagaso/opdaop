@@ -221,4 +221,23 @@ class User extends Authenticatable
     public function latestRenew() {
         return $this->hasOne('App\UserCreditLog')->latest();
     }
+
+    public function getConsumableDataAttribute($value)
+    {
+        return $this->sizeformat($value);
+    }
+
+    public function sizeformat($bytesize)
+    {
+        $i=0;
+        while(abs($bytesize) >= 1024) {
+            $bytesize=$bytesize/1024;
+            $i++;
+            if($i==4) break;
+        }
+
+        $units = array("Bytes","KB","MB","GB","TB");
+        $newsize=round($bytesize,2);
+        return("$newsize $units[$i]");
+    }
 }
