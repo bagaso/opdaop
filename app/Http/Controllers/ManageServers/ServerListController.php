@@ -83,6 +83,7 @@ class ServerListController extends Controller
                 if(!$cloudflare->success) {
                     return  redirect()->back()->with('error_cloudflare', 'Cloudflare: ' . $cloudflare->errors[0]->message);
                 }
+                $server->server_access()->detach();
                 $server->delete();
             }
         } catch (\Exception $e) {

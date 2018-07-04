@@ -331,8 +331,11 @@ Route::get('/vpn_auth_disconnect', function (Request $request) {
         $bytes_sent = trim($request->bytes_sent);
         $bytes_received = trim($request->bytes_received);
 
-        $server = \App\VpnServer::where('server_key', $server_key)->firstorfail();
-        $account = $server->users()->where('username', $username)->firstorfail();
+        $server = Server::where('server_key', $server_key)->firstorfail();
+        $account = User::where('username', $username)->firstorfail();
+
+        $vpn_session = $account->vpn()->where('server_id', $server->id)->firstorfail();
+        $vpn_session->delete();
 
         return '1';
 

@@ -222,6 +222,10 @@ class User extends Authenticatable
         return $this->hasOne('App\UserCreditLog')->latest();
     }
 
+    public function vpn() {
+        return $this->hasMany('App\OnlineUser');
+    }
+
     public function getConsumableDataAttribute($value)
     {
         return $this->sizeformat($value);
