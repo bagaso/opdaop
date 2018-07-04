@@ -25,6 +25,10 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('min_duration')->unsigned()->default(1);
             $table->string('dl_speed_openvpn')->default('0kbit');
             $table->string('up_speed_openvpn')->default('0kbit');
+            $table->boolean('login_openvpn')->unsigned()->default(0);
+            $table->boolean('login_ssh')->unsigned()->default(0);
+            $table->boolean('login_softether')->unsigned()->default(0);
+            $table->boolean('login_ss')->unsigned()->default(0);
             $table->boolean('is_public')->unsigned()->default(0);
             $table->boolean('is_enable')->unsigned()->default(0);
         });

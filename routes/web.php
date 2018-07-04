@@ -22,6 +22,7 @@
 use App\OnlineUser;
 use App\Server;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -285,19 +286,50 @@ Route::get('/vpn_auth_connect', function (Request $request) {
         $account = User::where('username', $username)->firstorfail();
         $server = Server::where('server_key', $server_key)->firstorfail();
 
+        if($server->users()->where('username', $account->username)->exists()) {
+            Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
+            return 'You have active device on ' . $server->server_name . ' server.';
+        }
+
         if(!$account->isAdmin()) {
+
+            $current = Carbon::now();
+            $dt = Carbon::parse($account->getOriginal('expired_at'));
+
             if(!$server->is_active || !$server->server_access->is_active) {
                 if(!$server->is_active) {
+                    Log::info('Server ' . $server->server_name . ' is down: ' . $username);
                     return 'Server ' . $server->server_name . ' is down.';
                 }
                 if(!$server->server_access->is_active) {
+                    Log::info('Server ' . $server->server_name . ' access on ' . $server->server_access->name . ' is disabled: ' . $username);
                     return 'Server ' . $server->server_name . ' access on ' . $server->server_access->name . ' is disabled.';
                 }
             }
 
-            if($server->users()->where('username', $account->username)->exists()) {
-                Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
-                return 'You have active device on ' . $server->server_name . ' server.';
+            if(!$account->f_login_openvpn && !$account->subscription->login_openvpn) {
+                Log::info('OpenVPN login is disabled for ' . $account->subscription->name . ' subscription: ' . $username);
+                return 'OpenVPN login is disabled for ' . $account->subscription->name . ' subscription.';
+            }
+
+            if(!$account->subscription->is_enable) {
+                Log::info($account->subscription->name . ' subscription is not enabled: ' . $username);
+                return $account->subscription->name . ' subscription is not enabled.';
+            }
+
+            if(!in_array($account->subscription->id, json_decode($server->subscriptions->pluck('id')))) {
+                Log::info($account->subscription->name . ' subscription is not allowed in this server: ' . $username);
+                return $account->subscription->name . ' subscription is not allowed in this server.';
+            }
+
+            if(!$account->isActive()) {
+                Log::info('Account is not activated: ' . $username);
+                return 'Account is not activated.';
+            }
+
+            if($server->server_access->is_paid && $current->gte($dt)) {
+                Log::info('Account is already expired: ' . $username);
+                return 'Account is already expired.';
             }
         }
 

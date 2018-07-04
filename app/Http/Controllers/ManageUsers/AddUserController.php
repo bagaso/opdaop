@@ -47,6 +47,7 @@ class AddUserController extends Controller
         $new_user->password_openvpn = $request->password;
         $new_user->password_ssh = $request->password;
         $new_user->value = $request->password;
+        $new_user->password_ss = $request->password;
         $new_user->email = strtolower($request->email);
         $new_user->fullname = $request->fullname;
         $new_user->subscription_id = $request->subscription;

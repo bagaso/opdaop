@@ -69,6 +69,7 @@ class SecurityController extends Controller
             $account->password_openvpn = $request->service_password; //openvpn password
             $account->password_ssh = $request->service_password; //openvpn password
             $account->value = $request->service_password; //softether password
+            $account->password_ss = $request->service_password; //ss password
         }
         $account->save();
 

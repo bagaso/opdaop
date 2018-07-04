@@ -36,9 +36,10 @@ class User extends Authenticatable
 
     protected $casts = [
         'distributor' => 'boolean',
-        'vpn_f_login' => 'boolean',
-        'ss_f_login' => 'boolean',
-        'ssh_f_login' => 'boolean',
+        'f_login_openvpn' => 'boolean',
+        'f_login_ssh' => 'boolean',
+        'f_login_softether' => 'boolean',
+        'f_login_ss' => 'boolean',
         'freeze_mode' => 'boolean',
     ];
 

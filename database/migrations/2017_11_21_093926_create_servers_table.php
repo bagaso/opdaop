@@ -25,8 +25,8 @@ class CreateServersTable extends Migration
             $table->string('server_key')->unique();
             $table->string('sub_domain')->unique();
             $table->integer('web_port')->default(80);
-            $table->string('dl_speed')->default('0kbit');
-            $table->string('up_speed')->default('0kbit');
+            $table->string('dl_speed_openvpn')->default('0kbit');
+            $table->string('up_speed_openvpn')->default('0kbit');
             $table->boolean('limit_bandwidth')->unsigned()->default(0);
             $table->boolean('is_active')->unsigned()->default(0);
             $table->timestamps();

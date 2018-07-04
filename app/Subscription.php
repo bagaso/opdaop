@@ -25,4 +25,13 @@ class Subscription extends Model
                 });
         });
     }
+
+    protected $casts = [
+        'login_openvpn' => 'boolean',
+        'login_ssh' => 'boolean',
+        'login_softether' => 'boolean',
+        'login_ss' => 'boolean',
+        'is_public' => 'boolean',
+        'is_enable' => 'boolean',
+    ];
 }

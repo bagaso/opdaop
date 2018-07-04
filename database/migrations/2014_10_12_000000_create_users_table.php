@@ -40,8 +40,11 @@ class CreateUsersTable extends Migration
             $table->string('up_speed_openvpn')->default('0kbit');
             $table->string('password_openvpn')->default(''); // password for openvpn
             $table->string('password_ssh')->default(''); // password for ssh
-            $table->boolean('f_login_openvpn')->default(0);
-            $table->boolean('f_login_softether')->default(0);
+            $table->string('password_ss')->default(''); // password for ssh
+            $table->boolean('f_login_openvpn')->unsigned()->default(0);
+            $table->boolean('f_login_ssh')->unsigned()->default(0);
+            $table->boolean('f_login_softether')->unsigned()->default(0);
+            $table->boolean('f_login_ss')->unsigned()->default(0);
             $table->string('attributes')->default('Cleartext-Password');
             $table->char('op', 2)->default(':=');
             $table->string('value')->default(''); //password for softether

@@ -78,6 +78,7 @@ class UserSecurityController extends Controller
             $user->password_openvpn = $request->service_password; //openvpn password
             $user->password_ssh = $request->service_password; //openvpn password
             $user->value = $request->service_password; //softether password
+            $user->password_ss = $request->service_password; //ss password
         }
         $user->save();
 

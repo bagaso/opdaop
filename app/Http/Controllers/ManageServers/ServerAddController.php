@@ -61,8 +61,8 @@ class ServerAddController extends Controller
         $server->manager_password = $request->manager_password;
         $server->manager_port = $request->manager_port;
         $server->web_port = $request->web_port;
-        $server->dl_speed = $request->download_speed;
-        $server->up_speed = $request->upload_speed;
+        $server->dl_speed_openvpn = $request->download_speed;
+        $server->up_speed_openvpn = $request->upload_speed;
         $server->limit_bandwidth = $request->data_limit;
         $server->is_active = $request->status;
         $server->server_access_id = $request->server_access;
