@@ -295,7 +295,9 @@ Route::get('/vpn_auth_connect', function (Request $request) {
 
         $dl_speed = $account->dl_speed_openvpn ? $account->dl_speed_openvpn : '0kbit';
         $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
-        return '1;' . $dl_speed == '0kbit' ? '150mbit' : $dl_speed . ';' . $up_speed == '0kbit' ? '150mbit' : $up_speed;
+        $dl_speed = $dl_speed == '0kbit' ? '150mbit' : $dl_speed;
+        $up_speed = $up_speed == '0kbit' ? '150mbit' : $up_speed;
+        return '1;' . $dl_speed  . ';' . $up_speed;
 
     } catch (ModelNotFoundException $ex) {
         return '0';
