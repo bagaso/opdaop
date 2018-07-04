@@ -19,6 +19,11 @@
 //  });
 //});
 
+use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 Auth::routes();
 
 Route::get('/suspended', function () {
@@ -237,4 +242,31 @@ Route::group(['prefix' => 'settings'], function() {
 Route::group(['prefix' => 'seller-summary'], function() {
     Route::get('/', 'SellerSummary\SellerRenewSummaryController@index')->name('seller_summary.renew');
     Route::post('/renew_summary_list', 'SellerSummary\SellerRenewSummaryController@renew_summary_list')->name('seller_summary.renew_summary_list');
+});
+
+
+Route::get('/vpn_auth', function (Request $request) {
+    try {
+        $username = $request->username;
+        $password = $request->password;
+        #$server_key = $request->server_key;
+
+        if (!preg_match("/^[a-z0-9_]+$/", $username)) {
+            Log::info('AUTH_FAILED CAPS: ' . $username);
+            return '0';
+        }
+
+        #$server = \App\VpnServer::where('server_key', $server_key)->firstorfail();
+
+        $account = User::where('username', $username)->firstorfail();
+
+        if($account->password_openvpn == $password) {
+            return '1';
+        }
+
+        Log::info('AUTH_FAILED: ' . $username);
+        return '0';
+    } catch (ModelNotFoundException $ex) {
+        return '0';
+    }
 });
