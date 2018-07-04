@@ -293,3 +293,21 @@ Route::get('/vpn_auth_connect', function (Request $request) {
     }
 });
 
+Route::get('/vpn_auth_disconnect', function (Request $request) {
+    try {
+        #$username = trim($request->username);
+        #$server_key = trim($request->server_key);
+
+        #if($username == '' || $server_key == '') return '0';
+
+        #$account = User::where('username', $username)->firstorfail();
+
+        #$dl_speed = $account->dl_speed_openvpn ? $account->dl_spee_openvpn : '0kbit';
+        #$up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
+        return '1';
+
+    } catch (ModelNotFoundException $ex) {
+        return '0';
+    }
+});
+
