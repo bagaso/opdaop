@@ -252,7 +252,7 @@ Route::get('/vpn_auth', function (Request $request) {
         $password = $request->password;
         #$server_key = $request->server_key;
 
-        if($username == '' || $password == '' || $server_key == '') return '0';
+        if($username == '' || $password == '') return '0';
 
         if (!preg_match("/^[a-z0-9_]+$/", $username)) {
             Log::info('AUTH_FAILED CAPS: ' . $username);
