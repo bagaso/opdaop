@@ -250,7 +250,7 @@ Route::get('/vpn_auth', function (Request $request) {
     try {
         $username = $request->username;
         $password = $request->password;
-        $server_key = $request->server_key;
+        #$server_key = $request->server_key;
 
         if($username == '' || $password == '' || $server_key == '') return '0';
 
@@ -259,7 +259,6 @@ Route::get('/vpn_auth', function (Request $request) {
             return '0';
         }
 
-        #$server = Server::whe0re('server_key', $server_key)->firstorfail();
 
         $account = User::where('username', $username)->firstorfail();
 
@@ -283,10 +282,20 @@ Route::get('/vpn_auth_connect', function (Request $request) {
         if($username == '' || $server_key == '') return '0';
 
         $account = User::where('username', $username)->firstorfail();
+        $server = Server::where('server_key', $server_key)->firstorfail();
+
+        if(!$server->is_active || !$server->server_access->is_active) {
+            if(!$server->is_active) {
+                return 'Server ' . $server->server_name . ' is down.';
+            }
+            if(!$server->server_access->is_active) {
+                return 'Server ' . $server->server_name . ' access on ' . $server->server_access->name . ' is disabled.';
+            }
+        }
 
         $dl_speed = $account->dl_speed_openvpn ? $account->dl_speed_openvpn : '0kbit';
         $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
-        return '1;' . $dl_speed . ';' . $up_speed;
+        return '1;' . $dl_speed == '0kbit' ? '150mbit' : $dl_speed . ';' . $up_speed == '0kbit' ? '150mbit' : $up_speed;
 
     } catch (ModelNotFoundException $ex) {
         return '0';

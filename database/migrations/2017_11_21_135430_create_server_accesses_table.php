@@ -23,6 +23,7 @@ class CreateServerAccessesTable extends Migration
             $table->boolean('is_private')->unsigned()->default(0);
             $table->boolean('multi_login')->unsigned()->default(0);
             $table->boolean('is_public')->unsigned()->default(0);
+            $table->boolean('is_active')->unsigned()->default(0);
             $table->boolean('is_enable')->unsigned()->default(0);
         });
     }
