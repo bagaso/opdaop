@@ -19,6 +19,7 @@
 //  });
 //});
 
+use App\Server;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -249,14 +250,16 @@ Route::get('/vpn_auth', function (Request $request) {
     try {
         $username = $request->username;
         $password = $request->password;
-        #$server_key = $request->server_key;
+        $server_key = $request->server_key;
+
+        if($username == '' || $password == '' || $server_key == '') return '0';
 
         if (!preg_match("/^[a-z0-9_]+$/", $username)) {
             Log::info('AUTH_FAILED CAPS: ' . $username);
             return '0';
         }
 
-        #$server = \App\VpnServer::where('server_key', $server_key)->firstorfail();
+        #$server = Server::whe0re('server_key', $server_key)->firstorfail();
 
         $account = User::where('username', $username)->firstorfail();
 
@@ -271,3 +274,22 @@ Route::get('/vpn_auth', function (Request $request) {
         return '0';
     }
 });
+
+Route::get('/vpn_auth_connect', function (Request $request) {
+    try {
+        $username = trim($request->username);
+        $server_key = trim($request->server_key);
+
+        if($username == '' || $server_key == '') return '0';
+
+        $account = User::where('username', $username)->firstorfail();
+
+        $dl_speed = $account->dl_speed_openvpn ? $account->dl_spee_openvpn : '0kbit';
+        $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
+        return '1;' . $dl_speed . ';' . $up_speed;
+
+    } catch (ModelNotFoundException $ex) {
+        return '0';
+    }
+});
+
