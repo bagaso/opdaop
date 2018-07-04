@@ -284,7 +284,7 @@ Route::get('/vpn_auth_connect', function (Request $request) {
 
         $account = User::where('username', $username)->firstorfail();
 
-        $dl_speed = $account->dl_speed_openvpn ? $account->dl_spee_openvpn : '0kbit';
+        $dl_speed = $account->dl_speed_openvpn ? $account->dl_speed_openvpn : '0kbit';
         $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
         return '1;' . $dl_speed . ';' . $up_speed;
 
