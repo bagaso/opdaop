@@ -178,7 +178,7 @@
                                         <label for="download_speed" class="col-sm-3 control-label">Download Speed</label>
 
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="download_speed" name="download_speed" value="{{ $server->dl_speed }}" placeholder="kbit, mbit">
+                                            <input type="text" class="form-control" id="download_speed" name="download_speed" value="{{ $server->dl_speed_openvpn }}" placeholder="kbit, mbit">
                                             @if ($errors->has('download_speed'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('download_speed') }}</strong>
@@ -191,7 +191,7 @@
                                         <label for="upload_speed" class="col-sm-3 control-label">Upload Speed</label>
 
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="upload_speed" name="upload_speed" value="{{ $server->up_speed }}" placeholder="kbit, mbit">
+                                            <input type="text" class="form-control" id="upload_speed" name="upload_speed" value="{{ $server->up_speed_openvpn }}" placeholder="kbit, mbit">
                                             @if ($errors->has('upload_speed'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('upload_speed') }}</strong>
