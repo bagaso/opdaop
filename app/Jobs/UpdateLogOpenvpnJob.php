@@ -39,9 +39,7 @@ class UpdateLogOpenvpnJob implements ShouldQueue
     {
         try {
             DB::connection()->getPdo();
-            Log::info('1112');
             if(Schema::hasTable('settings')) {
-
                 try {
 
                     $server = Server::findorfail($this->server_id);
@@ -52,33 +50,27 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                             $user = User::where('username', $log['CommonName'])->firstorfail();
                             $real_address = explode(":", $log['RealAddress']);
                             //$login_session = $user->vpn->count();
-                            Log::info('111');
-                            if($user->vpn->count() >= 1) {
+                            if($user->vpn->count() > 0) {
                                 $vpn_session = $user->vpn()->where('server_id', $this->server_id)->firstorfail();
                                 $vpn_session->byte_sent = floatval($log['BytesSent']) ? floatval($log['BytesSent']) : 0;
                                 $vpn_session->byte_received = floatval($log['BytesReceived']) ? floatval($log['BytesReceived']) : 0;
                                 $vpn_session->save();
-                                #$vpn_session->update(['byte_sent' => floatval($log['BytesSent']) ? floatval($log['BytesSent']) : 0, 'byte_received' => floatval($log['BytesReceived']) ? floatval($log['BytesReceived']) : 0]);
-                                //$vpn_user->update(['byte_sent' => 0, 'byte_received' => 0]);
                             } else {
-                                #$job = (new JobVpnDisconnectUser($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-                                #dispatch($job);
+                                $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                                dispatch($job);
                             }
                         } catch (ModelNotFoundException $ex) {
-                            Log::info('cc');
-                            #$job = (new JobVpnDisconnectUser($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-                            #dispatch($job);
+                            $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                            dispatch($job);
                         }
                     }
 
                 } catch (ModelNotFoundException $ex) {
-                    Log::info('bb');
                     #$job = (new JobVpnDisconnectUser($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                     #dispatch($job);
                 }
             }
         } catch (\Exception $e) {
-            Log::info('aa');
             //die("Could not connect to the database.  Please check your configuration.");
         }
     }

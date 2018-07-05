@@ -46,20 +46,16 @@ class UpdateLogOpenvpn extends Command
             DB::connection()->getPdo();
             if(Schema::hasTable('settings')) {
                 $ctr = 0;
-                $worker = ['log_update-1', 'log_update-2', 'log_update-3'];
+                $workers = ['log_update-1', 'log_update-2', 'log_update-3'];
                 $servers = Server::Active()->get();
                 foreach ($servers as $server) {
-                    Log::info('wew2');
-                    $ctr = 0;
-                    $job = (new UpdateLogOpenvpnJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($worker[$ctr]);
+                    $job = (new UpdateLogOpenvpnJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($workers[$ctr]);
                     dispatch($job);
-                    #$ctr++;
-                    #if($ctr==3) $ctr=0;
+                    $ctr++;
+                    if($ctr==3) $ctr=0;
                 }
-                Log::info('wew1');
             }
         } catch (\Exception $e) {
-            Log::info('wew');
             //die("Could not connect to the database.  Please check your configuration.");
         }
     }
