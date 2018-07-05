@@ -33,14 +33,14 @@ class OpenvpnDisconnectUserJob implements ShouldQueue
      */
     public function handle()
     {
-//        $socket = @fsockopen($this->server, $this->port, $errno, $errstr);
-//        if($socket)
-//        {
-//            //echo "Connected";
-//            //fputs($socket, "password\n");
-//            @fputs($socket, "kill {$this->username}\n");
-//            @fputs($socket, "quit\n");
-//        }
-//        @fclose($socket);
+        $socket = @fsockopen($this->server, $this->port, $errno, $errstr);
+        if($socket)
+        {
+            //echo "Connected";
+            //fputs($socket, "password\n");
+            @fputs($socket, "kill {$this->username}\n");
+            @fputs($socket, "quit\n");
+        }
+        @fclose($socket);
     }
 }
