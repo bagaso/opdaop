@@ -14,6 +14,7 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem-rackspace": "^1.0",
         "league/flysystem-sftp": "^1.0",
+        "pda/pheanstalk": "^3.1",
         "spatie/flysystem-dropbox": "^1.0",
         "spatie/laravel-backup": "^5.9",
         "yajra/laravel-datatables-oracle": "8.0"
