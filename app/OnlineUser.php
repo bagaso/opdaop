@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class OnlineUser extends Model
 {
@@ -13,7 +14,7 @@ class OnlineUser extends Model
      * @var integer
      * @access protected
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -21,6 +22,18 @@ class OnlineUser extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $uuid = Uuid::uuid4();
+            $model->id = $uuid->toString();
+        });
+    }
 
     protected $fillable = [
         'user_id', 'server_id', 'byte_sent', 'byte_received',
