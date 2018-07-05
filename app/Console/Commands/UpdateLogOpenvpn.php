@@ -46,7 +46,7 @@ class UpdateLogOpenvpn extends Command
             DB::connection()->getPdo();
             if(Schema::hasTable('settings')) {
                 $ctr = 0;
-                $worker = array('log_update-1', 'log_update-2', 'log_update-3');
+                $worker = ['log_update-1', 'log_update-2', 'log_update-3'];
                 $servers = Server::Active()->get();
                 foreach ($servers as $server) {
                     Log::info('wew2');
