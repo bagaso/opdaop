@@ -50,10 +50,11 @@ class UpdateLogOpenvpn extends Command
                 $servers = Server::Active()->get();
                 foreach ($servers as $server) {
                     Log::info('wew2');
+                    $ctr = 0;
                     $job = (new UpdateLogOpenvpnJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($worker[$ctr]);
                     dispatch($job);
-                    $ctr++;
-                    if($ctr==3) $ctr=0;
+                    #$ctr++;
+                    #if($ctr==3) $ctr=0;
                 }
                 Log::info('wew1');
             }
