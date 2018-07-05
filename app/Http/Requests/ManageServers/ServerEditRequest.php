@@ -36,7 +36,7 @@ class ServerEditRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
-                Rule::in(['VPN', 'SS', 'SSH']),
+                Rule::in(['openvpn', 'ssh', 'softether', 'ss']),
             ],
             'server_name' => [
                 'bail',
