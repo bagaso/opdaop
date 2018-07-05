@@ -69,8 +69,7 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                     }
 
                 } catch (ModelNotFoundException $ex) {
-                    #$job = (new JobVpnDisconnectUser($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-                    #dispatch($job);
+                    //die("Could not connect to the database.  Please check your configuration.");
                 }
             }
         } catch (Exception $e) {
