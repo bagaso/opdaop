@@ -286,7 +286,12 @@ Route::get('/vpn_auth_connect', function (Request $request) {
         $account = User::where('username', $username)->firstorfail();
         $server = Server::where('server_key', $server_key)->firstorfail();
 
-        if($server->users()->where('username', $account->username)->exists()) {
+//        if($server->users()->where('username', $account->username)->exists()) {
+//            Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
+//            return 'You have active device on ' . $server->server_name . ' server.';
+//        }
+
+        if($account->vpn()->where('server_id', $server->id)->exists()) {
             Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
             return 'You have active device on ' . $server->server_name . ' server.';
         }
