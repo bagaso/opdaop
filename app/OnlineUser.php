@@ -14,7 +14,7 @@ class OnlineUser extends Model
      * @var integer
      * @access protected
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'user_id';
 
     /**
      * Indicates if the IDs are auto-incrementing.
