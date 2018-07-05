@@ -372,11 +372,17 @@ Route::get('/vpn_auth_disconnect', function (Request $request) {
         $account = User::where('username', $username)->firstorfail();
 
         $account->timestamps = false;
-
         $account->lifetime_bandwidth = doubleval($account->lifetime_bandwidth) + doubleval($bytes_sent);
-        $account->save();
 
         $vpn_session = $account->vpn()->where('server_id', $server->id)->firstorfail();
+
+        if(!$account->isAdmin() && $server->limit_bandwidth) {
+            $data = doubleval($vpn_session->data_available) - doubleval($bytes_sent);
+            $account->consumable_data = ($data >= 0) ? $data : 0;
+        }
+
+        $account->save();
+
         $vpn_session->delete();
 
         return '1';
