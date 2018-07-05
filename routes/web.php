@@ -291,10 +291,10 @@ Route::get('/vpn_auth_connect', function (Request $request) {
 //            return 'You have active device on ' . $server->server_name . ' server.';
 //        }
 
-        if($account->vpn()->where('server_id', $server->id)->exists()) {
-            Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
-            return 'You have active device on ' . $server->server_name . ' server.';
-        }
+//        if($account->vpn()->where('server_id', $server->id)->exists()) {
+//            Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
+//            return 'You have active device on ' . $server->server_name . ' server.';
+//        }
 
         if(!$account->isAdmin()) {
 
