@@ -4,9 +4,9 @@ namespace App\Console\Commands;
 
 use App\Jobs\UpdateLogOpenvpnJob;
 use App\Server;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class UpdateLogOpenvpn extends Command
@@ -55,7 +55,7 @@ class UpdateLogOpenvpn extends Command
                     if($ctr==3) $ctr=0;
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
         }
     }
