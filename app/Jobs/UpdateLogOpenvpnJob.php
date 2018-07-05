@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class UpdateLogOpenvpnJob implements ShouldQueue
@@ -61,17 +62,20 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                                 #dispatch($job);
                             }
                         } catch (ModelNotFoundException $ex) {
+                            Log::info('cc');
                             #$job = (new JobVpnDisconnectUser($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                             #dispatch($job);
                         }
                     }
 
                 } catch (ModelNotFoundException $ex) {
+                    Log::info('bb');
                     #$job = (new JobVpnDisconnectUser($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                     #dispatch($job);
                 }
             }
         } catch (\Exception $e) {
+            Log::info('aa');
             //die("Could not connect to the database.  Please check your configuration.");
         }
     }
