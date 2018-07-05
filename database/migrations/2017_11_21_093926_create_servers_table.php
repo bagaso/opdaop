@@ -16,7 +16,7 @@ class CreateServersTable extends Migration
         Schema::create('servers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cf_id')->unique();
-            $table->string('server_type')->default('vpn');
+            $table->string('server_type')->default('openvpn');
             $table->integer('server_access_id')->unsigned()->default(2);
             $table->ipAddress('server_ip')->default('0.0.0.0');
             $table->string('server_name')->unique();

@@ -6,6 +6,7 @@ use App\Jobs\UpdateLogOpenvpnJob;
 use App\Server;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class UpdateLogOpenvpn extends Command
@@ -53,8 +54,10 @@ class UpdateLogOpenvpn extends Command
                     $ctr++;
                     if($ctr==3) $ctr=0;
                 }
+                Log::info('wew1');
             }
         } catch (\Exception $e) {
+            Log::info('wew');
             //die("Could not connect to the database.  Please check your configuration.");
         }
     }

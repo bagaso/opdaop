@@ -67,9 +67,10 @@
                                         <label for="server_type" class="col-sm-3 control-label">Server Type</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="server_type" name="server_type">
-                                                <option value="VPN">VPN</option>
-                                                <option value="SS">Shadow Socks</option>
-                                                <option value="SSH">SSH</option>
+                                                <option value="openvpn">OpenVPN</option>
+                                                <option value="ssh">SSH</option>
+                                                <option value="softether">SoftEther</option>
+                                                <option value="ss">Shadow Socks</option>
                                             </select>
                                             @if ($errors->has('server_type'))
                                                 <span class="help-block">
