@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Server;
 use App\User;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Queue\SerializesModels;
@@ -62,8 +63,8 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                             #}
                         } catch (ModelNotFoundException $ex) {
                             Log::info('22');
-                            $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-                            dispatch($job);
+                            #$job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                            #dispatch($job);
                         }
                     }
 
@@ -72,7 +73,7 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                     #dispatch($job);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
         }
     }

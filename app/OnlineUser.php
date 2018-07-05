@@ -36,7 +36,7 @@ class OnlineUser extends Model
     }
 
     protected $fillable = [
-        'user_id', 'server_id', 'byte_sent', 'byte_received',
+        'user_id', 'server_id', 'user_ip', 'user_port', 'byte_sent', 'byte_received', 'data_available',
     ];
 
     public function user()
