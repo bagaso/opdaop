@@ -50,16 +50,16 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                             $user = User::where('username', $log['CommonName'])->firstorfail();
                             $real_address = explode(":", $log['RealAddress']);
                             //$login_session = $user->vpn->count();
-                            if($user->vpn()->where('server_id', $server->id)->exists()) {
+                            #if($user->vpn()->where('server_id', $server->id)->exists()) {
                                 $vpn_session = $user->vpn()->where('server_id', $this->server_id)->firstorfail();
                                 $vpn_session->byte_sent = floatval($log['BytesSent']) ? floatval($log['BytesSent']) : 0;
                                 $vpn_session->byte_received = floatval($log['BytesReceived']) ? floatval($log['BytesReceived']) : 0;
                                 $vpn_session->save();
-                            } else {
-                                Log::info('11');
-                                $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-                                dispatch($job);
-                            }
+                            #} else {
+                            #    Log::info('11');
+                            #    $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                            #    dispatch($job);
+                            #}
                         } catch (ModelNotFoundException $ex) {
                             Log::info('22');
                             $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->server_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
