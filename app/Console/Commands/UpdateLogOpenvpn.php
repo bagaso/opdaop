@@ -47,7 +47,7 @@ class UpdateLogOpenvpn extends Command
             if(Schema::hasTable('settings')) {
                 $ctr = 0;
                 $worker = array('log_update-1', 'log_update-2', 'log_update-3');
-                $servers = Server::Active()->get();
+                $servers = Server::Active();
                 foreach ($servers as $server) {
                     Log::info('wew2');
                     $job = (new UpdateLogOpenvpnJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($worker[$ctr]);
