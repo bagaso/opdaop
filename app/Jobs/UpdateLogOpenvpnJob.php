@@ -50,7 +50,7 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                             $user = User::where('username', $log['CommonName'])->firstorfail();
                             $real_address = explode(":", $log['RealAddress']);
                             //$login_session = $user->vpn->count();
-                            if($user->vpn->count() > 0) {
+                            if($user->vpn()->where('server_id', $server->id)->exists()) {
                                 $vpn_session = $user->vpn()->where('server_id', $this->server_id)->firstorfail();
                                 $vpn_session->byte_sent = floatval($log['BytesSent']) ? floatval($log['BytesSent']) : 0;
                                 $vpn_session->byte_received = floatval($log['BytesReceived']) ? floatval($log['BytesReceived']) : 0;
