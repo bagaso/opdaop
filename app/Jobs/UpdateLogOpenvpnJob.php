@@ -40,6 +40,7 @@ class UpdateLogOpenvpnJob implements ShouldQueue
         try {
             DB::connection()->getPdo();
             if(Schema::hasTable('settings')) {
+                Log::info('1112');
                 try {
 
                     $server = Server::findorfail($this->server_id);
