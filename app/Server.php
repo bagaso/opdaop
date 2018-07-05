@@ -43,4 +43,9 @@ class Server extends Model
         return $this->hasMany('App\OnlineUser');
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
+
 }

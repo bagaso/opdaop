@@ -336,6 +336,18 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                 Log::info('Account is already expired: ' . $username);
                 return 'Account is already expired.';
             }
+
+            if($server->limit_bandwidth && $account->consumable_data <= 0) {
+                Log::info('You used all data allocated: ' . $username);
+                return 'You used all data allocated.';
+            }
+
+            if(!$server->server_access->is_paid) {
+                if($current->lt($dt)) {
+                    Log::info('Paid user cannot enter free server: ' . $username);
+                    return 'Paid user cannot enter free server.';
+                }
+            }
         }
 
         $vpn = new OnlineUser;

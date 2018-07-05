@@ -45,6 +45,7 @@ class Kernel extends ConsoleKernel
                 }
                 $schedule->command('backup:delete-old-file')->hourly();
                 $schedule->command('logs:action-logs-clean')->hourly();
+                $schedule->command('failed_jobs:truncate')->daily();
             }
         } catch (\Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
