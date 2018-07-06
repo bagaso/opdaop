@@ -401,7 +401,7 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                     return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
                 }
 
-                if($account->normalSubscription() && $account->subscription->device >= 1) {
+                if($account->normalSubscription() && $normal_server_sessions >= 1) {
                     Log::info('2-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
                     return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
                 }
