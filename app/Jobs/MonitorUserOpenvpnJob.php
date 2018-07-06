@@ -56,9 +56,6 @@ class MonitorUserOpenvpnJob implements ShouldQueue
 
                                 if(!$user->isAdmin()) {
 
-                                    $current = Carbon::now();
-                                    $dt = Carbon::parse($user->getOriginal('expired_at'));
-
                                     if(!$server->is_active || !$server->server_access->is_active) {
                                         $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                         dispatch($job);
@@ -74,14 +71,54 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                     } else if(!$user->isActive() || $user->freeze_mode) {
                                         $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                         dispatch($job);
-                                    } else if($server->server_access->is_paid && $current->gte($dt)) {
-                                        $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-                                        dispatch($job);
+//                                    } else if($server->server_access->is_paid && $current->gte($dt)) {
+//                                        $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+//                                        dispatch($job);
                                     } else if($server->limit_bandwidth && $user->consumable_data <= 0) {
                                         $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                         dispatch($job);
                                     } else if(!$server->server_access->is_paid) {
-                                        if($current->lt($dt)) {
+                                        $free_servers = Server::FreeServerOpenvpn()->get();
+                                        $free_ctr = 0;
+                                        foreach ($free_servers as $free) {
+                                            if($free->online_users()->where('user_id', $user->id)->count() > 0) {
+                                                $free_ctr += 1;
+                                            }
+                                        }
+                                        if(!$user->freeSubscription()) {
+                                            $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                                            dispatch($job);
+                                        } else if($free_ctr > 1) {
+                                            $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                                            dispatch($job);
+                                        }
+                                    } else if($server->server_access->is_paid) {
+                                        $normal_servers = Server::NormalServerOpenvpn()->get();
+                                        $normal_server_sessions = 0;
+                                        foreach ($normal_servers as $normal_server) {
+                                            if($normal_server->online_users()->where('user_id', $user->id)->count() > 0) {
+                                                $normal_server_sessions++;
+                                            }
+                                        }
+
+                                        $special_servers = Server::SpecialServerOpenvpn()->get();
+                                        $special_server_sessions = 0;
+                                        foreach ($special_servers as $special_server) {
+                                            if($special_server->online_users()->where('user_id', $user->id)->count() > 0) {
+                                                $special_server_sessions++;
+                                            }
+                                        }
+
+                                        if(!$user->paidSubscription()) {
+                                            $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                                            dispatch($job);
+                                        } else if($special_server_sessions >= 1) {
+                                            $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                                            dispatch($job);
+                                        } else if($user->normalSubscription() && $normal_server_sessions >= 1) {
+                                            $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+                                            dispatch($job);
+                                        } else if($user->specialSubscription() && $user->subscription->device >= ($normal_server_sessions + $special_server_sessions)) {
                                             $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                             dispatch($job);
                                         }

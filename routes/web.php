@@ -420,7 +420,7 @@ Route::get('/vpn_auth_connect', function (Request $request) {
         $vpn->server_id = $server->id;
         $vpn->byte_sent = 0;
         $vpn->byte_received = 0;
-        $vpn->data_available = $server->limit_bandwidth ? $account->getOriginal('consumable_data') : 0;
+        $vpn->data_available = $account->getOriginal('consumable_data');
         if($vpn->save()) {
             $dl_speed = $account->dl_speed_openvpn ? $account->dl_speed_openvpn : '0kbit';
             $up_speed = $account->up_speed_openvpn ? $account->up_speed_openvpn : '0kbit';
