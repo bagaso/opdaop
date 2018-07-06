@@ -43,9 +43,44 @@ class Server extends Model
         return $this->hasMany('App\OnlineUser');
     }
 
-    public function scopeActive($query)
+    public function scopeServerOpenvpn($query)
     {
-        return $query->where([['is_active', 1],['server_type', 'openvpn']]);
+        return $query->where([['server_type', 'openvpn']]);
+    }
+
+    public function scopeFreeServerOpenvpn($query)
+    {
+        return $query->where([['server_access_id', 1]]);
+    }
+
+    public function scopePaidServerOpenvpn($query)
+    {
+        return $query->whereIn('server_access_id', [2,3,4]);
+    }
+
+    public function scopePremiumServerOpenvpn($query)
+    {
+        return $query->where([['server_access_id', 2]]);
+    }
+
+    public function scopeVIPServerOpenvpn($query)
+    {
+        return $query->where([['server_access_id', 3]]);
+    }
+
+    public function scopePrivateServerOpenvpn($query)
+    {
+        return $query->where([['server_access_id', 4]]);
+    }
+
+    public function scopeNormalServerOpenvpn($query)
+    {
+        return $query->where([['server_access_id', 2]]);
+    }
+
+    public function scopeSpecialServerOpenvpn($query)
+    {
+        return $query->whereIn('server_access_id', [3, 4]);
     }
 
 }

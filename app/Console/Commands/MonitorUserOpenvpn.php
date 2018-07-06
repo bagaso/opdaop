@@ -47,7 +47,7 @@ class MonitorUserOpenvpn extends Command
             if(Schema::hasTable('settings')) {
                 $ctr = 0;
                 $workers = ['monitor_user-1', 'monitor_user-2', 'monitor_user-3'];
-                $servers = Server::Active()->get();
+                $servers = Server::ServerOpenvpn()->get();
                 foreach ($servers as $server) {
                     $job = (new MonitorUserOpenvpnJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($workers[$ctr]);
                     dispatch($job);

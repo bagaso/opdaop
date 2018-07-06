@@ -30,6 +30,7 @@ class CreateSubscriptionsTable extends Migration
             $table->boolean('login_softether')->unsigned()->default(0);
             $table->boolean('login_ss')->unsigned()->default(0);
             $table->boolean('is_public')->unsigned()->default(0);
+            $table->boolean('is_active')->unsigned()->default(0);
             $table->boolean('is_enable')->unsigned()->default(0);
         });
     }

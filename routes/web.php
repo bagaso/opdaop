@@ -358,6 +358,44 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                     Log::info('Paid user cannot enter free server: ' . $username);
                     return 'Paid user cannot enter free server.';
                 }
+
+                $free_servers = Server::FreeServer()->get();
+                $free_ctr = 0;
+                foreach ($free_servers as $free) {
+                    if($free->online_users()->where('user_id', $account->id)->count() > 0) {
+                        $free_ctr += 1;
+                    }
+                }
+
+                if($free_ctr > 0) {
+                    Log::info('Only one device allowed for free user on a free server: ' . $username);
+                    return 'Only one device allowed for free user on a free server.';
+                }
+            }
+
+            if($server->server_access->is_paid) {
+                $normal_server_sessions = $account->vpn()->where(function ($query) {
+                    if($query->server->server_access->id == 2) {
+                        return true;
+                    }
+                });
+                //$special_server_sessions = Server::where('server_access_id', $server->server_access->id)->get();
+//                $normal_server_sessions = Server::where('server_access_id', $server->server_access->id)->get();
+//                $special_server_sessions = Server::where('server_access_id', $server->server_access->id)->get();
+//                $vip_ctr = 0;
+//                foreach ($vip_sessions as $vip) {
+//                    if($vip->users()->where('id', $user->id)->count() > 0) {
+//                        $vip_ctr += 1;
+//                    }
+//                }
+//                if(!$server->server_access->config['multi_device'] && $vip_ctr > 0) {
+//                    Log::info('Only one device allowed on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+//                    return 'Only one device allowed on ' . strtolower($server->server_access->name) . ' Server.';
+//                }
+//                if($vip_ctr >= $server->server_access->config['max_device']) {
+//                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+//                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+//                }
             }
         }
 

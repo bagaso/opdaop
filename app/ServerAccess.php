@@ -11,6 +11,7 @@ class ServerAccess extends Model
         'is_private' => 'boolean',
         'multi_login' => 'boolean',
         'is_public' => 'boolean',
+        'is_active' => 'boolean',
         'is_enable' => 'boolean',
     ];
 }

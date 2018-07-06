@@ -32,6 +32,7 @@ class Subscription extends Model
         'login_softether' => 'boolean',
         'login_ss' => 'boolean',
         'is_public' => 'boolean',
+        'is_active' => 'boolean',
         'is_enable' => 'boolean',
     ];
 }
