@@ -34,7 +34,7 @@ class Server extends Model
     {
         return $this->hasManyThrough(
             'App\User', 'App\OnlineUser',
-            'server_id', 'id', 'id'
+            'server_id', 'user_id', 'id'
         );
     }
 
