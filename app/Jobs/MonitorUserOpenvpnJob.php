@@ -43,15 +43,9 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                 try {
 
                     $server = Server::findorfail($this->server_id);
-
-                    $logs = $this->parseLog($server->server_ip, 'tcp', $server->web_port);
-                    $users_log = [];
-                    foreach($logs as $log)
-                    {
-                        $users_log[] = $log['CommonName'];
-                    }
-
                     $online_users = $server->online_users;
+                    $logs = $this->parseLog($server->server_ip, 'tcp', $server->web_port);
+
                     foreach($online_users as $online_user)
                     {
                         try {
