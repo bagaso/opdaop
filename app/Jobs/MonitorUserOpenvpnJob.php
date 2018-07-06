@@ -57,7 +57,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                         try {
                             $user = User::findorfail($online_user->user_id);
 
-                            if(in_array($user->username, $users_log)) {
+                            if(in_array($user->username, array_pluck($logs, 'CommonName'))) {
 
                                 if(!$user->isAdmin()) {
 
