@@ -276,7 +276,7 @@ Route::get('/vpn_auth', function (Request $request) {
     }
 });
 
-Route::get('/vpn_auth_connect', function () {
+Route::get('/sample', function () {
     $server = Server::findorfail(5);
     $users = $server->online_user();
     return $users;
