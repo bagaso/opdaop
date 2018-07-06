@@ -343,10 +343,11 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                 return 'Account is in freeze mode.';
             }
 
-            if($server->server_access->is_paid && $current->gte($dt)) {
-                Log::info('Account is already expired: ' . $username);
-                return 'Account is already expired.';
-            }
+//            if($server->server_access->is_paid && $current->gte($dt)) {
+//                Log::info('Account is already expired: ' . $username);
+//                return 'Account is already expired.';
+//            }
+
 
             if($server->limit_bandwidth && $account->consumable_data <= 0) {
                 Log::info('You used all data allocated: ' . $username);
@@ -354,7 +355,7 @@ Route::get('/vpn_auth_connect', function (Request $request) {
             }
 
             if(!$server->server_access->is_paid) {
-                if($current->lt($dt)) {
+                if(!$account->freeSubscription()) {
                     Log::info('Paid user cannot enter free server: ' . $username);
                     return 'Paid user cannot enter free server.';
                 }
@@ -374,11 +375,42 @@ Route::get('/vpn_auth_connect', function (Request $request) {
             }
 
             if($server->server_access->is_paid) {
-                $normal_server_sessions = $account->vpn()->with('server')->where(function ($query) {
-                    if($query->server->server_access->id == 2) {
-                        return true;
+                if(!$account->paidSubscription()) {
+                    Log::info('Account is already expired: ' . $username);
+                    return 'Account is already expired.';
+                }
+
+                $normal_servers = Server::NormalServerOpenvpn()->get();
+                $normal_server_sessions = 0;
+                foreach ($normal_servers as $normal_server) {
+                    if($normal_server->online_users()->where('user_id', $account->id)->count() > 0) {
+                        $normal_server_sessions++;
                     }
-                });
+                }
+
+                $special_servers = Server::SpecialServerOpenvpn()->get();
+                $special_server_sessions = 0;
+                foreach ($special_servers as $special_server) {
+                    if($special_server->online_users()->where('user_id', $account->id)->count() > 0) {
+                        $special_server_sessions++;
+                    }
+                }
+
+                if($special_server_sessions >= 1) {
+                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+                }
+
+                if($account->normalSubscription() && $account->subscription->device >= 1) {
+                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+                }
+
+                if($account->specialSubscription() && $account->subscription->device >= ($normal_server_sessions + $special_server_sessions)) {
+                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+                }
+
                 //$special_server_sessions = Server::where('server_access_id', $server->server_access->id)->get();
 //                $normal_server_sessions = Server::where('server_access_id', $server->server_access->id)->get();
 //                $special_server_sessions = Server::where('server_access_id', $server->server_access->id)->get();

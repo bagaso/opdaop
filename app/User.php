@@ -245,4 +245,29 @@ class User extends Authenticatable
         $newsize=round($bytesize,2);
         return("$newsize $units[$i]");
     }
+
+    public function freeSubscription()
+    {
+        return $this->expired_at === 'Expired';
+    }
+
+    public function paidSubscription()
+    {
+        return $this->expired_at != 'Expired';
+    }
+
+    public function freezedSubscription()
+    {
+        return $this->expired_at != 'Freezed';
+    }
+
+    public function normalSubscription()
+    {
+        return $this->subscription_id === 1;
+    }
+
+    public function specialSubscription()
+    {
+        return in_array($this->subscription_id, [2,3,4]);
+    }
 }
