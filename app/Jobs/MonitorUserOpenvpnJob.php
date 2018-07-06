@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Server;
-use App\User;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -12,10 +11,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateLogOpenvpnJob implements ShouldQueue
+class MonitorUserOpenvpnJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -44,8 +42,8 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                 try {
 
                     $server = Server::findorfail($this->server_id);
-                    $logs = $this->parseLog($server->server_ip, 'tcp', $server->web_port);
-                    foreach($logs as $log)
+                    $users = $server->online_user();
+                    foreach($users as $user)
                     {
                         try {
                             $user = User::where('username', $log['CommonName'])->firstorfail();
@@ -67,59 +65,5 @@ class UpdateLogOpenvpnJob implements ShouldQueue
         } catch (Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
         }
-    }
-
-    public function availableIp($host, $port, $timeout=3) {
-        $fp = @fsockopen($host, $port, $errno, $errstr, $timeout);
-        if($fp) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public function parseLog($ip, $proto, $port=80) {
-        $status = array();
-        $ctr = 0;
-        $uid = 0;
-
-        if($this->availableIp($ip, $port)) {
-            $handle = @fopen('http://' . $ip . ':' . $port . '/logs/logs.log', "r");
-
-            if($handle) {
-                while (!@feof($handle)) {
-                    $buffer = @fgets($handle, 4096);
-
-                    unset($match);
-
-                    //if (ereg("^Updated,(.+)", $buffer, $match)) {
-                    //$status['updated'] = $match[1];
-                    //}
-
-                    if (preg_match("/^(.+),(\d+\.\d+\.\d+\.\d+\:\d+),(\d+),(\d+),(.+)$/", $buffer, $match)) {
-                        if ($match[1] <> 'Common Name' && $match[1] <> 'UNDEF' && $match[1] <> 'client') {
-                            //      $cn = $match[1];
-
-                            // for each remote ip:port because smarty doesnt
-                            // like looping on strings in a section
-                            $userlookup[$match[2]] = $uid;
-
-                            $status[$ctr]['CommonName'] = $match[1];
-                            $status[$ctr]['RealAddress'] = $match[2];
-                            $status[$ctr]['BytesReceived'] = $match[3]; #sizeformat($match[3]);
-                            $status[$ctr]['BytesSent'] = $match[4]; #sizeformat($match[4]);
-                            $status[$ctr]['Since'] = $match[5];
-                            $status[$ctr]['Proto'] = $proto;
-                            $uid++; $ctr++;
-                        }
-                    }
-
-                }
-                @fclose($handle);
-            }
-        }
-
-        return $status;
     }
 }

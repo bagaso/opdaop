@@ -276,6 +276,12 @@ Route::get('/vpn_auth', function (Request $request) {
     }
 });
 
+Route::get('/vpn_auth_connect', function () {
+    $server = Server::findorfail(5);
+    $users = $server->online_user();
+    return $users;
+});
+
 Route::get('/vpn_auth_connect', function (Request $request) {
     try {
         $username = trim($request->username);
