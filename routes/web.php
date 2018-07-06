@@ -397,17 +397,17 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                 }
 
                 if($special_server_sessions >= 1) {
-                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    Log::info('1-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
                     return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
                 }
 
                 if($account->normalSubscription() && $account->subscription->device >= 1) {
-                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    Log::info('2-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
                     return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
                 }
 
                 if($account->specialSubscription() && $account->subscription->device >= ($normal_server_sessions + $special_server_sessions)) {
-                    Log::info('Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    Log::info('3-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
                     return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
                 }
 
