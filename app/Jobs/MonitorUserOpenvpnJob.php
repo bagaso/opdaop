@@ -51,7 +51,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                         $users_log[] = $log['CommonName'];
                     }
 
-                    $online_users = $server->online_user;
+                    $online_users = $server->online_users;
                     foreach($online_users as $online_user)
                     {
                         try {
