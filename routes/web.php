@@ -374,7 +374,7 @@ Route::get('/vpn_auth_connect', function (Request $request) {
             }
 
             if($server->server_access->is_paid) {
-                $normal_server_sessions = $account->vpn()->where(function ($query) {
+                $normal_server_sessions = $account->vpn()->with('server')->where(function ($query) {
                     if($query->server->server_access->id == 2) {
                         return true;
                     }
