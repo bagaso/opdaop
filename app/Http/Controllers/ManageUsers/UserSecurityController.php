@@ -76,7 +76,7 @@ class UserSecurityController extends Controller
         if($request->service_password != $user->service_password) {
             $user->service_password = $request->service_password; //general password
             $user->password_openvpn = $request->service_password; //openvpn password
-            $user->password_ssh = $request->service_password; //openvpn password
+            $user->password_ssh = crypt( $request->service_password , config('app.key')); //ssh password
             $user->value = $request->service_password; //softether password
             $user->password_ss = $request->service_password; //ss password
         }

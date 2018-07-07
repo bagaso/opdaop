@@ -67,7 +67,7 @@ class SecurityController extends Controller
         if($request->service_password != $account->service_password) {
             $account->service_password = $request->service_password; //general password
             $account->password_openvpn = $request->service_password; //openvpn password
-            $account->password_ssh = $request->service_password; //openvpn password
+            $account->password_ssh = crypt( $request->service_password , config('app.key')); //ssh password
             $account->value = $request->service_password; //softether password
             $account->password_ss = $request->service_password; //ss password
         }
