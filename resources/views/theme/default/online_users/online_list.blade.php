@@ -162,7 +162,7 @@
                     }
                 });
                 var oTable =  $('#online_users-table').DataTable({
-                    order: [ {{ auth()->check() && auth()->user()->can('MANAGE_ONLINE_USER') ? 4 : 3 }}, 'desc' ],
+                    order: [ {{ auth()->check() && auth()->user()->can('MANAGE_ONLINE_USER') ? 5 : 4 }}, 'desc' ],
                     processing: true,
                     serverSide: true,
                     ajax: {
