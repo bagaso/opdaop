@@ -68,7 +68,7 @@ class ListController extends Controller
     public function multi_close(CloseMultiTicketRequest $request)
     {
         foreach ($request->ticket_ids as $id) {
-            if(auth()->user()->can('MANAGE_TICKET', $id)) {
+            if(auth()->user()->cannot('MANAGE_TICKET', $id)) {
                 return redirect()->back()->with('error', 'Closing Tickets Failed.');
             }
         }
@@ -85,7 +85,7 @@ class ListController extends Controller
     public function multi_lock(LockMultiTicketRequest $request)
     {
         foreach ($request->ticket_ids as $id) {
-            if(auth()->user()->can('MANAGE_TICKET', $id)) {
+            if(auth()->user()->cannot('MANAGE_SUPPORT')) {
                 return redirect()->back()->with('error', 'Locking Tickets Failed.');
             }
         }
@@ -102,7 +102,7 @@ class ListController extends Controller
     public function multi_open(OpenMultiTicketRequest $request)
     {
         foreach ($request->ticket_ids as $id) {
-            if(auth()->user()->can('MANAGE_TICKET', $id)) {
+            if(auth()->user()->cannot('MANAGE_TICKET', $id)) {
                 return redirect()->back()->with('error', 'Opening Tickets Failed.');
             }
         }
