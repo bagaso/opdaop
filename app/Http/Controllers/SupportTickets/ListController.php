@@ -5,9 +5,9 @@ namespace App\Http\Controllers\SupportTickets;
 use App\Http\Requests\SupportTickets\CloseMultiTicketRequest;
 use App\Http\Requests\SupportTickets\DeleteTicketRequest;
 use App\Http\Requests\SupportTickets\LockMultiTicketRequest;
+use App\Http\Requests\SupportTickets\UnlockMultiTicketRequest;
 use App\Http\Requests\SupportTickets\OpenMultiTicketRequest;
 use App\Ticket;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -93,6 +93,23 @@ class ListController extends Controller
             foreach ($request->ticket_ids as $id) {
                 $ticket = Ticket::findorfail($id);
                 $ticket->is_lock = 1;
+                $ticket->save();
+            }
+        });
+        return redirect()->back()->with('success', 'Selected Ticket Locked.');
+    }
+
+    public function multi_unlock(UnlockMultiTicketRequest $request)
+    {
+        foreach ($request->ticket_ids as $id) {
+            if(auth()->user()->cannot('MANAGE_SUPPORT')) {
+                return redirect()->back()->with('error', 'Unlocking Tickets Failed.');
+            }
+        }
+        DB::transaction(function () use ($request) {
+            foreach ($request->ticket_ids as $id) {
+                $ticket = Ticket::findorfail($id);
+                $ticket->is_lock = 0;
                 $ticket->save();
             }
         });

@@ -29,6 +29,13 @@
                             </h3>
                         </div>
                         <div class="panel-body table-responsive">
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -57,15 +64,21 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete_ticket">
-                                            Delete
-                                        </a>
-                                    </li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    @can('MANAGE_SUPPORT')
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#modal-unlock_ticket">
+                                                Unlock Ticket
+                                            </a>
+                                        </li>
+                                    @endcan
                                     <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    @if(auth()->user()->can('DELETE_TICKET'))
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete_ticket">
+                                                Delete
+                                            </a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -78,27 +91,53 @@
         </section>
         <!-- /.content -->
 
-        <div class="modal modal-danger fade" id="modal-delete_ticket">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Delete Confirmation</h4>
+        @can('MANAGE_SUPPORT')
+            <div class="modal modal-danger fade" id="modal-unlock_ticket">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Unlock Selected Ticket?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-outline" id="unlock_ticket">Unlock</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <p>Delete Selected Ticket?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline" id="delete_ticket">Delete</button>
-                    </div>
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
+                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal delete_user -->
+            <!-- /.modal unlock_ticket -->
+        @endcan
+
+        @can('DELETE_TICKET')
+            <div class="modal modal-danger fade" id="modal-delete_ticket">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Delete Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete Selected Ticket?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-outline" id="delete_ticket">Delete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal delete_ticket -->
+        @endcan
 
     </div>
     <!-- /.content-wrapper -->
@@ -150,7 +189,24 @@
                     selector: 'td:first-child'
                 }
             });
-
+            @can('MANAGE_SUPPORT')
+            $("#unlock_ticket").click(function () {
+                var rowcollection =  oTable.$("tr.selected");
+                //var user_ids = [];
+                var unlock_form_builder  = '';
+                rowcollection.each(function(index,elem){
+                    //Do something with 'checkbox_value'
+                    var ticket_id = $(this).find(".ticket_id").val();
+                    unlock_form_builder += '<input type="hidden" name="ticket_ids[]" value="' + ticket_id + '">';
+                });
+                $('<form id="form_unlock_ticket" action="{{ route('support_tickets.multi_unlock') }}" method="post">')
+                    .append('{{ csrf_field() }}')
+                    .append(unlock_form_builder)
+                    .append('</form>')
+                    .appendTo($(document.body)).submit();
+            });
+            @endcan
+            @can('DELETE_TICKET')
             $("#delete_ticket").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
@@ -166,6 +222,7 @@
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
+            @endcan
         });
     </script>
 @endpush

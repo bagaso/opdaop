@@ -74,6 +74,11 @@
                                             Lock Ticket
                                         </a>
                                     </li>
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#modal-unlock_ticket">
+                                                Unlock Ticket
+                                            </a>
+                                        </li>
                                     @endcan
                                     <li>
                                         <a href="#" data-toggle="modal" data-target="#modal-open_ticket">
@@ -166,6 +171,27 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal lock_ticket -->
+            <div class="modal modal-danger fade" id="modal-unlock_ticket">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Unlock Selected Ticket?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-outline" id="unlock_ticket">Unlock</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal unlock_ticket -->
         @endcan
 
         @can('DELETE_TICKET')
@@ -189,7 +215,7 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal delete_user -->
+        <!-- /.modal delete_ticket -->
         @endcan
 
     </div>
@@ -284,6 +310,21 @@
                 $('<form id="form_lock_ticket" action="{{ route('support_tickets.multi_lock') }}" method="post">')
                     .append('{{ csrf_field() }}')
                     .append(lock_form_builder)
+                    .append('</form>')
+                    .appendTo($(document.body)).submit();
+            });
+            $("#unlock_ticket").click(function () {
+                var rowcollection =  oTable.$("tr.selected");
+                //var user_ids = [];
+                var unlock_form_builder  = '';
+                rowcollection.each(function(index,elem){
+                    //Do something with 'checkbox_value'
+                    var ticket_id = $(this).find(".ticket_id").val();
+                    unlock_form_builder += '<input type="hidden" name="ticket_ids[]" value="' + ticket_id + '">';
+                });
+                $('<form id="form_unlock_ticket" action="{{ route('support_tickets.multi_unlock') }}" method="post">')
+                    .append('{{ csrf_field() }}')
+                    .append(unlock_form_builder)
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
