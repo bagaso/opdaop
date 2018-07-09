@@ -38,6 +38,11 @@ class Server extends Model
         );
     }
 
+    public function privateUsers()
+    {
+        return $this->belongsToMany('App\User');
+    }
+
     public function online_users()
     {
         return $this->hasMany('App\OnlineUser');

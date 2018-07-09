@@ -71,9 +71,6 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                     } else if(!$user->isActive() || $user->freeze_mode) {
                                         $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                         dispatch($job);
-//                                    } else if($server->server_access->is_paid && $current->gte($dt)) {
-//                                        $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
-//                                        dispatch($job);
                                     } else if($server->limit_bandwidth && $user->consumable_data <= 0) {
                                         $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                         dispatch($job);

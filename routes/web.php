@@ -19,6 +19,7 @@
 //  });
 //});
 
+use App\HistoryVpn;
 use App\OnlineUser;
 use App\Server;
 use App\User;
@@ -411,12 +412,20 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                     return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
                 }
             }
+
+            if($server->server_access->is_private) {
+                if(!in_array($account->id, json_decode($server->privateUsers->pluck('id')))) {
+                    Log::info('Your account is not allowed to login to ' . strtolower($server->server_access->name) . ' server: ' . $username);
+                    return 'Your account is not allowed to login to ' . strtolower($server->server_access->name) . ' server.';
+                }
+            }
         }
 
         $vpn = new OnlineUser;
         $vpn->user_id = $account->id;
         $vpn->user_ip = $request->trusted_ip ? $request->trusted_ip : '0.0.0.0';
         $vpn->user_port = $request->trusted_port ? $request->trusted_port : '0';
+        $vpn->protocol = 'OpenVPN';
         $vpn->server_id = $server->id;
         $vpn->byte_sent = 0;
         $vpn->byte_received = 0;
@@ -457,6 +466,20 @@ Route::get('/vpn_auth_disconnect', function (Request $request) {
         }
 
         $account->save();
+
+        $vpn_history = new HistoryVpn();
+        $vpn_history->user_id = $account->id;
+        $vpn_history->protocol = $vpn_session->protocol;
+        $vpn_history->user_ip = $vpn_session->user_ip;
+        $vpn_history->user_port = $vpn_session->user_port;
+        $vpn_history->server_name = $server->server_name;
+        $vpn_history->server_ip = $server->server_ip;
+        $vpn_history->sub_domain = $server->sub_domain;
+        $vpn_history->byte_sent = floatval($bytes_sent);
+        $vpn_history->byte_received = floatval($bytes_received);
+        $vpn_history->session_start = Carbon::parse($vpn_session->getOriginal('created_at'));
+        $vpn_history->session_end = Carbon::now();
+        $vpn_history->save();
 
         $vpn_session->delete();
 

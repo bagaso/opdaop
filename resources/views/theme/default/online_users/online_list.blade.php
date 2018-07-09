@@ -39,9 +39,11 @@
                                                 @endif
                                             @endauth
                                             <th>Username</th>
+                                            <th>Protocol</th>
                                             <th>Server</th>
                                             <th>DL</th>
                                             <th>UP</th>
+                                            <th>Connected Since</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -59,11 +61,6 @@
                                                     <li>
                                                         <a href="#" data-toggle="modal" data-target="#modal-disconnect_user">
                                                             Disconnect
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#modal-force_delete">
-                                                            Force Delete
                                                         </a>
                                                     </li>
                                                     <li><a href="#">Another action</a></li>
@@ -189,6 +186,7 @@
                         @endif
                         @endauth
                         { data: 'user', name: 'user.username' },
+                        { data: 'protocol', name: 'protocol' },
                         { data: 'server', name: 'server.server_name' },
                         { data: 'byte_sent', name: 'byte_sent' },
                         { data: 'byte_received', name: 'byte_received' }

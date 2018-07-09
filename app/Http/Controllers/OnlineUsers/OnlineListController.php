@@ -32,7 +32,7 @@ class OnlineListController extends Controller
 
     public function online_list(SearchOnlineUserRequest $request)
     {
-        $query = OnlineUser::with('user', 'server')->selectRaw('online_users.id, online_users.user_id, online_users.server_id, online_users.byte_sent, online_users.byte_received, online_users.created_at');
+        $query = OnlineUser::with('user', 'server')->selectRaw('online_users.id, online_users.user_id, online_users.protocol, online_users.server_id, online_users.byte_sent, online_users.byte_received, online_users.created_at');
         return datatables()->eloquent($query)
             ->addColumn('check', '<input type="hidden" class="ids" value="{{ $id }}">')
             ->addColumn('user', function (OnlineUser $online) {

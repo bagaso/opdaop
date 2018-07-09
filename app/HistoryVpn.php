@@ -2,11 +2,10 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
-class OnlineUser extends Model
+class HistoryVpn extends Model
 {
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -14,6 +13,13 @@ class OnlineUser extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    /**
+     * Indicates if the timestamps are auto updated.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      *  Setup model event hooks
@@ -27,18 +33,29 @@ class OnlineUser extends Model
         });
     }
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'id', 'user_id', 'server_id', 'user_ip', 'user_port', 'byte_sent', 'byte_received', 'data_available',
+        'id', 'user_id', 'user_ip', 'user_port', 'server_name', 'server_ip', 'sub_domain', 'byte_sent', 'byte_received', 'session_start', 'session_end',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'user_id',
     ];
 
     public function user()
     {
-        return $this->belongsTo('App\User');
-    }
-
-    public function server()
-    {
-        return $this->belongsTo('App\Server');
+        return $this->belongsTo('App\User', 'user_id')->select('id', 'username')->withDefault([
+            'username' => '###'
+        ]);
     }
 
     public function sizeformat($bytesize)
@@ -62,13 +79,4 @@ class OnlineUser extends Model
     public function getByteReceivedAttribute($value) {
         return $this->sizeformat($value);
     }
-
-    public function getCreatedAtAttribute($value) {
-        $dt = Carbon::parse($value);
-        if ($dt->diffInDays(Carbon::now()) > 1)
-            return $dt->format('Y-M-d');
-        else
-            return $dt->diffForHumans();
-    }
-
 }
