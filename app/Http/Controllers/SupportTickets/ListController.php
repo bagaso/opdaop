@@ -65,7 +65,7 @@ class ListController extends Controller
             ->make(true);
     }
 
-    public function close_ticket(CloseMultiTicketRequest $request)
+    public function multi_close(CloseMultiTicketRequest $request)
     {
         foreach ($request->ticket_ids as $id) {
             if(auth()->user()->can('MANAGE_TICKET', $id)) {
@@ -82,7 +82,7 @@ class ListController extends Controller
         return redirect()->back()->with('success', 'Selected Ticket Closed.');
     }
 
-    public function lock_ticket(LockMultiTicketRequest $request)
+    public function multi_lock(LockMultiTicketRequest $request)
     {
         foreach ($request->ticket_ids as $id) {
             if(auth()->user()->can('MANAGE_TICKET', $id)) {
@@ -99,7 +99,7 @@ class ListController extends Controller
         return redirect()->back()->with('success', 'Selected Ticket Locked.');
     }
 
-    public function open_ticket(OpenMultiTicketRequest $request)
+    public function multi_open(OpenMultiTicketRequest $request)
     {
         foreach ($request->ticket_ids as $id) {
             if(auth()->user()->can('MANAGE_TICKET', $id)) {

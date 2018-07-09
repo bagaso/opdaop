@@ -181,6 +181,9 @@ Route::group(['prefix' => 'news-and-updates'], function() {
 Route::group(['prefix' => 'support'], function() {
     Route::get('/', 'SupportTickets\ListController@index')->name('support_tickets');
     Route::post('/raw-support-ticket-list', 'SupportTickets\ListController@ticket_list')->name('support_tickets.list');
+    Route::post('/tickets-open', 'SupportTickets\ListController@multi_open')->name('support_tickets.multi_open');
+    Route::post('/tickets-close', 'SupportTickets\ListController@multi_close')->name('support_tickets.multi_close');
+    Route::post('/tickets-lock', 'SupportTickets\ListController@multi_lock')->name('support_tickets.multi_lock');
 
     Route::get('/open', 'SupportTickets\TicketListOpenController@index')->name('support_tickets.open');
     Route::post('/raw-support-ticket-list-open', 'SupportTickets\TicketListOpenController@ticket_list')->name('support_tickets.list.open');
