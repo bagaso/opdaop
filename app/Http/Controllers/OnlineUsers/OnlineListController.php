@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\OnlineUsers;
 
 use App\Http\Requests\OnlineUsers\DeleteOnlineUserRequest;
+use App\Http\Requests\OnlineUsers\DisconnectOnlineUserRequest;
 use App\Http\Requests\OnlineUsers\SearchOnlineUserRequest;
+use App\Jobs\OpenvpnDisconnectUserJob;
 use App\OnlineUser;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class OnlineListController extends Controller
@@ -43,6 +44,16 @@ class OnlineListController extends Controller
             })
             ->rawColumns(['check', 'group'])
             ->make(true);
+    }
+
+    public function disconnect(DisconnectOnlineUserRequest $request)
+    {
+        foreach ($request->ids as $id) {
+            $user_session = OnlineUser::findorfail($id);
+            $job = (new OpenvpnDisconnectUserJob($user_session->user->username, $user_session->server->server_ip, $user_session->server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
+            dispatch($job);
+        }
+        return redirect()->back()->with('success', 'Selected User Deleted.');
     }
 
     public function force_delete_user(DeleteOnlineUserRequest $request)

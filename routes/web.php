@@ -227,7 +227,7 @@ Route::group(['prefix' => 'pages'], function() {
 Route::group(['prefix' => 'online-users'], function() {
     Route::get('/', 'OnlineUsers\OnlineListController@index')->name('online_users');
     Route::post('/raw-online-users-list', 'OnlineUsers\OnlineListController@online_list')->name('online_users.vpn_online_list');
-    Route::post('/vpn-disconnect', 'OnlineUsers\OnlineListController@remove')->name('online_users.vpn_online_list.disconnect');
+    Route::post('/session-disconnect', 'OnlineUsers\OnlineListController@disconnect')->name('online_users.vpn_online_list.disconnect');
     Route::post('/force-delete-user', 'OnlineUsers\OnlineListController@force_delete_user')->name('online_users.vpn_online_list.force_delete');
 });
 

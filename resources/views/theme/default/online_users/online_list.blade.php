@@ -210,7 +210,7 @@
                     rowcollection.each(function(index,elem){
                         //Do something with 'checkbox_value'
                         var id1 = $(this).find(".ids").val();
-                        disconnect_form_builder += '<input type="hidden" name="user_ids[]" value="' + id1 + '">';
+                        disconnect_form_builder += '<input type="hidden" name="ids[]" value="' + id1 + '">';
                     });
                     $('<form id="form_remove_user" action="{{ route('online_users.vpn_online_list.disconnect') }}" method="post">')
                         .append('{{ csrf_field() }}')
