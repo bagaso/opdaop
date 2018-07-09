@@ -162,7 +162,7 @@
                     }
                 });
                 var oTable =  $('#online_users-table').DataTable({
-                    order: [ {{ auth()->check() && auth()->user()->can('MANAGE_ONLINE_USER') ? 5 : 4 }}, 'desc' ],
+                    order: [ {{ auth()->check() && auth()->user()->can('MANAGE_ONLINE_USER') ? 6 : 5 }}, 'desc' ],
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -189,7 +189,8 @@
                         { data: 'protocol', name: 'protocol' },
                         { data: 'server', name: 'server.server_name' },
                         { data: 'byte_sent', name: 'byte_sent' },
-                        { data: 'byte_received', name: 'byte_received' }
+                        { data: 'byte_received', name: 'byte_received' },
+                        { data: 'created_at', name: 'created_at' }
                     ],
                     @auth
                     @if(auth()->user()->can('MANAGE_ONLINE_USER'))
