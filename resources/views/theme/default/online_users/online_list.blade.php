@@ -63,10 +63,11 @@
                                                             Disconnect
                                                         </a>
                                                     </li>
-                                                    <li><a href="#">Another action</a></li>
-                                                    <li><a href="#">Something else here</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Separated link</a></li>
+                                                    <li>
+                                                        <a href="#" data-toggle="modal" data-target="#modal-disconnect_user">
+                                                            Delete
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -90,14 +91,14 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Remove Confirmation</h4>
+                                <h4 class="modal-title">Disconnect Confirmation</h4>
                             </div>
                             <div class="modal-body">
-                                <p>Remove Selected User?</p>
+                                <p>Disconnect Selected User?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-outline" id="disconnect_user">Remove</button>
+                                <button type="button" class="btn btn-outline" id="disconnect_user">Disconnect</button>
                             </div>
                         </div>
                         <!-- /.modal-content -->

@@ -4,7 +4,7 @@ namespace App\Http\Requests\SupportTickets;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LockTicketRequest extends FormRequest
+class OpenMultiTicketRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,10 +13,7 @@ class LockTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('MANAGE_TICKET', $this->id)) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**

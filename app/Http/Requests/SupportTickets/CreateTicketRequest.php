@@ -13,7 +13,7 @@ class CreateTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('MANAGE_SUPPORT')) {
+        if(auth()->user()->can('CREATE_TICKET')) {
             return true;
         }
         return false;

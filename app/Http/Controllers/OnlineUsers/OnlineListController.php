@@ -53,7 +53,7 @@ class OnlineListController extends Controller
             $job = (new OpenvpnDisconnectUserJob($user_session->user->username, $user_session->server->server_ip, $user_session->server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
             dispatch($job);
         }
-        return redirect()->back()->with('success', 'Selected User Deleted.');
+        return redirect()->back()->with('success', 'Disconnect request sent.');
     }
 
     public function force_delete_user(DeleteOnlineUserRequest $request)

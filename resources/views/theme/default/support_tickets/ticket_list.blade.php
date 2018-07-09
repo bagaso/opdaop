@@ -57,14 +57,30 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete_ticket">
-                                            Delete
+                                        <a href="#" data-toggle="modal" data-target="#modal-close_ticket">
+                                            Close Ticket
                                         </a>
                                     </li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    @can('MANAGE_SUPPORT')
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#modal-lock_ticket">
+                                            Lock Ticket
+                                        </a>
+                                    </li>
+                                    @endcan
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#modal-open_ticket">
+                                            Open Ticket
+                                        </a>
+                                    </li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    @if(auth()->user()->can('DELETE_TICKET'))
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete_ticket">
+                                                Delete
+                                            </a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -77,6 +93,75 @@
         </section>
         <!-- /.content -->
 
+        <div class="modal modal-danger fade" id="modal-close_ticket">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Close Selected Ticket?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline" id="close_ticket">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal close_ticket -->
+
+        <div class="modal modal-danger fade" id="modal-open_ticket">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Open Selected Ticket?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline" id="open_ticket">Open</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal open_ticket -->
+
+        @can('MANAGE_SUPPORT')
+            <div class="modal modal-danger fade" id="modal-lock_ticket">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Lock Selected Ticket?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-outline" id="lock_ticket">Lock</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal lock_ticket -->
+        @endcan
+
+        @can('DELETE_TICKET')
         <div class="modal modal-danger fade" id="modal-delete_ticket">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -98,6 +183,7 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal delete_user -->
+        @endcan
 
     </div>
     <!-- /.content-wrapper -->
@@ -148,7 +234,54 @@
                     selector: 'td:first-child'
                 }
             });
-
+            $("#close_ticket").click(function () {
+                var rowcollection =  oTable.$("tr.selected");
+                //var user_ids = [];
+                var close_form_builder  = '';
+                rowcollection.each(function(index,elem){
+                    //Do something with 'checkbox_value'
+                    var ticket_id = $(this).find(".ticket_id").val();
+                    close_form_builder += '<input type="hidden" name="ticket_ids[]" value="' + ticket_id + '">';
+                });
+                $('<form id="form_close_ticket" action="{{ route('support_tickets.multi_close') }}" method="post">')
+                    .append('{{ csrf_field() }}')
+                    .append(close_form_builder)
+                    .append('</form>')
+                    .appendTo($(document.body)).submit();
+            });
+            $("#open_ticket").click(function () {
+                var rowcollection =  oTable.$("tr.selected");
+                //var user_ids = [];
+                var open_form_builder  = '';
+                rowcollection.each(function(index,elem){
+                    //Do something with 'checkbox_value'
+                    var ticket_id = $(this).find(".ticket_id").val();
+                    open_form_builder += '<input type="hidden" name="ticket_ids[]" value="' + ticket_id + '">';
+                });
+                $('<form id="form_open_ticket" action="{{ route('support_tickets.multi_open') }}" method="post">')
+                    .append('{{ csrf_field() }}')
+                    .append(open_form_builder)
+                    .append('</form>')
+                    .appendTo($(document.body)).submit();
+            });
+            @can('MANAGE_SUPPORT')
+            $("#lock_ticket").click(function () {
+                var rowcollection =  oTable.$("tr.selected");
+                //var user_ids = [];
+                var lock_form_builder  = '';
+                rowcollection.each(function(index,elem){
+                    //Do something with 'checkbox_value'
+                    var ticket_id = $(this).find(".ticket_id").val();
+                    lock_form_builder += '<input type="hidden" name="ticket_ids[]" value="' + ticket_id + '">';
+                });
+                $('<form id="form_lock_ticket" action="{{ route('support_tickets.multi_lock') }}" method="post">')
+                    .append('{{ csrf_field() }}')
+                    .append(lock_form_builder)
+                    .append('</form>')
+                    .appendTo($(document.body)).submit();
+            });
+            @endcan
+            @can('DELETE_TICKET')
             $("#delete_ticket").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
@@ -164,6 +297,7 @@
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
+            @endcan
         });
     </script>
 @endpush

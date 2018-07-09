@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\SupportTickets;
 
+use App\Http\Requests\SupportTickets\CloseMultiTicketRequest;
 use App\Http\Requests\SupportTickets\DeleteTicketRequest;
+use App\Http\Requests\SupportTickets\LockMultiTicketRequest;
+use App\Http\Requests\SupportTickets\OpenMultiTicketRequest;
 use App\Ticket;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -60,6 +63,57 @@ class ListController extends Controller
             })
             ->rawColumns(['check', 'id', 'status'])
             ->make(true);
+    }
+
+    public function close_ticket(CloseMultiTicketRequest $request)
+    {
+        foreach ($request->ticket_ids as $id) {
+            if(auth()->user()->can('MANAGE_TICKET', $id)) {
+                return redirect()->back()->with('error', 'Closing Tickets Failed.');
+            }
+        }
+        DB::transaction(function () use ($request) {
+            foreach ($request->ticket_ids as $id) {
+                $ticket = Ticket::findorfail($id);
+                $ticket->is_open = 0;
+                $ticket->save();
+            }
+        });
+        return redirect()->back()->with('success', 'Selected Ticket Closed.');
+    }
+
+    public function lock_ticket(LockMultiTicketRequest $request)
+    {
+        foreach ($request->ticket_ids as $id) {
+            if(auth()->user()->can('MANAGE_TICKET', $id)) {
+                return redirect()->back()->with('error', 'Locking Tickets Failed.');
+            }
+        }
+        DB::transaction(function () use ($request) {
+            foreach ($request->ticket_ids as $id) {
+                $ticket = Ticket::findorfail($id);
+                $ticket->is_lock = 1;
+                $ticket->save();
+            }
+        });
+        return redirect()->back()->with('success', 'Selected Ticket Locked.');
+    }
+
+    public function open_ticket(OpenMultiTicketRequest $request)
+    {
+        foreach ($request->ticket_ids as $id) {
+            if(auth()->user()->can('MANAGE_TICKET', $id)) {
+                return redirect()->back()->with('error', 'Opening Tickets Failed.');
+            }
+        }
+        DB::transaction(function () use ($request) {
+            foreach ($request->ticket_ids as $id) {
+                $ticket = Ticket::findorfail($id);
+                $ticket->is_open = 1;
+                $ticket->save();
+            }
+        });
+        return redirect()->back()->with('success', 'Selected Ticket Opened.');
     }
 
     public function delete(DeleteTicketRequest $request)

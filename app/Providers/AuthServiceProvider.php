@@ -454,6 +454,22 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('CREATE_TICKET', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P046', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [3]) && in_array('P066', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [4]) && in_array('P085', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [5]) && in_array('P094', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
         Gate::define('MANAGE_TICKET', function ($user, $ticket_id) {
             $ticket = Ticket::findorfail($ticket_id);
             if($user->id != $ticket->user_id && in_array($user->group_id, [2])) {
@@ -462,8 +478,20 @@ class AuthServiceProvider extends ServiceProvider
                 }
             }
             if($user->id == $ticket->user_id) {
-                return true;
+                if(in_array($user->group_id, [3]) && in_array('P066', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array($user->group_id, [4]) && in_array('P085', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array($user->group_id, [5]) && in_array('P094', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
             }
+            return false;
+        });
+
+        Gate::define('DELETE_TICKET', function ($user) {
             return false;
         });
 
@@ -491,6 +519,10 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('MANAGE_ONLINE_USER', function ($user) {
+            return false;
+        });
+
+        Gate::define('DISCONNECT_ONLINE_USER', function ($user) {
             return false;
         });
 

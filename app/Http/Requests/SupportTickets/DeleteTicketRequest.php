@@ -13,7 +13,7 @@ class DeleteTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->isAdmin()) {
+        if(auth()->user()->can('DELETE_TICKET')) {
             return true;
         }
         return false;
