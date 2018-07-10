@@ -88,9 +88,11 @@ class ServerEditController extends Controller
 
     public function private_userlist(SearchPrivateUserRequest $request, $id = 0)
     {
-        $query = Server::findorfail($id);
+        $server= Server::findorfail($id);
 
-        return datatables()->eloquent($query->privateUsers)
+        $users = User::whereIn('id', json_decode($server->privateUser->pluck('user_id')));
+
+        return datatables()->eloquent($users)
             ->addColumn('check', '<input type="hidden" class="user_id" value="{{ $id }}">')
             ->addColumn('username', function (User $user) {
                 return $user->username;
