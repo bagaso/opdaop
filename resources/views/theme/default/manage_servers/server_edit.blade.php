@@ -31,12 +31,13 @@
 
                     @include('theme.default.layouts.sidebar.manage_servers')
                     <div class="col-md-9">
-                        <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Edit Server</h3>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Add User</h3>
                             </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
+
+                            <div class="panel-body table-responsive">
 
 
                                 @if (session('success'))
@@ -272,11 +273,61 @@
 
                                 </form>
 
-
                             </div>
-                            <!-- /.box-body -->
                         </div>
-                            <!-- /. box -->
+
+                        @if($server->server_access->is_private)
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Add User</h3>
+                                </div>
+
+                                <div class="panel-body">
+
+                                    @if (session('set') == 1 && session('success'))
+                                        <div class="alert alert-success alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <h4><i class="icon fa fa-check"></i> Success!</h4>
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    @if (old('add_user_to_server') != '' && $errors->count())
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                                            Add User Failed.
+                                        </div>
+                                    @endif
+
+                                    <form action="{{ route('account.security.update.service_password') }}" method="post" class="form-horizontal">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="add_user_to_server" value="add_user_to_server">
+
+                                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                                            <label for="username" class="col-sm-3 control-label">Username</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                                                @if ($errors->has('username'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('username') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button type="submit" class="btn btn-danger">Submit</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
                     <!-- /.col -->
 

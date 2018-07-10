@@ -297,11 +297,6 @@ Route::get('/vpn_auth_connect', function (Request $request) {
         $account = User::where('username', $username)->firstorfail();
         $server = Server::where('server_key', $server_key)->firstorfail();
 
-//        if($server->users()->where('username', $account->username)->exists()) {
-//            Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
-//            return 'You have active device on ' . $server->server_name . ' server.';
-//        }
-
         if($account->vpn()->where('server_id', $server->id)->exists()) {
             Log::info('You have active device on ' . $server->server_name . ' server: ' . $account->username);
             return 'You have active device on ' . $server->server_name . ' server.';
@@ -347,12 +342,6 @@ Route::get('/vpn_auth_connect', function (Request $request) {
                 Log::info('Account is in freeze mode: ' . $username);
                 return 'Account is in freeze mode.';
             }
-
-//            if($server->server_access->is_paid && $current->gte($dt)) {
-//                Log::info('Account is already expired: ' . $username);
-//                return 'Account is already expired.';
-//            }
-
 
             if($server->limit_bandwidth && $account->consumable_data <= 0) {
                 Log::info('You used all data allocated: ' . $username);
