@@ -81,7 +81,7 @@ class ServerEditController extends Controller
         $server = Server::findorfail($id);
         $user = User::where('username', $request->username)->get();
 
-        $server->privateusers()->attach($user->id);
+        $server->privateUsers()->attach($user->id);
         return redirect()->back()->with(['success' => 'User Added.', 'set' => 1]);
     }
 }
