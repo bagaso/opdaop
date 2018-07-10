@@ -90,7 +90,7 @@ class ServerEditController extends Controller
     {
         $server= Server::findorfail($id);
 
-        $users = User::whereIn('id', json_decode($server->privateUsers->pluck('user_id')));
+        $users = User::whereIn('id', json_decode($server->privateUsers->pluck('id')));
 
         return datatables()->eloquent($users)
             ->addColumn('check', '<input type="hidden" class="user_id" value="{{ $id }}">')
