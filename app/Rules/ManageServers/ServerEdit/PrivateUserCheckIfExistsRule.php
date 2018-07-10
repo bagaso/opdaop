@@ -31,7 +31,7 @@ class PrivateUserCheckIfExistsRule implements Rule
         $user = User::where('username', $value)->first();
         $server = Server::findorfail($this->server_id);
 
-        if(!$server->privateUsers()->where('user_id')->exists()) {
+        if(!$server->privateUsers()->where('user_id', $user->id)->exists()) {
             return true;
         }
         return false;
