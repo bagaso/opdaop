@@ -34,9 +34,9 @@ class AddPrivateUserRequest extends FormRequest
                 'required',
                 Rule::exists('users'),
                 new PrivateUserCheckIfExistsRule($this->id),
-                new PrivateUserCheckIfActiveRule,
                 new PrivateUserCheckIfSelfAdd,
                 new PrivateUserCheckSubscription,
+                new PrivateUserCheckIfActiveRule,
             ]
         ];
     }
