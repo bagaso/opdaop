@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class MonitorUserOpenvpnJob implements ShouldQueue
@@ -109,7 +110,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                         if(!$user->paidSubscription()) {
                                             $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                             dispatch($job);
-                                        } else if($special_server_sessions >= 1) {
+                                        } else if($special_server_sessions > 1) {
                                             $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                             dispatch($job);
                                         } else if($user->normalSubscription() && $normal_server_sessions > 1) {
