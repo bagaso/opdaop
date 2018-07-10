@@ -94,9 +94,6 @@ class ServerEditController extends Controller
 
         return datatables()->eloquent($users)
             ->addColumn('check', '<input type="hidden" class="user_id" value="{{ $id }}">')
-            ->addColumn('username', function (User $user) {
-                return $user->username;
-            })
             ->rawColumns(['check'])
             ->make(true);
     }
