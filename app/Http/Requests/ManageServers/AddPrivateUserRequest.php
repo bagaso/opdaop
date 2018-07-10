@@ -5,6 +5,7 @@ namespace App\Http\Requests\ManageServers;
 use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfActiveRule;
 use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfExistsRule;
 use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfSelfAdd;
+use App\Rules\ManageServers\ServerEdit\PrivateUserCheckSubscription;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -35,6 +36,7 @@ class AddPrivateUserRequest extends FormRequest
                 new PrivateUserCheckIfExistsRule($this->id),
                 new PrivateUserCheckIfActiveRule,
                 new PrivateUserCheckIfSelfAdd,
+                new PrivateUserCheckSubscription,
             ]
         ];
     }
