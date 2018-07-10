@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ManageServers;
 
 use App\Http\Requests\ManageServers\AddPrivateUserRequest;
+use App\Http\Requests\ManageServers\SearchPrivateUserRequest;
 use App\Http\Requests\ManageServers\ServerEditRequest;
 use App\Server;
 use App\ServerAccess;
@@ -77,6 +78,15 @@ class ServerEditController extends Controller
     }
 
     public function add_user(AddPrivateUserRequest $request, $id = 0)
+    {
+        $server = Server::findorfail($id);
+        $user = User::where('username', $request->username)->first();
+
+        $server->privateUsers()->attach($user->id);
+        return redirect()->back()->with(['success' => 'User Added.', 'set' => 1]);
+    }
+
+    public function private_userlist(SearchPrivateUserRequest $request)
     {
         $server = Server::findorfail($id);
         $user = User::where('username', $request->username)->first();

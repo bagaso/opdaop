@@ -34,7 +34,7 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Add User</h3>
+                                <h3 class="panel-title">Edit Server</h3>
                             </div>
 
                             <div class="panel-body table-responsive">
@@ -280,7 +280,7 @@
                         @if($server->server_access->is_private)
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Add User</h3>
+                                    <h3 class="panel-title">Add Private User</h3>
                                 </div>
 
                                 <div class="panel-body">
@@ -325,6 +325,37 @@
 
                                     </form>
 
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Private User List</h3>
+                                </div>
+                                <div class="panel-body table-responsive">
+                                    <table class="table table-hover" id="servers-table" style="font-size: small">
+                                        <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">Action</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal-remove_user">
+                                                    Remove
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         @endif
