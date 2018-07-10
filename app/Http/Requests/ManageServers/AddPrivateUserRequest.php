@@ -3,6 +3,7 @@
 namespace App\Http\Requests\ManageServers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddPrivateUserRequest extends FormRequest
 {
@@ -24,7 +25,10 @@ class AddPrivateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'username' => [
+                'required',
+                Rule::exists('users'),
+            ]
         ];
     }
 }
