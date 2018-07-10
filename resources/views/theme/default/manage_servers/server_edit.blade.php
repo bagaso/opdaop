@@ -39,22 +39,21 @@
 
                             <div class="panel-body table-responsive">
 
-
-                                @if (session('success'))
+                                @if (session('set') == 0 && session('success'))
                                     <div class="alert alert-success alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         <h4><i class="icon fa fa-check"></i> Success!</h4>
                                         {{ session('success') }}
                                     </div>
                                 @endif
-                                @if (session('error_cloudflare'))
+                                @if (old('update_server') != '' &&  session('error_cloudflare'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         <h4><i class="icon fa fa-ban"></i> Cloudflare Error!</h4>
                                         {{ session('error_cloudflare') }}
                                     </div>
                                 @endif
-                                @if ($errors->count())
+                                @if (old('update_server') != '' &&  $errors->count())
                                     <div class="alert alert-danger alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         <h4><i class="icon fa fa-ban"></i> Error!</h4>
@@ -64,6 +63,8 @@
 
                                 <form action="{{ route('manage_servers.server_edit.update', $server->id) }}" method="post" class="form-horizontal">
                                     {{ csrf_field() }}
+
+                                    <input type="hidden" name="update_server" value="update_server">
 
                                     <div class="form-group{{ $errors->has('server_type') ? ' has-error' : '' }}">
                                         <label for="server_type" class="col-sm-3 control-label">Server Type</label>
@@ -299,7 +300,7 @@
                                         </div>
                                     @endif
 
-                                    <form action="{{ route('account.security.update.service_password') }}" method="post" class="form-horizontal">
+                                    <form action="{{ route('manage_servers.server_edit.add_user', $server->id) }}" method="post" class="form-horizontal">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="add_user_to_server" value="add_user_to_server">
 

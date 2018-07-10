@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\ManageServers;
 
+use App\Http\Requests\ManageServers\AddPrivateUserRequest;
 use App\Http\Requests\ManageServers\ServerEditRequest;
 use App\Server;
 use App\ServerAccess;
 use App\Subscription;
+use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -71,6 +73,15 @@ class ServerEditController extends Controller
             ]
         );
         $server->subscriptions()->sync($request->subscription);
-        return redirect()->back()->with('success', 'Server Updated.');
+        return redirect()->back()->with(['success' => 'Server Updated.', 'set' => 0]);
+    }
+
+    public function add_user(AddPrivateUserRequest $request, $id = 0)
+    {
+        $server = Server::findorfail($id);
+        $user = User::where('username', $request->username);
+
+        $server->privateusers()->attach($user->id);
+        return redirect()->back()->with(['success' => 'User Added.', 'set' => 1]);
     }
 }

@@ -162,6 +162,7 @@ Route::group(['prefix' => 'manage-servers'], function() {
 
     Route::get('/server/{id}', 'ManageServers\ServerEditController@index')->name('manage_servers.server_edit');
     Route::post('/server/{id}', 'ManageServers\ServerEditController@update')->name('manage_servers.server_edit.update');
+    Route::post('/server/{id}/add_user', 'ManageServers\ServerEditController@add_user')->name('manage_servers.server_edit.add_user');
 });
 
 Route::group(['prefix' => 'news-and-updates'], function() {
