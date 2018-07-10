@@ -459,7 +459,7 @@
                         var user_id = $(this).find(".user_id").val();
                         remove_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
                     });
-                    $('<form id="form_remove_user" action="{{ route('manage_servers.server_edit.remove_user') }}" method="post">')
+                    $('<form id="form_remove_user" action="{{ route('manage_servers.server_edit.remove_user', $server->id) }}" method="post">')
                         .append('{{ csrf_field() }}')
                         .append(remove_form_builder)
                         .append('</form>')
