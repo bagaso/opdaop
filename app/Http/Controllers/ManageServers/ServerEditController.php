@@ -9,6 +9,7 @@ use App\Server;
 use App\ServerAccess;
 use App\Subscription;
 use App\User;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -94,7 +95,25 @@ class ServerEditController extends Controller
 
         return datatables()->eloquent($users)
             ->addColumn('check', '<input type="hidden" class="user_id" value="{{ $id }}">')
-            ->rawColumns(['check'])
+            ->addColumn('group', function (User $user) {
+                return '<span class="label label-' . $user->group->class . '">' . $user->group->name . '</span>';
+            })
+            ->addColumn('subscription', function (User $user) {
+                return '<span class="label label-' . $user->subscription->class . '">' . $user->subscription->name . '</span>';
+            })
+            ->editColumn('expired_at', function ($user) {
+                return '<span class="label label-' . $user->expired_at_class . '">' . $user->expired_at . '</span>';
+            })
+            ->filterColumn('expired_at', function ($query, $keyword) {
+                if(str_contains('expired', strtolower($keyword))) {
+                    $query->where('expired_at', '<=', Carbon::now());
+                } else if(str_contains('freezed', strtolower($keyword))) {
+                    $query->where('freeze_mode', 1);
+                } else {
+                    //
+                }
+            })
+            ->rawColumns(['check', 'group', 'subscription', 'expired_at'])
             ->make(true);
     }
 }

@@ -338,6 +338,9 @@
                                         <tr>
                                             <th></th>
                                             <th>Username</th>
+                                            <th>Group</th>
+                                            <th>Subscription</th>
+                                            <th>Duration</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -415,6 +418,9 @@
                     columns: [
                         { data: 'check', name: 'check' },
                         { data: 'username', name: 'username' },
+                        { data: 'group', name: 'group.name' },
+                        { data: 'subscription', name: 'subscription.name' },
+                        { data: 'expired_at', name: 'expired_at' },
                     ],
                     select: {
                         style:    'multi',
