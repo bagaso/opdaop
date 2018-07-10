@@ -90,7 +90,7 @@ class ServerEditController extends Controller
     {
         $query = Server::findorfail;
 
-        return datatables()->eloquent($query->privateUsers())
+        return datatables()->eloquent($query->privateUsers)
             ->addColumn('check', '<input type="hidden" class="user_id" value="{{ $id }}">')
             ->addColumn('username', function (User $user) {
                 return $user->username;
