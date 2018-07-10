@@ -41,6 +41,6 @@ class PrivateUserCheckIfSelfAdd implements Rule
      */
     public function message()
     {
-        return 'Invalid.';
+        return 'The selected username is invalid.';
     }
 }
