@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ManageServers;
 
+use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfExistsRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,6 +29,7 @@ class AddPrivateUserRequest extends FormRequest
             'username' => [
                 'required',
                 Rule::exists('users'),
+                new PrivateUserCheckIfExistsRule($this->id),
             ]
         ];
     }
