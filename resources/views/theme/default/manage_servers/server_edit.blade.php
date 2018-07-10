@@ -373,6 +373,28 @@
         </section>
         <!-- /.content -->
 
+        <div class="modal modal-danger fade" id="modal-remove_user">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Remove Selected User?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline" id="remove_user">Remove</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal remove_user -->
+
     </div>
     <!-- /.content-wrapper -->
 @endsection
@@ -426,6 +448,22 @@
                         style:    'multi',
                         selector: 'td:first-child'
                     }
+                });
+
+                $("#remove_user").click(function () {
+                    var rowcollection =  oTable.$("tr.selected");
+                    //var user_ids = [];
+                    var remove_form_builder  = '';
+                    rowcollection.each(function(index,elem){
+                        //Do something with 'checkbox_value'
+                        var user_id = $(this).find(".user_id").val();
+                        remove_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
+                    });
+                    $('<form id="form_remove_user" action="{{ route('manage_servers.server_edit.remove_user') }}" method="post">')
+                        .append('{{ csrf_field() }}')
+                        .append(remove_form_builder)
+                        .append('</form>')
+                        .appendTo($(document.body)).submit();
                 });
             })
         </script>

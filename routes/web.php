@@ -163,6 +163,7 @@ Route::group(['prefix' => 'manage-servers'], function() {
     Route::get('/server/{id}', 'ManageServers\ServerEditController@index')->name('manage_servers.server_edit');
     Route::post('/server/{id}', 'ManageServers\ServerEditController@update')->name('manage_servers.server_edit.update');
     Route::post('/server/{id}/add_user', 'ManageServers\ServerEditController@add_user')->name('manage_servers.server_edit.add_user');
+    Route::post('/server/{id}/remove_user', 'ManageServers\ServerEditController@remove_user')->name('manage_servers.server_edit.remove_user');
     Route::post('/server/{id}/private_users', 'ManageServers\ServerEditController@private_userlist')->name('manage_servers.server_edit.private_users');
 });
 

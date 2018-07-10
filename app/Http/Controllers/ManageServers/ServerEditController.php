@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ManageServers;
 
 use App\Http\Requests\ManageServers\AddPrivateUserRequest;
+use App\Http\Requests\ManageServers\RemovePrivateUserRequest;
 use App\Http\Requests\ManageServers\SearchPrivateUserRequest;
 use App\Http\Requests\ManageServers\ServerEditRequest;
 use App\Server;
@@ -85,6 +86,13 @@ class ServerEditController extends Controller
 
         $server->privateUsers()->attach($user->id);
         return redirect()->back()->with(['success' => 'User Added.', 'set' => 1]);
+    }
+
+    public function remove_user(RemovePrivateUserRequest $request, $id = 0)
+    {
+        $server = Server::findorfail($id);
+        $server->privateUsers()->detach($request->user_ids);
+        return redirect()->back()->with(['success' => 'Selected User Removed.', 'set' => 2]);
     }
 
     public function private_userlist(SearchPrivateUserRequest $request, $id = 0)
