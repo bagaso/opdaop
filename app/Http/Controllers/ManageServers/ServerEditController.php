@@ -86,12 +86,16 @@ class ServerEditController extends Controller
         return redirect()->back()->with(['success' => 'User Added.', 'set' => 1]);
     }
 
-    public function private_userlist(SearchPrivateUserRequest $request)
+    public function private_userlist(SearchPrivateUserRequest $request, $id = 0)
     {
-        $server = Server::findorfail($id);
-        $user = User::where('username', $request->username)->first();
+        $query = Server::findorfail($id)->privateUsers();
 
-        $server->privateUsers()->attach($user->id);
-        return redirect()->back()->with(['success' => 'User Added.', 'set' => 1]);
+        return datatables()->eloquent($query)
+            ->addColumn('check', '<input type="hidden" class="user_id" value="{{ $id }}">')
+            ->addColumn('username', function (Server $server) {
+                return $server->username;
+            })
+            ->rawColumns(['check'])
+            ->make(true);
     }
 }

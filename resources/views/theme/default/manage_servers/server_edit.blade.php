@@ -333,9 +333,10 @@
                                     <h3 class="panel-title">Private User List</h3>
                                 </div>
                                 <div class="panel-body table-responsive">
-                                    <table class="table table-hover" id="servers-table" style="font-size: small">
+                                    <table class="table table-hover" id="private_users_table" style="font-size: small">
                                         <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Username</th>
                                         </tr>
                                         </thead>
@@ -377,15 +378,49 @@
     @push('styles')
         <!-- Select2 -->
         <link rel="stylesheet" href="/theme/default/bower_components/select2/dist/css/select2.min.css">
+        <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+        <link href="//cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css" rel="stylesheet">
     @endpush
 
     @push('scripts')
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js"></script>
+        <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
         <!-- Select2 -->
         <script src="/theme/default/bower_components/select2/dist/js/select2.full.min.js"></script>
         <script>
             $(function () {
                 //Initialize Select2 Elements
-                $('.select2').select2()
+                $('.select2').select2();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var oTable =  $('#private_users_table').DataTable({
+                    order: [ 1, 'desc' ],
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('manage_servers.server_edit.private_users', $server->id) }}',
+                        method: 'POST'
+                    },
+                    columnDefs: [ {
+                        searchable: false,
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets:   0
+                    } ],
+                    columns: [
+                        { data: 'check', name: 'check' },
+                        { data: 'username', name: 'username' },
+                    ],
+                    select: {
+                        style:    'multi',
+                        selector: 'td:first-child'
+                    }
+                });
             })
         </script>
     @endpush
