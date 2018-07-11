@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'id', 'password', 'remember_token', 'group_id', 'subscription_id', 'status_id', 'parent_id', 'freeze_mode', 'service_password', 'password_openvpn', 'password_ssh', 'value',
+        'password', 'remember_token', 'group_id', 'subscription_id', 'status_id', 'parent_id', 'freeze_mode', 'service_password', 'password_openvpn', 'password_ssh', 'value',
     ];
 
     protected $dates = [
