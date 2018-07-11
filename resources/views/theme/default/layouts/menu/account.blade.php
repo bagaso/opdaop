@@ -2,6 +2,7 @@
     <li class="{{ request()->getUri() === route('account.profile') ? 'active' : '' }}"><a href="{{ route('account.profile') }}">Account</a></li>
     <li class="{{ request()->getUri() === route('account.security') ? 'active' : '' }}"><a href="{{ route('account.security') }}">Security</a></li>
     <li class="{{ request()->getUri() === route('account.duration')  ? 'active' : '' }}"><a href="{{ route('account.duration') }}">Reload</a></li>
+    <li class="{{ request()->getUri() === route('account.vouchers')  ? 'active' : '' }}"><a href="{{ route('account.vouchers') }}">Voucher</a></li>
     @if(auth()->user()->isAdmin() || in_array(auth()->user()->group->id, [2,3,4]))
     <li class="{{ request()->getUri() === route('account.transfer_credits') ? 'active' : '' }}"><a href="{{ route('account.transfer_credits') }}">Quick Transfer</a></li>
     @endif
