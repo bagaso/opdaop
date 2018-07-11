@@ -518,6 +518,13 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('ACCESS_FULL_CREDIT_LOGS', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P040', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
         Gate::define('MANAGE_ONLINE_USER', function ($user) {
             return false;
         });

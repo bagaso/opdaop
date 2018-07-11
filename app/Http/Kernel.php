@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'access_page.account' => \App\Http\Middleware\Account\AccessPageMiddleware::class,
         'access_page.authorized_reseller' => \App\Http\Middleware\AuthorizedResellers\AccessPageMiddleware::class,
         'access_page.seller_monitor' => \App\Http\Middleware\SellerSummary\AccessPageMiddleware::class,
+        'access_page.full_credit_logs' => \App\Http\Middleware\Logs\AccessPageMiddleware::class,
     ];
 }

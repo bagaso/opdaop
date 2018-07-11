@@ -15,7 +15,7 @@ class SearchResellerRequest extends FormRequest
     public function authorize()
     {
         if(Auth::check()) {
-            if(app('settings')->enable_authorized_reseller || auth()->user()->isAdmin()) {
+            if(auth()->user()->isAdmin() || app('settings')->enable_authorized_reseller) {
                 return true;
             }
         } else {

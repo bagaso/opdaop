@@ -16,7 +16,7 @@ class FullCreditLogController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware();
+        $this->middleware(['auth', 'access_page.full_credit_logs']);
     }
 
     /**
@@ -35,7 +35,7 @@ class FullCreditLogController extends Controller
         return datatables()->eloquent($query)
             ->addColumn('check', '<input type="hidden" class="log_id" value="{{ $id }}">')
             ->addColumn('user_from', function (AdminCreditLog $log) {
-                return $log->user_from->username;
+                return (!auth()->user()->isAdmin() && $log->user_from->isAdmin()) ? '<span class="label label-' . $log->user_from->group->class . '">' . $log->user_from->group->name . '</span>' : $log->user_from->username;
             })
             ->addColumn('user_to', function (AdminCreditLog $log) {
                 return $log->user_to->username;

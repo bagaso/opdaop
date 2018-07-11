@@ -28,14 +28,14 @@ class AdminCreditLog extends Model
 
     public function user_from()
     {
-        return $this->belongsTo('App\User', 'user_id_from')->withDefault([
+        return $this->belongsTo('App\User', 'user_id_from')->select('id', 'username', 'group_id')->withDefault([
             'username' => '###',
         ]);
     }
 
     public function user_to()
     {
-        return $this->belongsTo('App\User', 'user_id_to')->withDefault([
+        return $this->belongsTo('App\User', 'user_id_to')->select('id', 'username', 'group_id')->withDefault([
             'username' => '###',
         ]);
     }

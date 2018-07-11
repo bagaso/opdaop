@@ -13,7 +13,10 @@ class SearchCreditLogRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->user()->can('ACCESS_FULL_CREDIT_LOGS')) {
+            return true;
+        }
+        return false;
     }
 
     /**

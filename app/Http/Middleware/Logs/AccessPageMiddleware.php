@@ -15,6 +15,10 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(auth()->user()->can('ACCESS_FULL_CREDIT_LOGS'))
+        {
+            return $next($request);
+        }
+        return redirect(route('account.profile'));
     }
 }
