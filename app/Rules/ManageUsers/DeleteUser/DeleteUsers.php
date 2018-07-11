@@ -4,7 +4,7 @@ namespace App\Rules\ManageUsers\DeleteUser;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class UserIdRule implements Rule
+class DeleteUsers implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,7 +26,9 @@ class UserIdRule implements Rule
     public function passes($attribute, $value)
     {
         foreach($attribute as $user_id) {
-            auth()->user()->can('DELETE_USER', $user_id);
+            if(auth()->user()->cannot('DELETE_USER', $user_id)) {
+                return false;
+            }
         }
         return true;
     }
@@ -38,6 +40,6 @@ class UserIdRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'The user can\'t be deleted.';
     }
 }

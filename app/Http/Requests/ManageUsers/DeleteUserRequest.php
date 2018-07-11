@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ManageUsers;
 
+use App\Rules\ManageUsers\DeleteUser\DeleteUsers;
 use App\Rules\ManageUsers\DeleteUser\UserIdRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -34,6 +35,7 @@ class DeleteUserRequest extends FormRequest
                 'bail',
                 'required',
                 'array',
+                new DeleteUsers
             ],
         ];
     }
