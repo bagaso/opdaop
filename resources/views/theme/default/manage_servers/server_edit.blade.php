@@ -334,7 +334,7 @@
                                 </div>
                                 <div class="panel-body table-responsive">
 
-                                    @if (session('set') == 1 && session('success'))
+                                    @if (session('set') == 2 && session('success'))
                                         <div class="alert alert-success alert-dismissible">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                             <h4><i class="icon fa fa-check"></i> Success!</h4>
