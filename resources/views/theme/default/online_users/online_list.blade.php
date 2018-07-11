@@ -80,7 +80,7 @@
                 @endif
                 @endauth
                 @guest
-                        @if(!app('settings')->enable_online_users && !app('settings')->public_online_users)
+                        @if(!app('settings')->enable_online_users || !app('settings')->public_online_users)
                             <div class="col-md-12">
                                 <div class="alert alert-warning">
                                     <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
