@@ -57,14 +57,13 @@ class Ticket extends Model
     {
         return $query->whereHas('user', function($query) {
             if(!auth()->user()->isAdmin()) {
-                $query->where('group_id', '>', auth()->user()->group_id)
-                ->orWhere('id', '=', auth()->user()->id);
+                $query->where('group_id', '>', auth()->user()->group_id);
             }
         })->where(function ($query) {
             if(auth()->user()->cannot('MANAGE_SUPPORT')) {
                 $query->where('user_id', auth()->user()->id);
             }
-        });
+        })->orWhere('user_id', '=', auth()->user()->id);
     }
 
     public function scopeOpenTickets($query)
