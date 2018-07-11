@@ -333,6 +333,22 @@
                                     <h3 class="panel-title">Private User List</h3>
                                 </div>
                                 <div class="panel-body table-responsive">
+
+                                    @if (session('set') == 1 && session('success'))
+                                        <div class="alert alert-success alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <h4><i class="icon fa fa-check"></i> Success!</h4>
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    @if (old('remove_user_to_server') != '' && $errors->count())
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                                            Remove User Failed.
+                                        </div>
+                                    @endif
+
                                     <table class="table table-hover" id="private_users_table" style="font-size: small">
                                         <thead>
                                         <tr>
@@ -461,6 +477,7 @@
                     });
                     $('<form id="form_remove_user" action="{{ route('manage_servers.server_edit.remove_user', $server->id) }}" method="post">')
                         .append('{{ csrf_field() }}')
+                        .append('<input type="hidden" name="remove_user_to_server" value="remove_user_to_server">')
                         .append(remove_form_builder)
                         .append('</form>')
                         .appendTo($(document.body)).submit();
