@@ -26,6 +26,15 @@ class AdminCreditLog extends Model
         });
     }
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'user_id_from', 'user_id_to',
+    ];
+
     public function user_from()
     {
         return $this->belongsTo('App\User', 'user_id_from')->select('id', 'username', 'group_id')->withDefault([
@@ -39,9 +48,5 @@ class AdminCreditLog extends Model
             'username' => '###',
         ]);
     }
-
-    protected $hidden = [
-        'id', 'user_id_from', 'user_id_to',
-    ];
 
 }
