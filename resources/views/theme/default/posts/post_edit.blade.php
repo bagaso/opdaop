@@ -19,14 +19,7 @@
         <section class="content">
 
             <div class="row">
-                @cannot('MANAGE_POST', $post->id)
-                    <div class="col-md-12">
-                        <div class="alert alert-warning">
-                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
-                            No Permission Edit Post.
-                        </div>
-                    </div>
-                @endcannot
+
                 @can('MANAGE_POST', $post->id)
                     @include('theme.default.layouts.sidebar.posts')
                     <div class="col-md-9">
@@ -101,6 +94,15 @@
                     <!-- /.col -->
 
                 @endcan
+
+                @cannot('MANAGE_POST', $post->id)
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
+                            No Permission Edit Post.
+                        </div>
+                    </div>
+                @endcannot
 
             </div>
             <!-- /.row -->

@@ -19,14 +19,6 @@
         <section class="content">
 
             <div class="row">
-                @cannot('MANAGER_POST')
-                    <div class="col-md-12">
-                        <div class="alert alert-warning">
-                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
-                            No Permission Create Post.
-                        </div>
-                    </div>
-                @endcannot
                 @can('MANAGER_POST')
 
                         <div class="col-md-12">
@@ -101,6 +93,15 @@
                         <!-- /.col -->
 
                 @endcan
+
+                @cannot('MANAGER_POST')
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
+                            No Permission Create Post.
+                        </div>
+                    </div>
+                @endcannot
 
             </div>
             <!-- /.row -->
