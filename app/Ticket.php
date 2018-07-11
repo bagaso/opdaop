@@ -18,7 +18,7 @@ class Ticket extends Model
 
     public function user_by()
     {
-        return $this->belongsTo('App\User', 'user_id')->withDefault([
+        return $this->belongsTo('App\User')->withDefault([
             'username' => '###',
         ]);
     }
@@ -58,13 +58,12 @@ class Ticket extends Model
         return $query->where(function ($query) {
             if(auth()->user()->cannot('MANAGE_SUPPORT')) {
                 $query->where('user_id', auth()->user()->id)
-                ->where(function ($q) {
-                    if(auth()->user()->group_id > $q->user_by->group_id) {
-                        return true;
-                    }
-                    return false;
-                });
             }
+        })->where(function ($query) {
+            if(auth()->user()->group_id > $this->user_by->group_id) {
+                return true;
+            }
+            return false;
         });
     }
 
