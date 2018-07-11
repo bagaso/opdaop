@@ -52,11 +52,6 @@ class Ticket extends Model
             if(auth()->user()->cannot('MANAGE_SUPPORT')) {
                 $query->where('user_id', auth()->user()->id);
             }
-        })->where(function ($query) {
-            if(auth()->user()->group_id < $this->ticketOwner->user->group_id) {
-                return true;
-            }
-            return false;
         });
     }
 
