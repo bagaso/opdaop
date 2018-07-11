@@ -113,7 +113,7 @@ class ListController extends Controller
                 $ticket->save();
             }
         });
-        return redirect()->back()->with('success', 'Selected Ticket Locked.');
+        return redirect()->back()->with('success', 'Selected Ticket Unlocked.');
     }
 
     public function multi_open(OpenMultiTicketRequest $request)

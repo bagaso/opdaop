@@ -13,7 +13,10 @@ class UnlockMultiTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->user()->can('UNLOCK_TICKET')) {
+            return true;
+        }
+        return false;
     }
 
     /**
