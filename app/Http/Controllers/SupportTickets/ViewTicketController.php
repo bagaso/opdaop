@@ -20,7 +20,7 @@ class ViewTicketController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'access_page.support_tickets']);
+        $this->middleware(['auth', 'access_page.support_tickets:view']);
     }
 
     /**

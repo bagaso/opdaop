@@ -13,9 +13,14 @@ class AccessPageMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $page = '')
     {
         if(auth()->user()->isActive()) {
+            if($page = 'view') {
+                if(auth()->user()->can('MANAGE_TICKET', $request->id)) {
+                    return redirect(route('account.profile'));
+                }
+            }
             if(auth()->user()->isAdmin()) {
                 return $next($request);
             }
