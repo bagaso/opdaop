@@ -57,7 +57,8 @@ class Ticket extends Model
     {
         return $query->whereHas('user', function($query) {
             if(!auth()->user()->isAdmin()) {
-                $query->where('group_id', '>', auth()->user()->group_id);
+                $query->where('group_id', '>', auth()->user()->group_id)
+                ->orWhere('user_id', '=', auth()->user()->id);
             }
         })->where(function ($query) {
             if(auth()->user()->cannot('MANAGE_SUPPORT')) {
