@@ -17,19 +17,17 @@ class AccessPageMiddleware
     {
         if(!auth()->user()->isAdmin())
         {
-            if(auth()->user()->cannot('MANAGER_USER')) {
-                if($page == 'generate') {
-                    if(auth()->user()->cannot('MANAGE_VOUCHER')) {
-                        return redirect(route('account.profile'));
-                    }
+            if($page == 'generate') {
+                if(auth()->user()->can('MANAGE_VOUCHER')) {
+                    return $next($request);
                 }
             }
-//            if($page == 'apply') {
-//                if(auth()->user()->cannot('APPLY_VOUCHER_TO_ACCOUNT')) {
-//                    return redirect(route('account.profile'));
-//                }
-//            }
+            if($page == 'apply') {
+                if(auth()->user()->can('APPLY_VOUCHER_TO_ACCOUNT')) {
+                    return $next($request);
+                }
+            }
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }

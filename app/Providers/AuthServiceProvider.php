@@ -406,14 +406,16 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('MANAGE_VOUCHER', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P042', json_decode($user->permissions->pluck('code')))) {
-                return true;
-            }
-            if(in_array($user->group_id, [3]) && in_array('P063', json_decode($user->permissions->pluck('code')))) {
-                return true;
-            }
-            if(in_array($user->group_id, [4]) && in_array('P082', json_decode($user->permissions->pluck('code')))) {
-                return true;
+            if($user->can('MANAGER_USER')) {
+                if(in_array($user->group_id, [2]) && in_array('P042', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array($user->group_id, [3]) && in_array('P063', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array($user->group_id, [4]) && in_array('P082', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
             }
             return false;
         });

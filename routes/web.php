@@ -57,6 +57,10 @@ Route::group(['prefix' => 'account'], function() {
     Route::get('/transfer-credits', 'Account\TransferCreditController@index')->name('account.transfer_credits');
     Route::post('/transfer-credits', 'Account\TransferCreditController@update')->name('account.transfer_credits.update');
 
+    Route::get('/apply-voucher', 'Account\VouchersController@index')->name('account.vouchers');
+    Route::post('/apply-voucher', 'Account\VouchersController@apply')->name('account.vouchers.apply');
+    Route::post('/applied-voucher-raw-list', 'Account\VouchersController@voucher_list')->name('account.vouchers.applied_list');
+
     Route::get('/vacation-mode', 'Account\VacationModeController@index')->name('account.vacation');
     Route::post('/vacation-mode-freeze-enable', 'Account\VacationModeController@FreezeEnable')->name('account.vacation.enable');
     Route::post('/vacation-mode-freeze-disable', 'Account\VacationModeController@FreezeDisable')->name('account.vacation.disable');
@@ -134,10 +138,6 @@ Route::group(['prefix' => 'vouchers'], function() {
     Route::get('/', 'Vouchers\GenerateCodeController@index')->name('vouchers');
     Route::post('/', 'Vouchers\GenerateCodeController@generate')->name('vouchers.generate');
     Route::post('/raw-vouchers', 'Vouchers\GenerateCodeController@voucher_list')->name('vouchers.generate.list');
-
-    Route::get('/apply', 'Vouchers\ApplyVoucherController@index')->name('vouchers.apply');
-    Route::post('/apply', 'Vouchers\ApplyVoucherController@update')->name('vouchers.apply.do_apply');
-    Route::post('/raw-vouchers-applied', 'Vouchers\ApplyVoucherController@voucher_list')->name('vouchers.apply.list');
 });
 
 Route::group(['prefix' => 'json-file'], function() {

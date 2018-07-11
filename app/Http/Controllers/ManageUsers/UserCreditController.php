@@ -107,7 +107,7 @@ class UserCreditController extends Controller
                     'credit_after_to' => $request->top_up ? $user->credits : $user->credits + $request->credits,
                     'duration' => $request->top_up ? $duration : '',
                     'duration_before' => $old_expired_at,
-                    'duration_after' => $date_now->lt(Carbon::parse($old_expired_at)) ? Carbon::parse($old_expired_at)->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)) : $date_now->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)),
+                    'duration_after' => $date_now->lt(Carbon::parse($old_expired_at)) ? Carbon::parse($old_expired_at)->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)) : $date_now->copy()->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
                 ],
