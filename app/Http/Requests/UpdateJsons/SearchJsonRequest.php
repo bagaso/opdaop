@@ -13,7 +13,10 @@ class SearchJsonRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->user()->can('MANAGE_UPDATE_JSON')) {
+            return true;
+        }
+        return false;
     }
 
     /**

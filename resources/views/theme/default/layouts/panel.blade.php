@@ -382,7 +382,9 @@
                 @can('MANAGE_SERVER')
                 <li><a href="{{ route('manage_servers') }}"><i class="fa fa-book"></i> <span>Servers</span></a></li>
                 @endcan
+                @can('MANAGE_UPDATE_JSON')
                 <li><a href="{{ route('json') }}"><i class="fa fa-book"></i> <span>Json File Update</span></a></li>
+                @endcan
                 @can('ACCESS_FULL_CREDIT_LOGS')
                 <li><a href="{{ route('logs') }}"><i class="fa fa-book"></i> <span>Logs</span></a></li>
                 @endcan

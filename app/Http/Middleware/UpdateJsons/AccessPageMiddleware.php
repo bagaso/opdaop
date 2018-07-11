@@ -14,18 +14,13 @@ class AccessPageMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $page = '')
+    public function handle($request, Closure $next)
     {
-        if(!auth()->user()->isAdmin())
-        {
-            if(!in_array(auth()->user()->group->id, [2])) {
-                return redirect(route('account.profile'));
+        if(auth()->user()->isActive()) {
+            if(in_array(auth()->user()->group->id, [2])) {
+                return $next($request);
             }
-//            $update_json = UpdateJson::findorfail($request->id);
-//            if(!$update_json->is_enable) {
-//                return redirect(route('account.profile'));
-//            }
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }

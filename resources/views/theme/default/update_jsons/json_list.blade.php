@@ -29,29 +29,24 @@
                         @endif
                     <div class="panel panel-default">
                         <div class="panel-body table-responsive">
-                            @auth
-                                @if(auth()->user()->isAdmin())
-                                    <a href="{{ route('json.create') }}" class="btn btn-primary margin-bottom">Create Json</a>
-                                @endif
-                            @endauth
-                            <table class="table table-bordered table-hover" id="posts-table" style="font-size: small">
+                            @if(auth()->user()->isAdmin())
+                            <a href="{{ route('json.create') }}" class="btn btn-primary margin-bottom">Create Json</a>
+                            @endif
+                            <table class="table table-bordered table-hover" id="json_file-table" style="font-size: small">
                                 <thead>
-                                <tr>
-                                    @auth
+                                    <tr>
                                         @if(auth()->user()->isAdmin())
-                                            <th></th>
+                                        <th></th>
                                         @endif
-                                    @endauth
-                                    <th>Name</th>
-                                    <th>Slug Url</th>
-                                    <th>Version</th>
-                                    <th>Last Update</th>
-                                    <th>Created At</th>
-                                </tr>
+                                        <th>Name</th>
+                                        <th>Slug Url</th>
+                                        <th>Version</th>
+                                        <th>Last Update</th>
+                                        <th>Created At</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
-                        @auth
                             @if(auth()->user()->isAdmin())
                                 <div class="panel-footer">
                                     <div class="btn-group">
@@ -62,19 +57,14 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="#" data-toggle="modal" data-target="#modal-delete_post">
+                                                <a href="#" data-toggle="modal" data-target="#modal-delete_json">
                                                     Delete
                                                 </a>
                                             </li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             @endif
-                        @endauth
                     </div>
                     @endcan
                     @cannot('MANAGE_UPDATE_JSON')
@@ -91,15 +81,14 @@
         </section>
         <!-- /.content -->
 
-        @auth
             @if(auth()->user()->isAdmin())
-                <div class="modal modal-danger fade" id="modal-delete_post">
+                <div class="modal modal-danger fade" id="modal-delete_json">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Delete Confirmation</h4>
+                                <h4 class="modal-title">Confirmation</h4>
                             </div>
                             <div class="modal-body">
                                 <p>Delete Selected Json File?</p>
@@ -113,9 +102,8 @@
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal remove_reseller -->
+                <!-- /.modal delete_json -->
             @endif
-        @endauth
 
     </div>
     <!-- /.content-wrapper -->
@@ -123,13 +111,17 @@
 
 @push('styles')
     <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    @if(auth()->user()->isAdmin())
     <link href="//cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css" rel="stylesheet">
+    @endif
 @endpush
 
 @push('scripts')
     <!-- DataTables -->
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    @if(auth()->user()->isAdmin())
     <script src="//cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js"></script>
+    @endif
     <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
     <script>
         $(function () {
@@ -138,15 +130,14 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            var oTable = $('#posts-table').DataTable({
-                order: [ 4, 'desc' ],
+            var oTable = $('#json_file-table').DataTable({
+                order: [ {{ auth()->user()->isAdmin() ? 5 : 4 }}, 'desc' ],
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: '{{ route('json.list') }}',
                     method: 'POST'
                 },
-                @auth
                 @if(auth()->user()->isAdmin())
                 columnDefs: [ {
                     searchable: false,
@@ -155,29 +146,23 @@
                     targets:   0
                 } ],
                 @endif
-                @endauth
                 columns: [
-                    @auth
                     @if(auth()->user()->isAdmin())
                     { data: 'check', name: 'check' },
                     @endif
-                    @endauth
                     { data: 'name', name: 'name' },
                     { data: 'link', name: 'link' },
                     { data: 'version', name: 'version' },
                     { data: 'updated_at', name: 'updated_at' },
                     { data: 'created_at', name: 'created_at' }
                 ],
-                @auth
                 @if(auth()->user()->isAdmin())
                 select: {
                     style:    'multi',
                     selector: 'td:first-child'
                 }
                 @endif
-                @endauth
             });
-            @auth
             @if(auth()->user()->isAdmin())
             $("#delete_json").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
@@ -195,7 +180,6 @@
                     .appendTo($(document.body)).submit();
             });
             @endif
-            @endauth
         });
     </script>
 @endpush
