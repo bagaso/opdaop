@@ -60,7 +60,7 @@ class Ticket extends Model
                 $query->where('user_id', auth()->user()->id);
             }
         })->where(function ($query) {
-            if(auth()->user()->group_id > $query->user_by->group_id) {
+            if(auth()->user()->group_id > $this->user_by->group_id) {
                 return true;
             }
             return false;
