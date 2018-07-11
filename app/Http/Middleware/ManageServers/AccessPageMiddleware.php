@@ -15,10 +15,12 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->isAdmin())
-        {
-            if(!in_array(auth()->user()->group_id, [2])) {
-                return redirect(route('account.profile'));
+        if(auth()->user()->isActive()) {
+            if(auth()->user()->isAdmin()) {
+                return $next($request);
+            }
+            if(in_array(auth()->user()->group->id, [2])) {
+                return $next($request);
             }
         }
         return $next($request);

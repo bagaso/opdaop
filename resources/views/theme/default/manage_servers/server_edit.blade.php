@@ -19,14 +19,6 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                @cannot('MANAGE_SERVER')
-                    <div class="col-md-12">
-                        <div class="alert alert-warning">
-                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
-                            No Permission to Manage Server.
-                        </div>
-                    </div>
-                @endcannot
                 @can('MANAGE_SERVER')
 
                     @include('theme.default.layouts.sidebar.manage_servers')
@@ -384,6 +376,14 @@
                     <!-- /.col -->
 
                 @endcan
+                @cannot('MANAGE_SERVER')
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
+                            No Permission to Manage Server.
+                        </div>
+                    </div>
+                @endcannot
             </div>
             <!-- /.row -->
         </section>

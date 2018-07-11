@@ -43,7 +43,7 @@
                     @endcan
                     @cannot('ACCESS_FULL_CREDIT_LOGS')
                         <div class="alert alert-warning alert-dismissible">
-                            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                            <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                             No Permission to Access Full Credit Logs.
                         </div>
                     @endcannot

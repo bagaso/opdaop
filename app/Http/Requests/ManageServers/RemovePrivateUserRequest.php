@@ -13,7 +13,10 @@ class RemovePrivateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->user()->can('MANAGE_SERVER')) {
+            return true;
+        }
+        return false;
     }
 
     /**

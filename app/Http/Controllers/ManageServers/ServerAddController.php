@@ -50,7 +50,6 @@ class ServerAddController extends Controller
             return  redirect()->back()->with('error_cloudflare', 'Cloudflare: ' . $e->getMessage())->withInput();
         }
 
-
         $server = New Server();
         $server->cf_id = $cloudflare->result->id;
         $server->server_type = strtoupper($request->server_type);

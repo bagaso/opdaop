@@ -438,6 +438,17 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('PRIVATE_SERVER_USER_ADD_REMOVE', function ($user, $id) {
+            $data = User::findorfail($id);
+            if($data->isDownline() && in_array('P035', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(!$data->isDownline() && in_array('P036', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
         Gate::define('MANAGER_POST', function ($user) {
             if(in_array($user->group_id, [2]) && in_array('P045', json_decode($user->permissions->pluck('code')))) {
                 return true;

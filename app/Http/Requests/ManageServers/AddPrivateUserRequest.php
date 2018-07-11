@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ManageServers;
 
+use App\Rules\ManageServers\ServerEdit\PrivateUserCanAddUser;
 use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfActiveRule;
 use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfExistsRule;
 use App\Rules\ManageServers\ServerEdit\PrivateUserCheckIfSelfAdd;
@@ -18,7 +19,10 @@ class AddPrivateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->user()->can('MANAGE_SERVER')) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -37,6 +41,7 @@ class AddPrivateUserRequest extends FormRequest
                 new PrivateUserCheckIfSelfAdd,
                 new PrivateUserCheckSubscription,
                 new PrivateUserCheckIfActiveRule,
+                new PrivateUserCanAddUser,
             ]
         ];
     }
