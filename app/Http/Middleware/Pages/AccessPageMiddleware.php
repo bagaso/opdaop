@@ -15,9 +15,14 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->cannot('MANAGE_PAGES')) {
-            return redirect(route('account.profile'));
+        if(auth()->user()->isActive()) {
+            if(auth()->user()->isAdmin()) {
+                return $next($request);
+            }
+            if(in_array(auth()->user()->group->id, [2])) {
+                return $next($request);
+            }
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }

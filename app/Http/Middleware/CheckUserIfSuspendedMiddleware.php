@@ -16,10 +16,10 @@ class CheckUserIfSuspendedMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check() && in_array(Auth::user()->status_id, [1,2])) {
-            return $next($request);
+        if(Auth::check() && in_array(Auth::user()->status_id, [3])) {
+            Auth::logout();
+            return redirect(route('suspended'));
         }
-        Auth::logout();
-        return redirect(route('suspended'));
+        return $next($request);
     }
 }

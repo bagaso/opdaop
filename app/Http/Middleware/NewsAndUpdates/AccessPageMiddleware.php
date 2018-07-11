@@ -23,6 +23,6 @@ class AccessPageMiddleware
                 return $next($request);
             }
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }
