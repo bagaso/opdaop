@@ -39,12 +39,12 @@ class OnlineListController extends Controller
         return datatables()->eloquent($query)
             ->addColumn('check', '<input type="hidden" class="ids" value="{{ $id }}">')
             ->addColumn('user', function (OnlineUser $online) {
-                return $online->user->username;
+                return (!auth()->user()->isAdmin() && $online->user->isAdmin()) ? '<span class="label label-' . $online->user->group->class . '">' . $online->user->group->name . '</span>' : $online->user->username;
             })
             ->addColumn('server', function (OnlineUser $online) {
                 return $online->server->server_name;
             })
-            ->rawColumns(['check', 'group'])
+            ->rawColumns(['check', 'user'])
             ->make(true);
     }
 
