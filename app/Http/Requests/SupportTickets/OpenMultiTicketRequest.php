@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\SupportTickets;
 
-use App\Rules\SupportTickets\OpenTicketIds;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OpenMultiTicketRequest extends FormRequest
@@ -25,7 +24,11 @@ class OpenMultiTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'ticket_ids' => [
+                'bail',
+                'required',
+                'array',
+            ]
         ];
     }
 }

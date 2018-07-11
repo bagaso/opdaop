@@ -27,7 +27,11 @@ class LockMultiTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'ticket_ids' => [
+                'bail',
+                'required',
+                'array',
+            ]
         ];
     }
 }

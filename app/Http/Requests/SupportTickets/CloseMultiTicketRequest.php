@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\SupportTickets;
 
-use App\Rules\SupportTickets\CloseTicketIds;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CloseMultiTicketRequest extends FormRequest
@@ -25,7 +24,11 @@ class CloseMultiTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'ticket_ids' => [
+                'bail',
+                'required',
+                'array',
+            ]
         ];
     }
 }
