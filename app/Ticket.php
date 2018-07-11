@@ -13,7 +13,7 @@ class Ticket extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\ReplyTicket');
+        return $this->hasMany('App\ReplyTicket')->orderByDesc('created_at');
     }
 
     public function user_by()
@@ -56,8 +56,14 @@ class Ticket extends Model
     public function scopeAllTickets($query)
     {
         return $query->where(function ($query) {
-            if(!auth()->user()->isAdmin() && auth()->user()->cannot('MANAGE_SUPPORT')) {
-                $query->where('user_id', auth()->user()->id);
+            if(auth()->user()->cannot('MANAGE_SUPPORT')) {
+                $query->where('user_id', auth()->user()->id)
+                ->where(function ($q) {
+                    if(auth()->user()->group_id > $q->user_by->group_id) {
+                        return true;
+                    }
+                    return false;
+                });
             }
         });
     }
