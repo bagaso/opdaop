@@ -11,6 +11,10 @@ class Ticket extends Model
         'is_lock' => 'boolean',
     ];
 
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
     public function replies()
     {
         return $this->hasMany('App\ReplyTicket')->orderBy('created_at', 'asc');
