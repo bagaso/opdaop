@@ -490,8 +490,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('MANAGE_TICKET', function ($user, $ticket_id) {
             $ticket = Ticket::findorfail($ticket_id);
             if($user->id != $ticket->user_id && in_array($user->group_id, [2])) {
-                if(in_array('P046', json_decode($user->permissions->pluck('code')))) {
-                    return true;
+                if($ticket->user->group_id > $user->group_id) {
+                    if(in_array('P046', json_decode($user->permissions->pluck('code')))) {
+                        return true;
+                    }
                 }
             }
             if($user->id == $ticket->user_id) {
