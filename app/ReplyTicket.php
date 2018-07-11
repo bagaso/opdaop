@@ -39,6 +39,10 @@ class ReplyTicket extends Model
     {
         return $this->belongsTo('App\User')->withDefault([
             'username' => '###',
+            'group' => [
+                'name' => 'Deleted',
+                'class' => 'warning'
+            ]
         ]);
     }
 }
