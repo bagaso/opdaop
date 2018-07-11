@@ -40,25 +40,8 @@ class AdminCreditLog extends Model
         ]);
     }
 
-//    public function getUserFromAttribute() {
-//        if(!is_null($this->userfrom1)) {
-//            return $this->userfrom1->username;
-//        }
-//        return '###';
-//    }
-//
-//    public function getUserToAttribute() {
-//        if($this->user_id_to == 0) {
-//            return '---';
-//        }
-//        if(!is_null($this->userto1)) {
-//            return $this->userto1->username;
-//        }
-//        return '###';
-//    }
-
     protected $hidden = [
-        'user_id_from', 'user_id_to', //'userfrom1', 'userto1',
+        'id', 'user_id_from', 'user_id_to',
     ];
 
 }

@@ -40,7 +40,7 @@ class FullCreditLogController extends Controller
             ->addColumn('user_to', function (AdminCreditLog $log) {
                 return $log->user_to->username;
             })
-            ->rawColumns(['check'])
+            ->rawColumns(['check', 'user_from', 'user_to'])
             ->make(true);
     }
 }

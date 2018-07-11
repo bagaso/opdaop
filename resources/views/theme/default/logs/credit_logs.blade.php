@@ -21,7 +21,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-body table-responsive">
-                            <table class="table table-hover" id="resellers-table" style="font-size: small">
+                            <table class="table table-hover" id="full_credit_logs-table" style="font-size: small">
                                 <thead>
                                 <tr>
                                     <th>From</th>
@@ -53,13 +53,13 @@
 @endsection
 
 @push('styles')
-    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
     <!-- DataTables -->
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+    <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
     <script>
         $(function () {
             $.ajaxSetup({
@@ -67,7 +67,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            var oTable =  $('#resellers-table').DataTable({
+            var oTable =  $('#full_credit_logs-table').DataTable({
                 order: [ 9, 'desc' ],
                 processing: true,
                 serverSide: true,

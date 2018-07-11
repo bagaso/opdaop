@@ -380,7 +380,9 @@
                 <li><a href="{{ route('manage_servers') }}"><i class="fa fa-book"></i> <span>Servers</span></a></li>
                 @endcan
                 <li><a href="{{ route('json') }}"><i class="fa fa-book"></i> <span>Json File Update</span></a></li>
+                @can('MANAGE_SERVER')
                 <li><a href="{{ route('logs') }}"><i class="fa fa-book"></i> <span>Logs</span></a></li>
+                @endcan
                 <li><a href="{{ route('support_tickets') }}"><i class="fa fa-book"></i> <span>Support Ticket</span></a></li>
                 @endauth
             </ul>
