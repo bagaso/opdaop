@@ -16,7 +16,7 @@ class AddJsonRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->isAdmin()) {
+        if(auth()->user()->can('CREATE_JSON_FILE')) {
             return true;
         }
         return false;

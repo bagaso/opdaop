@@ -20,7 +20,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    @can('MANAGE_UPDATE_JSON')
+                    @can('CREATE_JSON_FILE')
                     <div class="panel panel-default">
                         <div class="panel-body">
 
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     @endcan
-                    @cannot('MANAGE_UPDATE_JSON')
+                    @cannot('CREATE_JSON_FILE')
                         <div class="alert alert-warning alert-dismissible">
                             <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                             No Permission to Create Json File.

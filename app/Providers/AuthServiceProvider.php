@@ -427,6 +427,10 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('CREATE_JSON_FILE', function ($user) {
+            return false;
+        });
+
         Gate::define('MANAGE_SERVER', function ($user) {
             if(in_array($user->group_id, [2]) && in_array('P044', json_decode($user->permissions->pluck('code')))) {
                 return true;
