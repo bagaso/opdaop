@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Http\Requests\Account\AccountLogSearchRequest;
 use App\UserCreditLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,7 +30,7 @@ class CreditLogController extends Controller
         return view('theme.default.account.credit_log');
     }
 
-    public function credit_log_list()
+    public function credit_log_list(AccountLogSearchRequest $request)
     {
         $query = UserCreditLog::with('user_related')
             ->selectRaw('user_credit_logs.id, user_credit_logs.user_id, user_credit_logs.user_id_related, user_credit_logs.type, user_credit_logs.direction, user_credit_logs.credit_used, user_credit_logs.duration, user_credit_logs.credit_before, user_credit_logs.credit_after, user_credit_logs.created_at')

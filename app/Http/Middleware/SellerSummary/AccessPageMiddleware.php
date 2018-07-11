@@ -15,9 +15,9 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->isAdmin()) {
-            return redirect(route('account.profile'));
+        if(auth()->user()->isAdmin()) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }

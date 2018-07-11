@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Http\Requests\Account\AccountLogSearchRequest;
 use App\UserActionLog;
 use App\Http\Controllers\Controller;
 
@@ -27,7 +28,7 @@ class ActionLogController extends Controller
         return view('theme.default.account.action_log');
     }
 
-    public function action_log_list()
+    public function action_log_list(AccountLogSearchRequest $request)
     {
         $query = UserActionLog::with('user_related')
             ->selectRaw('user_action_logs.id, user_action_logs.user_id, user_action_logs.user_id_related, user_action_logs.action, user_action_logs.from_ip, user_action_logs.created_at')
