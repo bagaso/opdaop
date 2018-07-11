@@ -18,8 +18,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                @include('theme.default.layouts.sidebar.vouchers')
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Generate Voucher</h3>

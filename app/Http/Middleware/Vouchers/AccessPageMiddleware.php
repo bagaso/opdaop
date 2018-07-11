@@ -15,11 +15,8 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->isAdmin())
-        {
-            if(auth()->user()->cannot('MANAGE_VOUCHER')) {
-                return $next($request);
-            }
+        if(auth()->user()->can('MANAGE_VOUCHER')) {
+            return $next($request);
         }
         return redirect(route('account.profile'));
     }

@@ -351,6 +351,9 @@
                 @if(app('settings')->enable_authorized_reseller && app('settings')->public_authorized_reseller)
                 <li><a href="{{ route('authorized_reseller') }}"><i class="fa fa-book"></i> <span>Authorized Resellers</span></a></li>
                 @endif
+                @if(app('settings')->enable_online_users && app('settings')->public_online_users)
+                <li><a href="{{ route('online_users') }}"><i class="fa fa-book"></i> <span>Online Users</span></a></li>
+                @endif
                 <li><a href="{{ route('login') }}"><i class="fa fa-book"></i> <span>Login</span></a></li>
                 @endguest
                 @auth
@@ -361,15 +364,15 @@
                 @can('ACCESS_SELLER_MONITOR')
                 <li><a href="{{ route('seller_summary.renew') }}"><i class="fa fa-book"></i> <span>Seller Monitoring</span></a></li>
                 @endcan
-                @if(auth()->user()->group->id != 5)
+                @can('MANAGE_VOUCHER')
                 <li><a href="{{ route('vouchers') }}"><i class="fa fa-book"></i> <span>Vouchers</span></a></li>
-                @else
-                <li><a href="{{ route('vouchers.apply') }}"><i class="fa fa-book"></i> <span>Vouchers</span></a></li>
-                @endif
-                @if(app('settings')->enable_authorized_reseller || auth()->user()->isAdmin())
+                @endcan
+                @if(auth()->user()->isAdmin() || app('settings')->enable_authorized_reseller)
                 <li><a href="{{ route('authorized_reseller') }}"><i class="fa fa-book"></i> <span>Authorized Resellers</span></a></li>
                 @endif
+                @if(auth()->user()->isAdmin() || app('settings')->enable_online_users)
                 <li><a href="{{ route('online_users') }}"><i class="fa fa-book"></i> <span>Online Users</span></a></li>
+                @endif
                 @can('MANAGE_SITE_SETTINGS')
                 <li><a href="{{ route('settings') }}"><i class="fa fa-book"></i> <span>Settings</span></a></li>
                 @endcan
@@ -380,7 +383,7 @@
                 <li><a href="{{ route('manage_servers') }}"><i class="fa fa-book"></i> <span>Servers</span></a></li>
                 @endcan
                 <li><a href="{{ route('json') }}"><i class="fa fa-book"></i> <span>Json File Update</span></a></li>
-                @can('MANAGE_SERVER')
+                @can('ACCESS_FULL_CREDIT_LOGS')
                 <li><a href="{{ route('logs') }}"><i class="fa fa-book"></i> <span>Logs</span></a></li>
                 @endcan
                 <li><a href="{{ route('support_tickets') }}"><i class="fa fa-book"></i> <span>Support Ticket</span></a></li>
