@@ -36,7 +36,7 @@ class ListController extends Controller
     public function ticket_list()
     {
         $query = Ticket::with(['ticketOwner' => function($query) {
-            $query->where('users.group_id', '>', auth()->user()->group_id);
+            $query->where('ticketOwner.user.group_id', '>', auth()->user()->group_id);
         }])->AllTickets()->selectRaw('tickets.id, tickets.subject, tickets.is_open, tickets.is_lock');
         return datatables()->eloquent($query)
             ->addColumn('check', '<input type="hidden" class="ticket_id" value="{{ $id }}">')
