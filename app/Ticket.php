@@ -52,7 +52,9 @@ class Ticket extends Model
 
     public function scopeAllTickets($query)
     {
-        return $query->where(function ($query) {
+        return $query->whereHas('ticketOwner', function($query) {
+            $query->where('user.group_id', '>', auth()->user()->group_id);
+        })->where(function ($query) {
             if(auth()->user()->cannot('MANAGE_SUPPORT')) {
                 $query->where('user_id', auth()->user()->id);
             }
