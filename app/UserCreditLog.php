@@ -32,7 +32,7 @@ class UserCreditLog extends Model
      * @var array
      */
     protected $hidden = [
-        //'id', 'user_id', 'user_id_related',
+        'user_id', 'user_id_related',
     ];
 
     public function user()

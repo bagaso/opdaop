@@ -35,6 +35,15 @@ class UserActionLog extends Model
         'user_id', 'user_id_related', 'action', 'from_ip',
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'user_id', 'user_id_related',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id')->withDefault([
