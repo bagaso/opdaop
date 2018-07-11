@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Vouchers;
 
-use App\Rules\Vouchers\GenerateCode\CreditRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class GenerateCodeRequest extends FormRequest
+class GeneratedVoucherSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,10 +13,7 @@ class GenerateCodeRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('MANAGE_VOUCHER')) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**
@@ -28,14 +24,7 @@ class GenerateCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'credit' => [
-                'bail',
-                'required',
-                'integer',
-                'min:1',
-                'max:5',
-                new CreditRule,
-            ]
+            //
         ];
     }
 }

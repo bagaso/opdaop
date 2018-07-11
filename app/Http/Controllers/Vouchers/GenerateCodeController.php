@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vouchers;
 
 use App\Http\Requests\Vouchers\GenerateCodeRequest;
+use App\Http\Requests\Vouchers\GeneratedVoucherSearchRequest;
 use App\User;
 use App\Voucher;
 use Carbon\Carbon;
@@ -96,7 +97,7 @@ class GenerateCodeController extends Controller
         return redirect()->back()->with(['success' => 'New Code Generated.', 'vouchers' => $v]);
     }
 
-    public function voucher_list()
+    public function voucher_list(GeneratedVoucherSearchrequest $request)
     {
         $query = Voucher::FetchVoucherList(auth()->user())->with('user_from', 'user_to')->select('vouchers.*');
         return datatables()->eloquent($query)

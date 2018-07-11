@@ -19,6 +19,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Generate Voucher</h3>
@@ -95,7 +96,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Voucher List</h3>
+                            <h3 class="panel-title">Generated Voucher List</h3>
                         </div>
                         <div class="panel-body table-responsive">
 

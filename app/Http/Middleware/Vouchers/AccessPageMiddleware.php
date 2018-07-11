@@ -15,8 +15,13 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->can('MANAGE_VOUCHER')) {
-            return $next($request);
+        if(auth()->user()->isActive()) {
+            if(auth()->user()->isAdmin()) {
+                return $next($request);
+            }
+            if(in_array(auth()->user()->group->id, [2,3,4])) {
+                return $next($request);
+            }
         }
         return redirect(route('account.profile'));
     }
