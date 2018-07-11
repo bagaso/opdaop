@@ -13,14 +13,7 @@ class Ticket extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\ReplyTicket')->orderBy('created_at', 'desc');
-    }
-
-    public function user_by()
-    {
-        return $this->belongsTo('App\User')->withDefault([
-            'username' => '###',
-        ]);
+        return $this->hasMany('App\ReplyTicket')->orderBy('created_at', 'asc');
     }
 
     public function ticketOwner() {
@@ -59,6 +52,11 @@ class Ticket extends Model
             if(auth()->user()->cannot('MANAGE_SUPPORT')) {
                 $query->where('user_id', auth()->user()->id);
             }
+        })->where(function ($query) {
+            if(auth()->user()->group_id > $this->ticketOwner->user->group_id) {
+                return true;
+            }
+            return false;
         });
     }
 
