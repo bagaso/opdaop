@@ -13,19 +13,12 @@ class AccessPageMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $page = '')
+    public function handle($request, Closure $next)
     {
         if(!auth()->user()->isAdmin())
         {
-            if($page == 'generate') {
-                if(auth()->user()->can('MANAGE_VOUCHER')) {
-                    return $next($request);
-                }
-            }
-            if($page == 'apply') {
-                if(auth()->user()->can('APPLY_VOUCHER_TO_ACCOUNT')) {
-                    return $next($request);
-                }
+            if(auth()->user()->cannot('MANAGE_VOUCHER')) {
+                return $next($request);
             }
         }
         return redirect(route('account.profile'));

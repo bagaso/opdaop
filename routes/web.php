@@ -134,10 +134,10 @@ Route::group(['prefix' => 'manage-users'], function() {
     Route::post('/user/{id}/permission', 'ManageUsers\UserPermissionController@update')->name('manage_users.user_permission.update');
 });
 
-Route::group(['prefix' => 'vouchers'], function() {
+Route::group(['prefix' => 'generate-voucher'], function() {
     Route::get('/', 'Vouchers\GenerateCodeController@index')->name('vouchers');
     Route::post('/', 'Vouchers\GenerateCodeController@generate')->name('vouchers.generate');
-    Route::post('/raw-vouchers', 'Vouchers\GenerateCodeController@voucher_list')->name('vouchers.generate.list');
+    Route::post('/raw-generated-vouchers', 'Vouchers\GenerateCodeController@voucher_list')->name('vouchers.generate.list');
 });
 
 Route::group(['prefix' => 'json-file'], function() {

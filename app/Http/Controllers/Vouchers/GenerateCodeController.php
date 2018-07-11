@@ -20,7 +20,7 @@ class GenerateCodeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'access_page.vouchers:generate']);
+        $this->middleware(['auth', 'access_page.vouchers']);
     }
 
     /**
