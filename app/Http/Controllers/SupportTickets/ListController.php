@@ -42,7 +42,7 @@ class ListController extends Controller
                 return $ticket->ticketOwner->user->username;
             })
             ->addColumn('latestReply', function (Ticket $ticket) {
-                return $ticket->latestReply->user->username <> '###' ? (!auth()->user()->isAdmin() && $ticket->latestReply->user->isAdmin()  ? $ticket->latestReply->user->fullname : $ticket->latestReply->user->username) : $ticket->latestReply->user->username;
+                return $ticket->latestReply->user->username <> '###' ? (!auth()->user()->isAdmin() && $ticket->latestReply->user->isAdmin() ? '<span class="label label-' . $ticket->latestReply->user->group->class . '">' . $ticket->latestReply->user->group->name . '</span>' : $ticket->latestReply->user->username) : $ticket->latestReply->user->username;
             })
             ->addColumn('status', function (Ticket $ticket) {
                 return '<span class="label label-' . $ticket->status_class . '">' . $ticket->status . '</span>';
@@ -61,7 +61,7 @@ class ListController extends Controller
                     //
                 }
             })
-            ->rawColumns(['check', 'id', 'status'])
+            ->rawColumns(['check', 'id', 'latestReply', 'status'])
             ->make(true);
     }
 
