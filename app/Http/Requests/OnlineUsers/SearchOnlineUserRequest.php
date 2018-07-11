@@ -3,6 +3,7 @@
 namespace App\Http\Requests\OnlineUsers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SearchOnlineUserRequest extends FormRequest
 {
@@ -13,8 +14,14 @@ class SearchOnlineUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(app('settings')->enable_online_users) {
-            return true;
+        if(Auth::check()) {
+            if(app('settings')->enable_online_users) {
+                return true;
+            }
+        } else {
+            if(app('settings')->enable_online_users && app('settings')->public_online_users) {
+                return true;
+            }
         }
         return false;
     }

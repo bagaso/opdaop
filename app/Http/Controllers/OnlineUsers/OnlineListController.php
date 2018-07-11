@@ -18,7 +18,9 @@ class OnlineListController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        if(!app('settings')->public_online_users) {
+            $this->middleware(['auth']);
+        }
     }
 
     /**
