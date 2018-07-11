@@ -39,7 +39,7 @@
                                 @foreach($ticket->replies as $reply)
                                     <div class="direct-chat-msg {{ $ticket->user_id === $reply->user_id  ? 'right' : 'left'}}">
                                         <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name pull-{{ $ticket->user_id === $reply->user_id  ? 'right' : 'left'}}">{{ $reply->user->username }}</span>
+                                            <span class="direct-chat-name pull-{{ $ticket->user_id === $reply->user_id  ? 'right' : 'left'}}">{{ $reply->user->username }} - <small class="label label-{{ $reply->user->username <> '###' ? $reply->user->group->class :  'warning' }}">{{ $reply->user->username <> '###' ? $reply->user->group->name : 'Deleted' }}</small></span>
                                             <span class="direct-chat-timestamp pull-{{ $ticket->user_id === $reply->user_id  ? 'left' : 'right'}}">{{ $reply->created_at }}</span>
                                         </div>
                                         <!-- /.direct-chat-info -->
