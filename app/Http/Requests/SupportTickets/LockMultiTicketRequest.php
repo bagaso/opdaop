@@ -13,7 +13,10 @@ class LockMultiTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->user()->can('LOCK_TICKET')) {
+            return true;
+        }
+        return false;
     }
 
     /**

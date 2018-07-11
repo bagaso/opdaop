@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\SupportTickets;
 
+use App\Rules\SupportTickets\OpenTicketIds;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OpenMultiTicketRequest extends FormRequest
