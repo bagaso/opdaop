@@ -134,6 +134,7 @@
                 </div>
                 <!-- /.nav-tabs-custom -->
 
+                @can('UPDATE_ACCOUNT')
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Upload Photo</h3>
@@ -195,6 +196,7 @@
 
                     </div>
                 </div>
+                @endcan
 
             </div>
             <!-- /.col -->

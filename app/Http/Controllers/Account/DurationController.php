@@ -89,7 +89,7 @@ class DurationController extends Controller
                     'credit_after_to' => $account->credits - $request->credits,
                     'duration' => $duration,
                     'duration_before' => $old_expired_at,
-                    'duration_after' => $date_now->lt(Carbon::parse($old_expired_at)) ? Carbon::parse($old_expired_at)->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)) : $date_now->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)),
+                    'duration_after' => $date_now->lt(Carbon::parse($old_expired_at)) ? Carbon::parse($old_expired_at)->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)) : $date_now->copy()->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
                 ],

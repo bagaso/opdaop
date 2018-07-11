@@ -19,6 +19,7 @@
 
             <div class="row">
                 <div class="col-md-12">
+                    @can('ACCESS_FULL_CREDIT_LOGS')
                     <div class="panel panel-default">
                         <div class="panel-body table-responsive">
                             <table class="table table-hover" id="full_credit_logs-table" style="font-size: small">
@@ -39,6 +40,13 @@
                             </table>
                         </div>
                     </div>
+                    @endcan
+                    @cannot('ACCESS_FULL_CREDIT_LOGS')
+                        <div class="alert alert-warning alert-dismissible">
+                            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                            No Permission to Access Full Credit Logs.
+                        </div>
+                    @endcannot
                 </div>
                 <!-- /.col -->
             </div>
@@ -52,42 +60,44 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@push('styles')
-    <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
-@endpush
+@can('ACCESS_FULL_CREDIT_LOGS')
+    @push('styles')
+        <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    @endpush
 
-@push('scripts')
-    <!-- DataTables -->
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
-    <script>
-        $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+    @push('scripts')
+        <!-- DataTables -->
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+        <script>
+            $(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var oTable =  $('#full_credit_logs-table').DataTable({
+                    order: [ 9, 'desc' ],
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('logs.credit.list') }}',
+                        method: 'POST'
+                    },
+                    columns: [
+                        { data: 'user_from', name: 'user_from.username' },
+                        { data: 'credit_before_from', name: 'credit_before_from' },
+                        { data: 'credit_after_from', name: 'credit_after_from' },
+                        { data: 'user_to', name: 'user_to.username' },
+                        { data: 'credit_before_to', name: 'credit_before_to' },
+                        { data: 'credit_after_to', name: 'credit_after_to' },
+                        { data: 'type', name: 'type' },
+                        { data: 'credit_used', name: 'credit_used' },
+                        { data: 'duration', name: 'duration' },
+                        { data: 'created_at', name: 'created_at' }
+                    ]
+                });
             });
-            var oTable =  $('#full_credit_logs-table').DataTable({
-                order: [ 9, 'desc' ],
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('logs.credit.list') }}',
-                    method: 'POST'
-                },
-                columns: [
-                    { data: 'user_from', name: 'user_from.username' },
-                    { data: 'credit_before_from', name: 'credit_before_from' },
-                    { data: 'credit_after_from', name: 'credit_after_from' },
-                    { data: 'user_to', name: 'user_to.username' },
-                    { data: 'credit_before_to', name: 'credit_before_to' },
-                    { data: 'credit_after_to', name: 'credit_after_to' },
-                    { data: 'type', name: 'type' },
-                    { data: 'credit_used', name: 'credit_used' },
-                    { data: 'duration', name: 'duration' },
-                    { data: 'created_at', name: 'created_at' }
-                ]
-            });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
+@endcan
