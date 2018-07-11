@@ -13,7 +13,7 @@ class LockTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('MANAGE_TICKET', $this->id)) {
+        if(auth()->user()->can('LOCK_TICKET')) {
             return true;
         }
         return false;

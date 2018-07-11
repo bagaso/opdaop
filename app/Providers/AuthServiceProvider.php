@@ -495,6 +495,9 @@ class AuthServiceProvider extends ServiceProvider
                 }
             }
             if($user->id == $ticket->user_id) {
+                if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
                 if(in_array($user->group_id, [3]) && in_array('P066', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
@@ -505,6 +508,10 @@ class AuthServiceProvider extends ServiceProvider
                     return true;
                 }
             }
+            return false;
+        });
+
+        Gate::define('LOCK_TICKET', function ($user) {
             return false;
         });
 
