@@ -65,7 +65,11 @@ class Ticket extends Model
 
     public function scopeOpenTickets($query)
     {
-        return $query->where(function ($query) {
+        return $query->whereHas('user', function($query) {
+            if(!auth()->user()->isAdmin()) {
+                $query->where('group_id', '>', auth()->user()->group_id);
+            }
+        })->where(function ($query) {
             if(auth()->user()->can('MANAGE_SUPPORT')) {
                 $query->where('is_open', 1)
                       ->where('is_lock', 0);
@@ -79,7 +83,11 @@ class Ticket extends Model
 
     public function scopeCloseTickets($query)
     {
-        return $query->where(function ($query) {
+        return $query->whereHas('user', function($query) {
+            if(!auth()->user()->isAdmin()) {
+                $query->where('group_id', '>', auth()->user()->group_id);
+            }
+        })->where(function ($query) {
             if(auth()->user()->can('MANAGE_SUPPORT')) {
                 $query->where('is_open', 0)
                     ->where('is_lock', 0);
@@ -93,7 +101,11 @@ class Ticket extends Model
 
     public function scopeLockTickets($query)
     {
-        return $query->where(function ($query) {
+        return $query->whereHas('user', function($query) {
+            if(!auth()->user()->isAdmin()) {
+                $query->where('group_id', '>', auth()->user()->group_id);
+            }
+        })->where(function ($query) {
             if(auth()->user()->can('MANAGE_SUPPORT')) {
                 $query->where('is_lock', 1);
             } else {

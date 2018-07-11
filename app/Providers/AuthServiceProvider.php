@@ -472,7 +472,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('CREATE_TICKET', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P046', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [3]) && in_array('P066', json_decode($user->permissions->pluck('code')))) {
