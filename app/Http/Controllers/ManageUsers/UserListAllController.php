@@ -105,7 +105,20 @@ class UserListAllController extends Controller
     public function freeze_user(FreezeUserRequest $request)
     {
         $date_now = Carbon::now();
-        User::whereIn('id', $request->user_ids)->update(['freeze_start' => $date_now, 'freeze_mode' => 1]);
+        foreach ($request->user_ids as $user_id) {
+            $user = User::findorfail($user_id);
+            if(auth()->user()->can('UPDATE_USER_FREEZE', $user->id)) {
+                # Disallow if user is 'Expired'
+                if($user->expired_at == 'Expired') {
+                    return redirect()->back()->withErrors(['user_ids' => '1111']);
+                }
+                # Disallow if account has no permission to bypass USER_BYPASS_FREEZE_LIMIT and user is no freeze left
+                if($user->freeze_ctr < 1 && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT', $user->id)) {
+                    return redirect()->back()->withErrors(['user_ids' => '2222']);
+                }
+            }
+        }
+        #User::whereIn('id', $request->user_ids)->update(['freeze_start' => $date_now, 'freeze_mode' => 1]);
         return redirect()->back()->with('success', 'Selected User Freezed.');
     }
 }
