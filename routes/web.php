@@ -99,6 +99,7 @@ Route::group(['prefix' => 'manage-users'], function() {
     Route::get('/trash', 'ManageUsers\UserListTrashController@index')->name('manage_users.view_trash');
     Route::post('/raw-users-list-trash', 'ManageUsers\UserListTrashController@user_list')->name('manage_users.user_list.trash');
     Route::post('/restore_user', 'ManageUsers\UserListTrashController@restore_user')->name('manage_users.restore_user');
+    Route::post('/force_delete_user', 'ManageUsers\UserListTrashController@force_delete_user')->name('manage_users.force_delete_user');
 
     Route::get('/user/{id}', 'ManageUsers\UserProfileController@index')->name('manage_users.user_profile');
     Route::post('/user/{id}', 'ManageUsers\UserProfileController@update')->name('manage_users.user_profile.update');

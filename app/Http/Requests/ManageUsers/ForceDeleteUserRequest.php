@@ -13,6 +13,9 @@ class ForceDeleteUserRequest extends FormRequest
      */
     public function authorize()
     {
+        if(auth()->user()->isAdmin()) {
+            return true;
+        }
         return false;
     }
 
@@ -24,7 +27,11 @@ class ForceDeleteUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_ids' => [
+                'bail',
+                'required',
+                'array',
+            ],
         ];
     }
 }
