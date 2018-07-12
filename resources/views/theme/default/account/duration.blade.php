@@ -38,7 +38,7 @@
                                     <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                     Account is Inactive.
                                 </div>
-                                @elseif(auth()->user->cannot('ACCOUNT_EXTEND_USING_CREDITS'))
+                                @elseif(auth()->user()->cannot('ACCOUNT_EXTEND_USING_CREDITS'))
                                 <div class="alert alert-warning alert-dismissible">
                                     <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                     No Permission to Extend using Credits.
