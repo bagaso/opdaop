@@ -14,7 +14,7 @@ class DurationRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!auth()->user()->isAdmin() && auth()->user()->can('UPDATE_ACCOUNT')) {
+        if(!auth()->user()->isAdmin() && auth()->user()->can('ACCOUNT_EXTEND_USING_CREDITS')) {
             return true;
         }
         return false;

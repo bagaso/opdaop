@@ -575,5 +575,21 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('ACCOUNT_EXTEND_USING_CREDITS', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P049', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [3]) && in_array('P065', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [4]) && in_array('P084', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [5]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
     }
 }

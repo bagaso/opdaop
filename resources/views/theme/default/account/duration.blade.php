@@ -38,20 +38,23 @@
                                     <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                     Account is Inactive.
                                 </div>
-                                @endif
-                                @if(auth()->user()->credits === 'No Limit')
+                                @elseif(auth()->user->cannot('ACCOUNT_EXTEND_USING_CREDITS'))
+                                <div class="alert alert-warning alert-dismissible">
+                                    <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                                    No Permission to Extend using Credits.
+                                </div>
+                                @elseif(auth()->user()->credits === 'No Limit')
                                 <div class="alert alert-warning alert-dismissible">
                                     <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                     Account is "No Limit".
                                 </div>
-                                @endif
-                                @if(!auth()->user()->isAdmin() && !session('success') && (auth()->user()->freeze_mode))
+                                @elseif(!auth()->user()->isAdmin() && !session('success') && (auth()->user()->freeze_mode))
                                 <div class="alert alert-warning alert-dismissible">
                                     <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                     Freeze is Activated
                                 </div>
                                 @endif
-                                @if(auth()->user()->credits !== 'No Limit' && auth()->user()->isActive())
+                                @if(auth()->user()->credits !== 'No Limit' && auth()->user()->can('ACCOUNT_EXTEND_USING_CREDITS'))
                                 @if (session('success'))
                                 <div class="alert alert-success alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
