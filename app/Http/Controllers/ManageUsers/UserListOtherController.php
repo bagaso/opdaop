@@ -32,7 +32,7 @@ class UserListOtherController extends Controller
         return view('theme.default.manage_users.user_list_other');
     }
 
-    public function user_list(UserListOtherSearchRequest $request)
+    public function user_list(UserListSearchRequest $request)
     {
         $query = User::UserOther(auth()->user())->with('group', 'subscription', 'status', 'upline')->selectRaw('users.id, users.username, users.email, users.group_id, users.subscription_id, users.status_id, users.freeze_mode, users.credits, users.expired_at, users.parent_id, users.created_at');
         return datatables()->eloquent($query)
