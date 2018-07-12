@@ -37,15 +37,12 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete_user">
-                                            Delete
-                                        </a>
-                                    </li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
+                                    @can('DELETE_USER')
                                     <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-delete_user">Delete</a></li>
+                                    @endcan
                                 </ul>
                             </div>
                         </div>
@@ -78,11 +75,7 @@
                                     <li><a href="#">Something else here</a></li>
                                     @can('DELETE_USER')
                                     <li class="divider"></li>
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete_user">
-                                            Delete
-                                        </a>
-                                    </li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-delete_user">Delete</a></li>
                                     @endcan
                                 </ul>
                             </div>
@@ -95,7 +88,7 @@
             <!-- /.row -->
         </section>
         <!-- /.content -->
-
+        @can('DELETE_USER')
         <div class="modal modal-danger fade" id="modal-delete_user">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -117,6 +110,7 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal delete_user -->
+        @endcan
 
     </div>
     <!-- /.content-wrapper -->
@@ -171,6 +165,7 @@
                     selector: 'td:first-child'
                 }
             });
+            @can('DELETE_USER')
             $("#delete_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
@@ -186,6 +181,7 @@
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
+            @endcan
         });
     </script>
 @endpush

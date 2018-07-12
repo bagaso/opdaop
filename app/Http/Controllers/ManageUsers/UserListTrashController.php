@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ManageUsers;
 
+use App\Http\Requests\ManageUsers\ForceDeleteUserRequest;
 use App\Http\Requests\ManageUsers\RestoreUserRequest;
 use App\Http\Requests\ManageUsers\UserListSearchRequest;
 use App\Http\Requests\ManageUsers\UserListTrashSearchRequest;
@@ -95,5 +96,11 @@ class UserListTrashController extends Controller
     {
         User::whereIn('id', $request->user_ids)->restore();
         return redirect()->back()->with('success', 'Selected User Restored.');
+    }
+
+    public function force_delete_user(ForceDeleteUserRequest $request)
+    {
+        User::whereIn('id', $request->user_ids)->forcedelete();
+        return redirect()->back()->with('success', 'Selected User Force Deleted.');
     }
 }

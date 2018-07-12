@@ -24,7 +24,17 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Trash User List</h3>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">Action</button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-restore_user">Restore</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-force_delete_user">Force Delete</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="panel-body table-responsive">
                             <table class="table table-bordered table-hover" id="users-table" style="font-size: small">
@@ -51,20 +61,8 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#modal-restore_user">
-                                            Restore
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Force Delete
-                                        </a>
-                                    </li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-restore_user">Restore</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-force_delete_user">Force Delete</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -83,7 +81,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Restore Confirmation</h4>
+                        <h4 class="modal-title">Confirmation</h4>
                     </div>
                     <div class="modal-body">
                         <p>Restore Selected User?</p>
@@ -97,7 +95,29 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal delete_user -->
+        <!-- /.modal restore_user -->
+
+        <div class="modal modal-warning fade" id="modal-restore_user">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Force Delete Selected User?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline" id="force_delete_user">Force Delete</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal force_delete_user -->
 
     </div>
     <!-- /.content-wrapper -->
@@ -159,15 +179,15 @@
             $("#restore_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
-                var restore_form_builder  = '';
+                var restore_user_form_builder  = '';
                 rowcollection.each(function(index,elem){
                     //Do something with 'checkbox_value'
                     var user_id = $(this).find(".user_id").val();
-                    restore_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
+                    restore_user_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
                 });
-                $('<form id="form_restore_user" action="{{ route('manage_users.user_restore') }}" method="post">')
+                $('<form id="form_restore_user" action="{{ route('manage_users.restore_user') }}" method="post">')
                     .append('{{ csrf_field() }}')
-                    .append(restore_form_builder)
+                    .append(restore_user_form_builder)
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
@@ -175,15 +195,15 @@
             $("#force_delete_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
-                var restore_form_builder  = '';
+                var force_delete_user_form_builder  = '';
                 rowcollection.each(function(index,elem){
                     //Do something with 'checkbox_value'
                     var user_id = $(this).find(".user_id").val();
-                    restore_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
+                    force_delete_user_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
                 });
-                $('<form id="form_restore_user" action="{{ route('manage_users.user_restore') }}" method="post">')
+                $('<form id="form_force_delete_user" action="{{ route('manage_users.force_delete_user') }}" method="post">')
                     .append('{{ csrf_field() }}')
-                    .append(restore_form_builder)
+                    .append(force_delete_user_form_builder)
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
