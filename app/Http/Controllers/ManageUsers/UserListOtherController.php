@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ManageUsers;
 
+use App\Http\Requests\ManageUsers\DeleteUserOtherRequest;
 use App\Http\Requests\ManageUsers\UserListOtherSearchRequest;
 use App\User;
 use Carbon\Carbon;
@@ -104,5 +105,11 @@ class UserListOtherController extends Controller
             })
             ->rawColumns(['check', 'username', 'group', 'subscription', 'status', 'credits', 'upline', 'expired_at'])
             ->make(true);
+    }
+
+    public function delete_user(DeleteUserOtherRequest $request)
+    {
+        User::whereIn('id', $request->user_ids)->delete();
+        return redirect()->back()->with('success', 'Selected User Deleted.');
     }
 }

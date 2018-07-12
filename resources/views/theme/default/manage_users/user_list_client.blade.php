@@ -67,15 +67,16 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete_user">
-                                            Delete
-                                        </a>
-                                    </li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    @can('DELETE_USER')
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete_user">
+                                                Delete
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </div>
                         </div>

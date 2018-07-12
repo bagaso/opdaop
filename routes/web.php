@@ -79,6 +79,7 @@ Route::group(['prefix' => 'manage-users'], function() {
     Route::get('/', 'ManageUsers\UserListAllController@index')->name('manage_users.view_all');
     Route::post('/raw-users-list-all', 'ManageUsers\UserListAllController@user_list')->name('manage_users.user_list.all');
     Route::post('/users-list-all-delete', 'ManageUsers\UserListAllController@delete_user')->name('manage_users.user_list.all.delete');
+    Route::post('/users-list-other-delete', 'ManageUsers\UserListOtherController@delete_user')->name('manage_users.user_list.other.delete');
 
     Route::get('/sub-admin', 'ManageUsers\UserListSubAdminController@index')->name('manage_users.view_sub_admin');
     Route::post('/raw-users-list-sub-admin', 'ManageUsers\UserListSubAdminController@user_list')->name('manage_users.user_list.sub_admin');

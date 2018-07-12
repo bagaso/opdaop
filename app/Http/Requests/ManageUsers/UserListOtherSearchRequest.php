@@ -16,6 +16,7 @@ class UserListOtherSearchRequest extends FormRequest
         if(auth()->user()->can('MANAGE_USER_OTHER')) {
             return true;
         }
+        return false;
     }
 
     /**

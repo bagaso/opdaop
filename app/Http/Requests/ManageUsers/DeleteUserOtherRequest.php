@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\ManageUsers;
 
-use App\Rules\ManageUsers\DeleteUser\DeleteUsers;
-use App\Rules\ManageUsers\DeleteUser\UserIdRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteUserRequest extends FormRequest
+class DeleteUserOtherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +13,7 @@ class DeleteUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->cannot('DELETE_USER')) {
+        if(auth()->user()->cannot('DELETE_USER_OTHER')) {
             return true;
         }
         return false;
@@ -29,12 +27,7 @@ class DeleteUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_ids' => [
-                'bail',
-                'required',
-                'array',
-                new DeleteUsers
-            ],
+            //
         ];
     }
 }

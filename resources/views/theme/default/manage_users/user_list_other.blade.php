@@ -75,8 +75,14 @@
                                     </li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    @can('DELETE_USER_OTHER')
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete_user">
+                                                Delete
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </div>
                         </div>
@@ -177,7 +183,7 @@
                     var user_id = $(this).find(".user_id").val();
                     delete_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
                 });
-                $('<form id="form_delete_user" action="{{ route('manage_users.user_list.all.delete') }}" method="post">')
+                $('<form id="form_delete_user" action="{{ route('manage_users.user_list.other.delete') }}" method="post">')
                     .append('{{ csrf_field() }}')
                     .append(delete_form_builder)
                     .append('</form>')

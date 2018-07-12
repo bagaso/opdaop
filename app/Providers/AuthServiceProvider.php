@@ -141,7 +141,27 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('DELETE_USER', function ($user, $id) {
+        Gate::define('DELETE_USER', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P004', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [3]) && in_array('P053', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [4]) && in_array('P073', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('DELETE_USER_OTHER', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P005', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('DELETE_USER_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P004', json_decode($user->permissions->pluck('code')))) {
                 return true;

@@ -68,15 +68,16 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    @can('DELETE_USER')
+                                    <li class="divider"></li>
                                     <li>
                                         <a href="#" data-toggle="modal" data-target="#modal-delete_user">
                                             Delete
                                         </a>
                                     </li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    @endcan
                                 </ul>
                             </div>
                         </div>
@@ -95,7 +96,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Delete Confirmation</h4>
+                        <h4 class="modal-title">Confirmation</h4>
                     </div>
                     <div class="modal-body">
                         <p>Delete Selected User?</p>
