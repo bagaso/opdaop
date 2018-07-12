@@ -117,7 +117,7 @@ class UserListAllController extends Controller
                     return redirect()->back()->withErrors(['user_ids' => '2222']);
                 }
             }
-            if($user->freeze_mode) {
+            if(!$user->freeze_mode) {
                 DB::transaction(function () use ($user, $date_now) {
                     User::where('id', $user->id)->update([
                         'freeze_start' => $date_now,

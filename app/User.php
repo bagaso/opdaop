@@ -35,12 +35,12 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
+        'freeze_mode' => 'boolean',
         'distributor' => 'boolean',
         'f_login_openvpn' => 'boolean',
         'f_login_ssh' => 'boolean',
         'f_login_softether' => 'boolean',
         'f_login_ss' => 'boolean',
-        'freeze_mode' => 'boolean',
     ];
 
     public function isActive() {
