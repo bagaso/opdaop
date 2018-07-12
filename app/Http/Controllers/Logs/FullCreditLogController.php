@@ -6,6 +6,7 @@ use App\AdminCreditLog;
 use App\Http\Requests\Logs\SearchCreditLogRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class FullCreditLogController extends Controller
 {
