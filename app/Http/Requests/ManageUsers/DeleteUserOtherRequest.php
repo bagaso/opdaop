@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ManageUsers;
 
+use App\Rules\ManageUsers\DeleteUser\DeleteUsers;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DeleteUserOtherRequest extends FormRequest
@@ -27,7 +28,12 @@ class DeleteUserOtherRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_ids' => [
+                'bail',
+                'required',
+                'array',
+                new DeleteUsers
+            ],
         ];
     }
 }
