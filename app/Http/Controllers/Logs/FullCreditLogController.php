@@ -41,7 +41,7 @@ class FullCreditLogController extends Controller
             ->addColumn('user_to', function (AdminCreditLog $log) {
                 return $log->user_to->username;
             })
-            ->filterColumn('user_from.username', function ($query, $keyword) {
+            ->filterColumn('user_from', function ($query, $keyword) {
                 $query->select(DB::raw(1))
                     ->from('users')
                     ->where('group_id', '<>', 1);
