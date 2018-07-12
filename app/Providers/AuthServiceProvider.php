@@ -342,12 +342,32 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_FREEZE', function ($user, $id) {
+        Gate::define('UPDATE_USER_FREEZE', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P023', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [3]) && in_array('P061', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            if(in_array($user->group_id, [4]) && in_array('P081', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('UPDATE_USER_FREEZE_OTHER', function ($user) {
+            if(in_array($user->group_id, [2]) && in_array('P024', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('UPDATE_USER_FREEZE_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P023', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [2]) && !$data->isDownline()&& in_array('P024', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [2]) && !$data->isDownline() && in_array('P024', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [3]) && $data->isDownline() && in_array('P061', json_decode($user->permissions->pluck('code')))) {
@@ -359,19 +379,26 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('BYPASS_FREEZE_LIMIT', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P025', json_decode($user->permissions->pluck('code')))) {
+        Gate::define('BYPASS_USER_FREEZE_LIMIT', function ($user) {
+            if($user->can('UPDATE_USER_FREEZE') && in_array($user->group_id, [2]) && in_array('P025', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
         });
 
-        Gate::define('BYPASS_USER_FREEZE_LIMIT', function ($user, $id) {
-            $data = User::findorfail($id);
-            if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P025', json_decode($user->permissions->pluck('code')))) {
+        Gate::define('BYPASS_USER_FREEZE_LIMIT_OTHER', function ($user) {
+            if($user->can('UPDATE_USER_FREEZE_OTHER') && in_array($user->group_id, [2]) && in_array('P026', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [2]) && !$data->isDownline() && in_array('P026', json_decode($user->permissions->pluck('code')))) {
+            return false;
+        });
+
+        Gate::define('BYPASS_USER_FREEZE_LIMIT_ID', function ($user, $id) {
+            $data = User::findorfail($id);
+            if($user->can('BYPASS_USER_FREEZE_LIMIT') && $data->isDownline()) {
+                return true;
+            }
+            if($user->can('BYPASS_USER_FREEZE_LIMIT_OTHER') && !$data->isDownline()) {
                 return true;
             }
             return false;
