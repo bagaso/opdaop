@@ -42,7 +42,7 @@ class UserVacationModeController extends Controller
             User::where('id', $user->id)->update([
                 'freeze_start' => $date_now,
                 'freeze_mode' => 1,
-                'freeze_ctr' => ($user->freeze_ctr < 1 && auth()->user()->can('BYPASS_USER_FREEZE_LIMIT', $user->id)) ? $user->freeze_ctr : ($user->freeze_ctr - 1),
+                'freeze_ctr' => ($user->freeze_ctr < 1 && auth()->user()->can('BYPASS_USER_FREEZE_LIMIT_ID', $user->id)) ? $user->freeze_ctr : ($user->freeze_ctr - 1),
             ]);
             DB::table('user_action_logs')->insert([
                 [

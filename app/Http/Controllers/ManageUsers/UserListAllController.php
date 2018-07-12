@@ -5,12 +5,12 @@ namespace App\Http\Controllers\ManageUsers;
 use App\Http\Requests\ManageUsers\DeleteUserRequest;
 use App\Http\Requests\ManageUsers\FreezeUserRequest;
 use App\Http\Requests\ManageUsers\UserListAllSearchRequest;
-use App\Http\Requests\ManageUsers\UserListSearchRequest;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
+use Ramsey\Uuid\Uuid;
 
 class UserListAllController extends Controller
 {
@@ -117,6 +117,33 @@ class UserListAllController extends Controller
                     return redirect()->back()->withErrors(['user_ids' => '2222']);
                 }
             }
+            DB::transaction(function () use ($user, $date_now) {
+                User::where('id', $user->id)->update([
+                    'freeze_start' => $date_now,
+                    'freeze_mode' => 1,
+                    'freeze_ctr' => ($user->freeze_ctr < 1 && auth()->user()->can('BYPASS_USER_FREEZE_LIMIT_ID', $user->id)) ? $user->freeze_ctr : ($user->freeze_ctr - 1),
+                ]);
+                DB::table('user_action_logs')->insert([
+                    [
+                        'id' => Uuid::uuid4()->toString(),
+                        'user_id' => auth()->user()->id,
+                        'user_id_related' => $user->id,
+                        'action' => 'You have Enabled Freeze of a User.',
+                        'from_ip' => Request::getClientIp(),
+                        'created_at' => $date_now,
+                        'updated_at' => $date_now,
+                    ],
+                    [
+                        'id' => Uuid::uuid4()->toString(),
+                        'user_id' => $user->id,
+                        'user_id_related' => auth()->user()->id,
+                        'action' => 'Your Account Freeze was Enabled.',
+                        'from_ip' => Request::getClientIp(),
+                        'created_at' => $date_now,
+                        'updated_at' => $date_now,
+                    ]
+                ]);
+            });
         }
         #User::whereIn('id', $request->user_ids)->update(['freeze_start' => $date_now, 'freeze_mode' => 1]);
         return redirect()->back()->with('success', 'Selected User Freezed.');
