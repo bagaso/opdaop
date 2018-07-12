@@ -15,7 +15,7 @@ class DeleteUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->cannot('DELETE_USER')) {
+        if(auth()->user()->can('DELETE_USER')) {
             return true;
         }
         return false;
