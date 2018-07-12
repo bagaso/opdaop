@@ -39,7 +39,7 @@ class UserListSearchRequest extends FormRequest
             }
         }
         if(request()->getUri() === route('manage_users.user_list.other')) {
-            if(auth()->user()->can('MANAGE_USER_ALL')) {
+            if(auth()->user()->can('MANAGE_USER_OTHER')) {
                 return true;
             }
         }
