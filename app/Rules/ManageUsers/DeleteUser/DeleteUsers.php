@@ -26,7 +26,7 @@ class DeleteUsers implements Rule
     public function passes($attribute, $value)
     {
         foreach($value as $user_id) {
-            if(auth()->user()->can('DELETE_USER_ID', $user_id)) {
+            if(auth()->user()->cannot('DELETE_USER_ID', $user_id)) {
                 return false;
             }
         }
