@@ -97,7 +97,7 @@
         </div>
         <!-- /.modal restore_user -->
 
-        <div class="modal modal-warning fade" id="modal-restore_user">
+        <div class="modal modal-warning fade" id="modal-force_delete_user">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
