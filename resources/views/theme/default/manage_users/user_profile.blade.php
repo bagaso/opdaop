@@ -33,13 +33,13 @@
                         @include('theme.default.layouts.menu.manage_users_profile')
                         <div class="tab-content">
                             <div class="active">
-                                @cannot('UPDATE_USER_PROFILE', $user->id)
+                                @cannot('MANAGE_USER_PROFILE_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission Edit User Profile.
                                     </div>
                                 @endcannot
-                                @can('UPDATE_USER_PROFILE', $user->id)
+                                @can('MANAGE_USER_PROFILE_ID', $user->id)
                                     @if (session('set') == 0 && session('success'))
                                         <div class="alert alert-success alert-dismissible">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -62,7 +62,7 @@
                                         <div class="form-group{{ $errors->has('group') ? ' has-error' : '' }}">
                                             <label for="group" class="col-sm-3 control-label">Group</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" id="group" name="group"{{ auth()->user()->can('UPDATE_USER_GROUP', $user->id) ? '' : ' disabled' }}>
+                                                <select class="form-control" id="group" name="group"{{ auth()->user()->can('MANAGE_USER_GROUP_ID', $user->id) ? '' : ' disabled' }}>
                                                     @forelse($groups as $group)
                                                         <option value="{{ $group->id }}"{{ $user->group_id == $group->id ? ' selected' : '' }}>{{ $group->name }}</option>
                                                     @empty
@@ -81,7 +81,7 @@
                                             <label for="username" class="col-sm-3 control-label">Username</label>
 
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" placeholder="Username"{{ auth()->user()->can('UPDATE_USER_USERNAME', $user->id) ? '' : ' disabled' }}>
+                                                <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" placeholder="Username"{{ auth()->user()->can('MANAGE_USER_USERNAME_ID', $user->id) ? '' : ' disabled' }}>
                                                 @if ($errors->has('username'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('username') }}</strong>
@@ -175,7 +175,7 @@
                                         <div class="form-group{{ $errors->has('subscription') ? ' has-error' : '' }}">
                                             <label for="subscription" class="col-sm-3 control-label">Subscription</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" id="subscription" name="subscription"{{ auth()->user()->can('UPDATE_USER_SUBSCRIPTION', $user->id) ? '' : ' disabled' }}>
+                                                <select class="form-control" id="subscription" name="subscription"{{ auth()->user()->can('MANAGE_USER_SUBSCRIPTION_ID', $user->id) ? '' : ' disabled' }}>
                                                     @forelse($subscriptions as $subscription)
                                                         <option value="{{ $subscription->id }}"{{ $user->subscription_id == $subscription->id ? ' selected' : '' }}>{{ $subscription->name }}</option>
                                                     @empty
@@ -207,7 +207,7 @@
                     </div>
                     <!-- /.nav-tabs-custom -->
 
-                    @can('UPDATE_USER_PROFILE', $user->id)
+                    @can('MANAGE_USER_PROFILE_ID', $user->id)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Upload Photo</h3>

@@ -2,10 +2,9 @@
 
 namespace App\Rules\ManageUsers\UserFreeze;
 
-use App\User;
 use Illuminate\Contracts\Validation\Rule;
 
-class FreezeUserCheckIfCanbeFreeze implements Rule
+class UnFreezeUserCheckIfCanbeUnFreeze implements Rule
 {
     /**
      * Create a new rule instance.
@@ -39,7 +38,6 @@ class FreezeUserCheckIfCanbeFreeze implements Rule
                 }
             }
         }
-        return true;
     }
 
     /**
@@ -49,6 +47,6 @@ class FreezeUserCheckIfCanbeFreeze implements Rule
      */
     public function message()
     {
-        return 'The user selected can\'t be freeze.';
+        return 'The validation error message.';
     }
 }

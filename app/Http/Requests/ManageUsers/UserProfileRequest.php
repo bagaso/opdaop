@@ -20,7 +20,7 @@ class UserProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_PROFILE', $this->id)) {
+        if(auth()->user()->can('MANAGE_USER_PROFILE_ID', $this->id)) {
             return true;
         }
         return false;
