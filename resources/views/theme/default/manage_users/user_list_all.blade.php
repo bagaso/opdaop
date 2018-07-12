@@ -37,7 +37,7 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-freeze_user">Freeze</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     @can('DELETE_USER')
                                     <li class="divider"></li>
@@ -71,7 +71,7 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modal-freeze_user">Freeze</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     @can('DELETE_USER')
                                     <li class="divider"></li>
@@ -88,6 +88,29 @@
             <!-- /.row -->
         </section>
         <!-- /.content -->
+
+        <div class="modal modal-danger fade" id="modal-freeze_user">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Freeze Selected User?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline" id="freeze_user">Freeze User</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal freeze_user -->
+
         @can('DELETE_USER')
         <div class="modal modal-danger fade" id="modal-delete_user">
             <div class="modal-dialog">
@@ -164,6 +187,21 @@
                     style:    'multi',
                     selector: 'td:first-child'
                 }
+            });
+            $("#freeze_user").click(function () {
+                var rowcollection =  oTable.$("tr.selected");
+                //var user_ids = [];
+                var freeze_user_form_builder  = '';
+                rowcollection.each(function(index,elem){
+                    //Do something with 'checkbox_value'
+                    var user_id = $(this).find(".user_id").val();
+                    freeze_user_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
+                });
+                $('<form id="freeze_user" action="{{ route('manage_users.user_list.all.user_freeze') }}" method="post">')
+                    .append('{{ csrf_field() }}')
+                    .append(freeze_user_form_builder)
+                    .append('</form>')
+                    .appendTo($(document.body)).submit();
             });
             @can('DELETE_USER')
             $("#delete_user").click(function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ManageUsers;
 
 use App\Http\Requests\ManageUsers\DeleteUserRequest;
+use App\Http\Requests\ManageUsers\FreezeUserRequest;
 use App\Http\Requests\ManageUsers\UserListAllSearchRequest;
 use App\Http\Requests\ManageUsers\UserListSearchRequest;
 use App\User;
@@ -99,5 +100,12 @@ class UserListAllController extends Controller
     {
         User::whereIn('id', $request->user_ids)->delete();
         return redirect()->back()->with('success', 'Selected User Deleted.');
+    }
+
+    public function freeze_user(FreezeUserRequest $request)
+    {
+        $date_now = Carbon::now();
+        User::whereIn('id', $request->user_ids)->update(['freeze_start' => $date_now, 'freeze_mode' => 1]);
+        return redirect()->back()->with('success', 'Selected User Freezed.');
     }
 }
