@@ -83,14 +83,13 @@
         </section>
         <!-- /.content -->
 
-        @can('DELETE_USER')
         <div class="modal modal-danger fade" id="modal-delete_user">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Delete Confirmation</h4>
+                        <h4 class="modal-title">Confirmation</h4>
                     </div>
                     <div class="modal-body">
                         <p>Delete Selected User?</p>
@@ -105,7 +104,6 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal delete_user -->
-        @endcan
 
     </div>
     <!-- /.content-wrapper -->
@@ -158,7 +156,6 @@
                     selector: 'td:first-child'
                 }
             });
-            @can('DELETE_USER')
             $("#delete_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
@@ -174,7 +171,6 @@
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
-            @endcan
         });
     </script>
 @endpush
