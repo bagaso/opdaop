@@ -55,6 +55,7 @@ class UserLogController extends Controller
             ->addColumn('user_related', function (UserCreditLog $UserCreditLog) {
                 return (!auth()->user()->isAdmin() && $UserCreditLog->user_related->isAdmin()) ? '<span class="label label-' . $UserCreditLog->user_related->group->class . '">' . $UserCreditLog->user_related->group->name . '</span>' : $UserCreditLog->user_related->username;
             })
+            ->rawColumns(['user_related'])
             ->make(true);
     }
 }

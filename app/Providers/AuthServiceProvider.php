@@ -37,10 +37,6 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        Gate::define('OWNER', function ($user) {
-            return false;
-        });
-
         Gate::define('UPDATE_ACCOUNT', function ($user) {
             return true;
         });
@@ -84,6 +80,9 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [2,3,4]) && $user->can('MANAGE_USER_DOWNLINE')) {
                 return true;
             }
+            return false;
+        });
+        Gate::define('MANAGE_USER_TRASH', function ($user) {
             return false;
         });
 

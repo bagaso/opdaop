@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\ManageUsers;
 
 use App\Http\Requests\ManageUsers\UserListOtherSearchRequest;
-use App\Http\Requests\ManageUsers\UserListSearchRequest;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +30,7 @@ class UserListOtherController extends Controller
         return view('theme.default.manage_users.user_list_other');
     }
 
-    public function user_list(UserListSearchRequest $request)
+    public function user_list(UserListOtherSearchRequest $request)
     {
         $query = User::UserOther(auth()->user())->with('group', 'subscription', 'status', 'upline')->selectRaw('users.id, users.username, users.email, users.group_id, users.subscription_id, users.status_id, users.freeze_mode, users.credits, users.expired_at, users.parent_id, users.created_at');
         return datatables()->eloquent($query)

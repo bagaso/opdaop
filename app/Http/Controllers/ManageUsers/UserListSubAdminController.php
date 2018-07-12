@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ManageUsers;
 
 use App\Http\Requests\ManageUsers\UserListSearchRequest;
+use App\Http\Requests\ManageUsers\UserListSubAdminSearchRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class UserListSubAdminController extends Controller
         return view('theme.default.manage_users.user_list_sub_admin');
     }
 
-    public function user_list(UserListSearchRequest $request)
+    public function user_list(UserListSubAdminSearchRequest $request)
     {
         $query = User::SubAdmins(auth()->user())->with('group', 'subscription', 'status', 'upline')->selectRaw('users.id, users.username, users.email, users.group_id, users.subscription_id, users.status_id, users.freeze_mode, users.credits, users.expired_at, users.parent_id, users.created_at');
         return datatables()->eloquent($query)

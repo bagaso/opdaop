@@ -4,7 +4,7 @@ namespace App\Http\Requests\ManageUsers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserListOtherSearchRequest extends FormRequest
+class UserListTrashSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +13,10 @@ class UserListOtherSearchRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('MANAGE_USER_OTHER')) {
+        if(auth()->user()->can('MANAGE_USER_TRASH')) {
             return true;
         }
+        return false;
     }
 
     /**

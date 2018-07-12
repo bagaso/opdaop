@@ -13,6 +13,9 @@ class UserListAllSearchRequest extends FormRequest
      */
     public function authorize()
     {
+        if(auth()->user()->can('MANAGE_USER_ALL')) {
+            return true;
+        }
         return false;
     }
 

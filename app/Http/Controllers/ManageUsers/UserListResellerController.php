@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ManageUsers;
 
+use App\Http\Requests\ManageUsers\UserListResellerSearchRequest;
 use App\Http\Requests\ManageUsers\UserListSearchRequest;
 use App\User;
 use Carbon\Carbon;
@@ -31,7 +32,7 @@ class UserListResellerController extends Controller
         return view('theme.default.manage_users.user_list_reseller');
     }
 
-    public function user_list(UserListSearchRequest $request)
+    public function user_list(UserListResellerSearchRequest $request)
     {
         $query = User::Resellers(auth()->user())->with('group', 'subscription', 'status', 'upline')->selectRaw('users.id, users.username, users.email, users.group_id, users.subscription_id, users.status_id, users.freeze_mode, users.credits, users.expired_at, users.parent_id, users.created_at');
         return datatables()->eloquent($query)
