@@ -105,6 +105,7 @@
                     </div>
                     <!-- /.nav-tabs-custom -->
 
+                    @can('UPDATE_USER_SECURITY', $user->id)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Service Password</h3>
@@ -162,6 +163,7 @@
 
                         </div>
                     </div>
+                    @endcan
                 </div>
                 <!-- /.col -->
             </div>

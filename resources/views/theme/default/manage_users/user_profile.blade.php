@@ -207,6 +207,7 @@
                     </div>
                     <!-- /.nav-tabs-custom -->
 
+                    @can('UPDATE_USER_PROFILE', $user->id)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Upload Photo</h3>
@@ -268,6 +269,7 @@
 
                         </div>
                     </div>
+                    @endcan
 
                 </div>
                 <!-- /.col -->
