@@ -358,7 +358,7 @@
                 @endguest
                 @auth
                 <li><a href="{{ route('account.profile') }}"><i class="fa fa-book"></i> <span>My Account</span></a></li>
-                @can('MANAGER_USER')
+                @can('MANAGE_USER')
                 <li><a href="{{ route('manage_users.view_all') }}"><i class="fa fa-book"></i> <span>Manager Users</span></a></li>
                 @endcan
                 @can('ACCESS_SELLER_MONITOR')
