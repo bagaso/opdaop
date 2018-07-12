@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ManageUsers;
 
 use App\Http\Requests\ManageUsers\RestoreUserRequest;
 use App\Http\Requests\ManageUsers\UserListSearchRequest;
+use App\Http\Requests\ManageUsers\UserListTrashSearchRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class UserListTrashController extends Controller
         return view('theme.default.manage_users.user_list_trash');
     }
 
-    public function user_list(UserListSearchRequest $request)
+    public function user_list(UserListTrashSearchRequest $request)
     {
         $query = User::Trashes(auth()->user())->with('group', 'subscription', 'status', 'upline')->selectRaw('users.id, users.username, users.email, users.group_id, users.subscription_id, users.status_id, users.freeze_mode, users.credits, users.expired_at, users.parent_id, users.deleted_at');
         return datatables()->eloquent($query)
