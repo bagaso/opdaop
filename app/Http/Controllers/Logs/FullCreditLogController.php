@@ -32,7 +32,7 @@ class FullCreditLogController extends Controller
 
     public function log_list(SearchCreditLogRequest $request)
     {
-        $query = AdminCreditLog::with('user_from', 'user_to')->join('users', 'admin_credit_logs.user_id_from', '=', 'users.id')->selectRaw('admin_credit_logs.id, admin_credit_logs.user_id_from, admin_credit_logs.user_id_to, admin_credit_logs.type, admin_credit_logs.credit_used, admin_credit_logs.credit_before_from, admin_credit_logs.credit_after_from, admin_credit_logs.credit_before_to, admin_credit_logs.credit_after_to, admin_credit_logs.duration, admin_credit_logs.created_at');
+        $query = AdminCreditLog::with('user_from', 'user_to')->selectRaw('admin_credit_logs.id, admin_credit_logs.user_id_from, admin_credit_logs.user_id_to, admin_credit_logs.type, admin_credit_logs.credit_used, admin_credit_logs.credit_before_from, admin_credit_logs.credit_after_from, admin_credit_logs.credit_before_to, admin_credit_logs.credit_after_to, admin_credit_logs.duration, admin_credit_logs.created_at');
         return datatables()->eloquent($query)
             ->addColumn('check', '<input type="hidden" class="log_id" value="{{ $id }}">')
             ->addColumn('user_from', function (AdminCreditLog $log) {
@@ -40,11 +40,6 @@ class FullCreditLogController extends Controller
             })
             ->addColumn('user_to', function (AdminCreditLog $log) {
                 return $log->user_to->username;
-            })
-            ->filterColumn('users', function ($query, $keyword) {
-                $query->select(DB::raw(1))
-                    ->from('users')
-                    ->where('group_id', '<>', 1);
             })
             ->rawColumns(['check', 'user_from', 'user_to'])
             ->make(true);
