@@ -39,6 +39,6 @@ class TrialPeriodCheckFormatRule implements Rule
      */
     public function message()
     {
-        return 'The trial type format in invalid.';
+        return 'The trial type format is invalid.';
     }
 }

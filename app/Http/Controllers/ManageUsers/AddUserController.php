@@ -45,7 +45,7 @@ class AddUserController extends Controller
         $new_user->password = bcrypt($request->password);
         $new_user->service_password = $request->password;
         $new_user->password_openvpn = $request->password;
-        $new_user->password_ssh = crypt( $request->password , config('app.key')); //ssh password
+        $new_user->password_ssh = crypt($request->password, config('app.key')); //ssh password
         $new_user->value = $request->password;
         $new_user->password_ss = $request->password;
         $new_user->email = strtolower($request->email);

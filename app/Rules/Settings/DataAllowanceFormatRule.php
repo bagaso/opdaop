@@ -39,6 +39,6 @@ class DataAllowanceFormatRule implements Rule
      */
     public function message()
     {
-        return 'The data allowance type format in invalid.';
+        return 'The data allowance type format is invalid.';
     }
 }

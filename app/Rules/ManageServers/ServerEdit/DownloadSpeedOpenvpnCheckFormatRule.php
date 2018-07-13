@@ -4,7 +4,7 @@ namespace App\Rules\ManageServers\ServerEdit;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class DownloadSpeedCheckFormatRule implements Rule
+class DownloadSpeedOpenvpnCheckFormatRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,10 @@ class DownloadSpeedCheckFormatRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        $memory_type = substr($value, -2, 2);
+        if(in_array($memory_type, ['mbit', 'kbit'])) {
+            return  true;
+        }
     }
 
     /**
@@ -35,6 +38,6 @@ class DownloadSpeedCheckFormatRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'The download speed format is invalid.';
     }
 }
