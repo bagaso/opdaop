@@ -17,7 +17,7 @@ class AccessPageMiddleware
     {
         if(auth()->user()->isActive()) {
             if($page = 'view') {
-                if(auth()->user()->cannot('MANAGE_TICKET', $request->id)) {
+                if(auth()->user()->cannot('MANAGE_TICKET_ID', $request->id)) {
                     return redirect(route('account.profile'));
                 }
             }
