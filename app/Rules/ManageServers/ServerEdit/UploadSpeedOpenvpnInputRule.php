@@ -27,7 +27,7 @@ class UploadSpeedOpenvpnInputRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $memory_type = substr($value, -1, 1);
+        $memory_type = substr($value, -4, 4);
         $this->memory_type = $memory_type;
         $memory_interval = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
         if(in_array($memory_type, ['mbit']) && $memory_interval >= 0 && $memory_interval <= 500) {
@@ -47,10 +47,10 @@ class UploadSpeedOpenvpnInputRule implements Rule
     public function message()
     {
         if(in_array($this->memory_type, ['mbit'])) {
-            return  'Mbit speed base is between is 0 - 500.';
+            return  'Mbit speed base must between is 0 - 500.';
         }
         if(in_array($this->memory_type, ['kbit'])) {
-            return  'Kbit speed base is between 0 - 1024.';
+            return  'Kbit speed base must between 0 - 1024.';
         }
     }
 }

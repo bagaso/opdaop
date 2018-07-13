@@ -25,7 +25,7 @@ class DownloadSpeedOpenvpnCheckFormatRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $memory_type = substr($value, -2, 2);
+        $memory_type = substr($value, -4, 4);
         if(in_array($memory_type, ['mbit', 'kbit'])) {
             return  true;
         }

@@ -47,10 +47,10 @@ class TrialPeriodInputRule implements Rule
     public function message()
     {
         if(in_array($this->trial_type, ['h'])) {
-            return  'Hours trial base is between is 0 - 24.';
+            return  'Hours trial base must between 0 - 24.';
         }
         if(in_array($this->trial_type, ['d'])) {
-            return  'Days trial base is between 0 - 30.';
+            return  'Days trial base must between 0 - 30.';
         }
     }
 }
