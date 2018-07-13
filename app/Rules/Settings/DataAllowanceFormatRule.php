@@ -25,8 +25,8 @@ class DataAllowanceFormatRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $trial_type = substr($value, -1, 1);
-        if(in_array($trial_type, ['mb', 'gb'])) {
+        $data_allowance_type = substr($value, -1, 1);
+        if(in_array($data_allowance_type, ['mb', 'gb'])) {
             return  true;
         }
         return false;
