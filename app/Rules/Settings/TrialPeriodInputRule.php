@@ -4,8 +4,10 @@ namespace App\Rules\Settings;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class TrialPeriodCheckFormatRule implements Rule
+class TrialPeriodInputRule implements Rule
 {
+    private $trial_type;
+
     /**
      * Create a new rule instance.
      *
@@ -26,7 +28,12 @@ class TrialPeriodCheckFormatRule implements Rule
     public function passes($attribute, $value)
     {
         $trial_type = substr($value, -1, 1);
-        if(in_array($trial_type, ['h', 'd'])) {
+        $this->trial_type = $trial_type;
+        $trial_interval = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+        if(in_array($trial_type, ['h']) && $trial_interval >= 0 && $trial_interval <= 24) {
+            return  true;
+        }
+        if(in_array($trial_type, ['d']) && $trial_interval >= 0 && $trial_interval <= 30) {
             return  true;
         }
         return false;
@@ -39,6 +46,11 @@ class TrialPeriodCheckFormatRule implements Rule
      */
     public function message()
     {
-        return 'The trial type format in invalid.';
+        if(in_array($this->trial_type, ['h'])) {
+            return  'Hours trial base is between is 0 - 24.';
+        }
+        if(in_array($this->trial_type, ['d'])) {
+            return  'Days trial base is between 0 - 30.';
+        }
     }
 }

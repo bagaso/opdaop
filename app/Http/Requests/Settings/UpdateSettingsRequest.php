@@ -4,6 +4,7 @@ namespace App\Http\Requests\Settings;
 
 use App\Rules\Settings\CronCheckFormatRule;
 use App\Rules\Settings\TrialPeriodCheckFormatRule;
+use App\Rules\Settings\TrialPeriodInputRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSettingsRequest extends FormRequest
@@ -42,6 +43,7 @@ class UpdateSettingsRequest extends FormRequest
                 'bail',
                 'required',
                 new TrialPeriodCheckFormatRule,
+                new TrialPeriodInputRule
             ],
             'data_reset' => 'bail|required|integer|in:1,0',
             'data_reset_cron' => [
