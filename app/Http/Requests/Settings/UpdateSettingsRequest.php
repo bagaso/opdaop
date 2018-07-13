@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Settings;
 
 use App\Rules\Settings\CronCheckFormatRule;
+use App\Rules\Settings\DataAllowanceFormatRule;
+use App\Rules\Settings\DataAllowanceInputRule;
 use App\Rules\Settings\TrialPeriodCheckFormatRule;
 use App\Rules\Settings\TrialPeriodInputRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -54,6 +56,8 @@ class UpdateSettingsRequest extends FormRequest
             'data_allowance' => [
                 'bail',
                 'required',
+                new DataAllowanceFormatRule,
+                new DataAllowanceInputRule,
             ],
             'enable_authorized_reseller' => 'bail|required|integer|in:1,0',
             'public_authorized_reseller' => 'bail|required|integer|in:1,0',
