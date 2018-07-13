@@ -13,7 +13,7 @@ class UserDownlineRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('ACCESS_USER_DOWNLINE', $this->id) && auth()->user()->can('MANAGE_USER_OTHER')) {
+        if(auth()->user()->can('ACCESS_USER_DOWNLINE_ID', $this->id)) {
             return true;
         }
         return false;

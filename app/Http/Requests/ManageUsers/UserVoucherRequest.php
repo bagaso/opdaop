@@ -14,7 +14,7 @@ class UserVoucherRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_VOUCHER', $this->id)) {
+        if(auth()->user()->can('MANAGE_USER_VOUCHER_ID', $this->id)) {
             return true;
         }
         return false;

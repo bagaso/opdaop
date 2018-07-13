@@ -53,7 +53,7 @@ class CreditRule implements Rule
     public function message()
     {
         if($this->input_credits == 0) {
-            return 'Invalid Input Credit.';
+            return 'Invalid input credits.';
         }
         if($this->user->credits === 'No Limit') {
             return 'User is not allowed to received Credit.';

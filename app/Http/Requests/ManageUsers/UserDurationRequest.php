@@ -13,7 +13,7 @@ class UserDurationRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_DURATION', $this->id)) {
+        if(auth()->user()->can('MANAGE_USER_DURATION_ID', $this->id)) {
             return true;
         }
         return false;

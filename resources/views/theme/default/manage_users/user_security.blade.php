@@ -34,13 +34,13 @@
                         <div class="tab-content">
                             <div class="active">
 
-                                @cannot('UPDATE_USER_SECURITY', $user->id)
+                                @cannot('MANAGE_USER_SECURITY_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission Edit User Security.
                                     </div>
                                 @endcannot
-                                @can('UPDATE_USER_SECURITY', $user->id)
+                                @can('MANAGE_USER_SECURITY_ID', $user->id)
 
                                     @if (session('set') == 0 && session('success'))
                                         <div class="alert alert-success alert-dismissible">
@@ -105,7 +105,7 @@
                     </div>
                     <!-- /.nav-tabs-custom -->
 
-                    @can('UPDATE_USER_SECURITY', $user->id)
+                    @can('MANAGE_USER_SECURITY_ID', $user->id)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Service Password</h3>

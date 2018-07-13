@@ -15,7 +15,7 @@ class UserUnfreezeRequest extends FormRequest
     public function authorize()
     {
         $user = User::findorfail($this->id);
-        if(auth()->user()->can('UPDATE_USER_FREEZE', $user->id)) {
+        if(auth()->user()->can('MANAGE_USER_FREEZE_ID', $user->id)) {
             return true;
         }
         return false;

@@ -28,7 +28,7 @@ class GroupRule implements Rule
     public function passes($attribute, $value)
     {
         $user = User::findorfail($this->user_id);
-        if(($user->group_id !== (int)$value && auth()->user()->can('UPDATE_USER_GROUP', $user->id)) || $user->group_id === (int)$value) {
+        if(($user->group_id !== (int)$value && auth()->user()->can('MANAGE_USER_GROUP_ID', $user->id)) || $user->group_id === (int)$value) {
             return true;
         }
         return false;

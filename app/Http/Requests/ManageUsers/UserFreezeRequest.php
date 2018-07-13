@@ -15,7 +15,7 @@ class UserFreezeRequest extends FormRequest
     public function authorize()
     {
         $user = User::findorfail($this->id);
-        if(auth()->user()->can('UPDATE_USER_FREEZE', $user->id)) {
+        if(auth()->user()->can('MANAGE_USER_FREEZE_ID', $user->id)) {
             # Disallow if user is 'Expired'
             if($user->expired_at == 'Expired') {
                 return false;

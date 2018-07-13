@@ -33,13 +33,13 @@
                         @include('theme.default.layouts.menu.manage_users_profile')
                         <div class="tab-content">
                             <div class="active">
-                                @cannot('UPDATE_USER_DURATION', $user->id)
+                                @cannot('MANAGE_USER_DURATION_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission Edit User Duration.
                                     </div>
                                 @endcannot
-                                @can('UPDATE_USER_DURATION', $user->id)
+                                @can('MANAGE_USER_DURATION_ID', $user->id)
 
                                     @if (session('success'))
                                         <div class="alert alert-success alert-dismissible">

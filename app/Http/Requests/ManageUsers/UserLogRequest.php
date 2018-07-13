@@ -13,7 +13,7 @@ class UserLogRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('ACCESS_USER_LOGS', $this->id)) {
+        if(auth()->user()->can('ACCESS_USER_LOGS_ID', $this->id)) {
             return true;
         }
         return false;

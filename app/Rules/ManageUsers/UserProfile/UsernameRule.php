@@ -28,7 +28,7 @@ class UsernameRule implements Rule
     public function passes($attribute, $value)
     {
         $user = User::findorfail($this->user_id);
-        if((strtolower($user->username) !== strtolower($value) && auth()->user()->can('UPDATE_USER_USERNAME', $user->id)) || strtolower($user->username) === strtolower($value)) {
+        if((strtolower($user->username) !== strtolower($value) && auth()->user()->can('MANAGE_USER_USERNAME_ID', $user->id)) || strtolower($user->username) === strtolower($value)) {
             return true;
         }
         return false;

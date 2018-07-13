@@ -13,7 +13,7 @@ class UserPermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_PERMISSION', $this->id)) {
+        if(auth()->user()->can('MANAGE_USER_PERMISSION_ID', $this->id)) {
             return true;
         }
         return false;

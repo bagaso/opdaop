@@ -13,7 +13,7 @@ class UserServicePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_SECURITY', $this->id)) {
+        if(auth()->user()->can('MANAGE_USER_SECURITY_ID', $this->id)) {
             return true;
         }
         return false;

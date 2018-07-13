@@ -28,7 +28,7 @@ class SubscriptionRule implements Rule
     public function passes($attribute, $value)
     {
         $user = User::findorfail($this->user_id);
-        if(($user->subscription_id !== (int)$value && auth()->user()->can('UPDATE_USER_SUBSCRIPTION', $user->id)) || $user->subscription_id === (int)$value) {
+        if(($user->subscription_id !== (int)$value && auth()->user()->can('MANAGE_USER_SUBSCRIPTION_ID', $user->id)) || $user->subscription_id === (int)$value) {
             return true;
         }
         return false;

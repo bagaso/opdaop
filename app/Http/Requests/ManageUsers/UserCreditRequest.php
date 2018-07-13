@@ -15,7 +15,7 @@ class UserCreditRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_CREDIT', $this->id)) {
+        if(auth()->user()->can('TRANSFER_USER_CREDIT_ID', $this->id)) {
             return true;
         }
         return false;

@@ -96,10 +96,10 @@ class AuthServiceProvider extends ServiceProvider
             if($data->group_id <= $user->group_id) {
                 return false;
             }
-            if($data->isDownline() && $user->can('MANAGE_USER_DOWNLINE')) {
+            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline()) {
                 return true;
             }
-            if(!$data->isDownline() && $user->can('MANAGE_USER_OTHER')) {
+            if($user->can('MANAGE_USER_OTHER') && !$data->isDownline()) {
                 return true;
             }
             return false;
@@ -269,7 +269,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_SECURITY_ID', function ($user, $id) {
+        Gate::define('MANAGE_USER_SECURITY_ID', function ($user, $id) {
             if($user->can('MANAGE_USER_PROFILE_ID', $id)) {
                 $data = User::findorfail($id);
                 if($data->isDownline() && (in_array('P014', json_decode($user->permissions->pluck('code'))) || in_array('P057', json_decode($user->permissions->pluck('code'))) || in_array('P077', json_decode($user->permissions->pluck('code'))))) {
@@ -328,7 +328,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_CREDIT', function ($user, $id) {
+        Gate::define('TRANSFER_USER_CREDIT_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P016', json_decode($user->permissions->pluck('code')))) {
                 return true;
@@ -358,7 +358,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('SUBTRACT_CREDIT', function ($user, $id) {
+        Gate::define('SUBTRACT_CREDIT_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P019', json_decode($user->permissions->pluck('code')))) {
                 return true;
@@ -369,7 +369,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_VOUCHER', function ($user, $id) {
+        Gate::define('MANAGE_USER_VOUCHER_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P021', json_decode($user->permissions->pluck('code')))) {
                 return true;
@@ -386,7 +386,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_FREEZE', function ($user) {
+        Gate::define('MANAGE_USER_FREEZE', function ($user) {
             if(in_array($user->group_id, [2]) && in_array('P023', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
@@ -399,19 +399,19 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_FREEZE_OTHER', function ($user) {
+        Gate::define('MANAGE_USER_FREEZE_OTHER', function ($user) {
             if($user->can('MANAGE_USER_OTHER') && in_array('P024', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
         });
 
-        Gate::define('UPDATE_USER_FREEZE_ID', function ($user, $id) {
+        Gate::define('MANAGE_USER_FREEZE_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('UPDATE_USER_FREEZE') && $data->isDownline()) {
+            if($user->can('MANAGE_USER_FREEZE') && $data->isDownline()) {
                 return true;
             }
-            if($user->can('UPDATE_USER_FREEZE_OTHER') && !$data->isDownline()) {
+            if($user->can('MANAGE_USER_FREEZE_OTHER') && !$data->isDownline()) {
                 return true;
             }
 //            if($user->can('UPDATE_USER_FREEZE') && $data->isDownline()) {
@@ -424,14 +424,14 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('BYPASS_USER_FREEZE_LIMIT', function ($user) {
-            if($user->can('UPDATE_USER_FREEZE') && in_array($user->group_id, [2]) && in_array('P025', json_decode($user->permissions->pluck('code')))) {
+            if($user->can('MANAGE_USER_FREEZE') && in_array($user->group_id, [2]) && in_array('P025', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
         });
 
         Gate::define('BYPASS_USER_FREEZE_LIMIT_OTHER', function ($user) {
-            if($user->can('UPDATE_USER_FREEZE_OTHER') && in_array('P026', json_decode($user->permissions->pluck('code')))) {
+            if($user->can('MANAGE_USER_FREEZE_OTHER') && in_array('P026', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
@@ -469,21 +469,23 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('ACCESS_USER_DOWNLINE', function ($user, $id) {
-            $data = User::findorfail($id);
-            if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P029', json_decode($user->permissions->pluck('code')))) {
-                return true;
-            }
-            if(in_array($user->group_id, [2]) && !$data->isDownline() && in_array('P030', json_decode($user->permissions->pluck('code')))) {
-                return true;
-            }
-            if(in_array($user->group_id, [3]) && $data->isDownline() && in_array('P062', json_decode($user->permissions->pluck('code')))) {
-                return true;
+        Gate::define('ACCESS_USER_DOWNLINE_ID', function ($user, $id) {
+            if($user->can('MANAGE_USER_OTHER')) {
+                $data = User::findorfail($id);
+                if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P029', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array($user->group_id, [2]) && !$data->isDownline() && in_array('P030', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array($user->group_id, [3]) && $data->isDownline() && in_array('P062', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
             }
             return false;
         });
 
-        Gate::define('UPDATE_USER_DURATION', function ($user, $id) {
+        Gate::define('MANAGE_USER_DURATION_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P031', json_decode($user->permissions->pluck('code')))) {
                 return true;
@@ -494,7 +496,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('UPDATE_USER_PERMISSION', function ($user, $id) {
+        Gate::define('MANAGE_USER_PERMISSION_ID', function ($user, $id) {
             $data = User::findorfail($id);
             if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P033', json_decode($user->permissions->pluck('code')))) {
                 return true;
