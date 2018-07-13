@@ -142,7 +142,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('DELETE_USER', function ($user) {
+        Gate::define('DELETE_USER_DOWNLINE', function ($user) {
             if($user->can('MANAGE_USER_DOWNLINE')) {
                 if(in_array($user->group_id, [2]) && in_array('P004', json_decode($user->permissions->pluck('code')))) {
                     return true;

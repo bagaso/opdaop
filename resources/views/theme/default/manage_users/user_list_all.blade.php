@@ -37,9 +37,11 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    @can('MANAGE_USER_FREEZE_DOWNLINE')
                                     <li><a href="#" data-toggle="modal" data-target="#modal-freeze_user">Freeze</a></li>
+                                    @endcan
                                     <li><a href="#">Something else here</a></li>
-                                    @can('DELETE_USER')
+                                    @can('DELETE_USER_DOWNLINE')
                                     <li class="divider"></li>
                                     <li><a href="#" data-toggle="modal" data-target="#modal-delete_user">Delete</a></li>
                                     @endcan
@@ -71,9 +73,11 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    @can('MANAGE_USER_FREEZE_DOWNLINE')
                                     <li><a href="#" data-toggle="modal" data-target="#modal-freeze_user">Freeze</a></li>
+                                    @endcan
                                     <li><a href="#">Something else here</a></li>
-                                    @can('DELETE_USER')
+                                    @can('DELETE_USER_DOWNLINE')
                                     <li class="divider"></li>
                                     <li><a href="#" data-toggle="modal" data-target="#modal-delete_user">Delete</a></li>
                                     @endcan
@@ -89,6 +93,7 @@
         </section>
         <!-- /.content -->
 
+        @can('MANAGE_USER_FREEZE_DOWNLINE')
         <div class="modal modal-danger fade" id="modal-freeze_user">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -110,8 +115,9 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal freeze_user -->
+        @endcan
 
-        @can('DELETE_USER')
+        @can('DELETE_USER_DOWNLINE')
         <div class="modal modal-danger fade" id="modal-delete_user">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -188,6 +194,7 @@
                     selector: 'td:first-child'
                 }
             });
+            @can('MANAGE_USER_FREEZE_DOWNLINE')
             $("#freeze_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
@@ -203,7 +210,8 @@
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
-            @can('DELETE_USER')
+            @endcan
+            @can('DELETE_USER_DOWNLINE')
             $("#delete_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
                 //var user_ids = [];
