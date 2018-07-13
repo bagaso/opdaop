@@ -81,7 +81,7 @@ class Ticket extends Model
                       ->where('is_open', 1)
                       ->where('is_lock', 0);
             }
-        })->orWhere('user_id', '=', auth()->user()->id);
+        })->orWhere([['user_id', '=', auth()->user()->id],['is_open', 1], ['is_lock', 0]]);
     }
 
     public function scopeCloseTickets($query)
@@ -99,7 +99,7 @@ class Ticket extends Model
                     ->where('is_open', 0)
                     ->where('is_lock', 0);
             }
-        })->orWhere('user_id', '=', auth()->user()->id);
+        })->orWhere([['user_id', '=', auth()->user()->id],['is_open', 0], ['is_lock', 0]]);
     }
 
     public function scopeLockTickets($query)
@@ -115,6 +115,6 @@ class Ticket extends Model
                 $query->where('user_id', auth()->user()->id)
                     ->where('is_lock', 1);
             }
-        })->orWhere('user_id', '=', auth()->user()->id);
+        })->orWhere([['user_id', '=', auth()->user()->id],['is_lock', 1]]);
     }
 }
