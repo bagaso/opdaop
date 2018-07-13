@@ -46,10 +46,10 @@ class DataAllowanceInputRule implements Rule
      */
     public function message()
     {
-        if(in_array($this->this->data_allowance_type, ['mb'])) {
+        if(in_array($this->data_allowance_type, ['mb'])) {
             return  'Megabytes data allowance base is between is 0 - 1024.';
         }
-        if(in_array($this->this->data_allowance_type, ['gb'])) {
+        if(in_array($this->data_allowance_type, ['gb'])) {
             return  'GigaBytes data allowance base is between 0 - 50.';
         }
     }
