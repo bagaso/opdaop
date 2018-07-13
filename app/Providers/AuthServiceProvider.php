@@ -430,7 +430,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('BYPASS_USER_FREEZE_LIMIT_DOWNLINE', function ($user) {
-            if($user->can('MANAGE_USER_FREEZE_DOWNLINE') && in_array($user->group_id, [2]) && in_array('P025', json_decode($user->permissions->pluck('code')))) {
+            if($user->can('MANAGE_USER_FREEZE_DOWNLINE') && in_array('P025', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
