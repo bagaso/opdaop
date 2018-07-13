@@ -21,7 +21,7 @@ class UserFreezeRequest extends FormRequest
                 return false;
             }
             # Disallow if account has no permission to bypass USER_BYPASS_FREEZE_LIMIT and user is no freeze left
-            if($user->freeze_ctr < 1 && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT', $user->id)) {
+            if($user->freeze_ctr < 1 && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT_ID', $user->id)) {
                 return false;
             }
             return true;
