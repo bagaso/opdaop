@@ -2,6 +2,7 @@
 
 namespace App\Rules\ManageServers\ServerEdit;
 
+use App\Server;
 use Illuminate\Contracts\Validation\Rule;
 
 class ServerIpCheckOnlineUserRule implements Rule
