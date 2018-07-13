@@ -168,7 +168,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('DELETE_USER_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('DELETE_USER') && $data->isDownline()) {
+            if($user->can('DELETE_USER_DOWNLINE') && $data->isDownline()) {
                 return true;
             }
             if($user->can('DELETE_USER_OTHER') && !$data->isDownline()) {
