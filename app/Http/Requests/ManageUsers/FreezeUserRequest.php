@@ -14,7 +14,7 @@ class FreezeUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_FREEZE')) {
+        if(auth()->user()->can('MANAGE_USER_FREEZE_DOWNLINE')) {
             return true;
         }
         return false;

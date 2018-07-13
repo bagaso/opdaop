@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ManageUsers;
 
+use App\Rules\ManageUsers\UserFreeze\FreezeUserCheckIfCanbeFreeze;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FreezeUserOtherRequest extends FormRequest
@@ -13,7 +14,7 @@ class FreezeUserOtherRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('UPDATE_USER_FREEZE_OTHER')) {
+        if(auth()->user()->can('MANAGE_USER_FREEZE_OTHER')) {
             return true;
         }
         return false;
@@ -31,6 +32,7 @@ class FreezeUserOtherRequest extends FormRequest
                 'bail',
                 'required',
                 'array',
+                new FreezeUserCheckIfCanbeFreeze,
             ],
         ];
     }

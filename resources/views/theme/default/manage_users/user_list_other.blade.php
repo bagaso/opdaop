@@ -197,7 +197,7 @@
                     var user_id = $(this).find(".user_id").val();
                     freeze_user_form_builder += '<input type="hidden" name="user_ids[]" value="' + user_id + '">';
                 });
-                $('<form id="freeze_user" action="{{ route('manage_users.user_list.all.user_freeze') }}" method="post">')
+                $('<form id="freeze_user" action="{{ route('manage_users.user_list.other.user_freeze') }}" method="post">')
                     .append('{{ csrf_field() }}')
                     .append(freeze_user_form_builder)
                     .append('</form>')

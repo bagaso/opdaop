@@ -108,16 +108,6 @@ class UserListAllController extends Controller
         $date_now = Carbon::now();
         foreach ($request->user_ids as $user_id) {
             $user = User::findorfail($user_id);
-            if(auth()->user()->can('UPDATE_USER_FREEZE_ID', $user->id)) {
-                # Disallow if user is 'Expired'
-                if($user->expired_at == 'Expired') {
-                    return redirect()->back()->withErrors(['user_ids' => '1111']);
-                }
-                # Disallow if account has no permission to bypass USER_BYPASS_FREEZE_LIMIT and user is no freeze left
-                if($user->freeze_ctr < 1 && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT_ID', $user->id)) {
-                    return redirect()->back()->withErrors(['user_ids' => '2222']);
-                }
-            }
             if(!$user->freeze_mode) {
                 DB::transaction(function () use ($user, $date_now) {
                     User::where('id', $user->id)->update([
@@ -148,7 +138,6 @@ class UserListAllController extends Controller
                 });
             }
         }
-        #User::whereIn('id', $request->user_ids)->update(['freeze_start' => $date_now, 'freeze_mode' => 1]);
         return redirect()->back()->with('success', 'Selected User Freezed.');
     }
 
@@ -157,29 +146,20 @@ class UserListAllController extends Controller
         $date_now = Carbon::now();
         foreach ($request->user_ids as $user_id) {
             $user = User::findorfail($user_id);
-            if(auth()->user()->can('UPDATE_USER_FREEZE_ID', $user->id)) {
-                # Disallow if user is 'Expired'
-                if($user->expired_at == 'Expired') {
-                    return redirect()->back()->withErrors(['user_ids' => '1111']);
-                }
-                # Disallow if account has no permission to bypass USER_BYPASS_FREEZE_LIMIT and user is no freeze left
-                if($user->freeze_ctr < 1 && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT_ID', $user->id)) {
-                    return redirect()->back()->withErrors(['user_ids' => '2222']);
-                }
-            }
-            if(!$user->freeze_mode) {
+            if($user->freeze_mode) {
                 DB::transaction(function () use ($user, $date_now) {
+                    $new_expired_at = Carbon::parse($user->getOriginal('expired_at'));
                     User::where('id', $user->id)->update([
-                        'freeze_start' => $date_now,
-                        'freeze_mode' => 1,
-                        'freeze_ctr' => ($user->freeze_ctr < 1 && auth()->user()->can('BYPASS_USER_FREEZE_LIMIT_ID', $user->id)) ? $user->freeze_ctr : ($user->freeze_ctr - 1),
-                    ]);
+                            'expired_at' => $new_expired_at->addSeconds($user->freeze_start->diffInSeconds(Carbon::now())),
+                            'freeze_start' => null,
+                            'freeze_mode' => 0]
+                    );
                     DB::table('user_action_logs')->insert([
                         [
                             'id' => Uuid::uuid4()->toString(),
                             'user_id' => auth()->user()->id,
                             'user_id_related' => $user->id,
-                            'action' => 'You have Enabled Freeze of a User.',
+                            'action' => 'You have Disabled Freeze of a User.',
                             'from_ip' => Request::getClientIp(),
                             'created_at' => $date_now,
                             'updated_at' => $date_now,
@@ -188,7 +168,7 @@ class UserListAllController extends Controller
                             'id' => Uuid::uuid4()->toString(),
                             'user_id' => $user->id,
                             'user_id_related' => auth()->user()->id,
-                            'action' => 'Your Account Freeze was Enabled.',
+                            'action' => 'Your Account Freeze was Disabled.',
                             'from_ip' => Request::getClientIp(),
                             'created_at' => $date_now,
                             'updated_at' => $date_now,
@@ -197,7 +177,6 @@ class UserListAllController extends Controller
                 });
             }
         }
-        #User::whereIn('id', $request->user_ids)->update(['freeze_start' => $date_now, 'freeze_mode' => 1]);
         return redirect()->back()->with('success', 'Selected User Freezed.');
     }
 }

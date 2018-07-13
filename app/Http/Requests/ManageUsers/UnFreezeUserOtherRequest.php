@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\ManageUsers;
 
-use App\Rules\ManageUsers\UserFreeze\UnFreezeUserCheckIfCanbeUnFreeze;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UnFreezeUserRequest extends FormRequest
+class UnFreezeUserOtherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class UnFreezeUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->can('MANAGE_USER_FREEZE_DOWNLINE')) {
+        if(auth()->user()->can('MANAGE_USER_FREEZE_OTHER')) {
             return true;
         }
         return false;
@@ -28,12 +27,7 @@ class UnFreezeUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_ids' => [
-                'bail',
-                'required',
-                'array',
-                new UnFreezeUserCheckIfCanbeUnFreeze,
-            ],
+            //
         ];
     }
 }
