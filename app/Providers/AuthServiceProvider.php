@@ -544,6 +544,13 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('PRIVATE_SERVER_USER_ADD_REMOVE', function ($user) {
+            if($user->can('PRIVATE_SERVER_USER_ADD_REMOVE_DOWNLINE') || $user->can('PRIVATE_SERVER_USER_ADD_REMOVE_OTHER')) {
+                return true;
+            }
+            return false;
+        });
+
         Gate::define('PRIVATE_SERVER_USER_ADD_REMOVE_DOWNLINE', function ($user) {
             if($user->can('MANAGE_USER_DOWNLINE') && in_array('P035', json_decode($user->permissions->pluck('code')))) {
                 return true;

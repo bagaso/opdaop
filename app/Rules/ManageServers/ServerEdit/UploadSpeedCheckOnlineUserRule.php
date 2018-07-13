@@ -29,7 +29,7 @@ class UploadSpeedCheckOnlineUserRule implements Rule
     public function passes($attribute, $value)
     {
         $server = Server::findorfail($this->server_id);
-        if(($server->server_ip == $value) || $server->server_ip <> $value && $server->online_users->count() == 0) {
+        if(($server->up_speed_openvpn == $value) || $server->up_speed_openvpn <> $value && $server->online_users->count() == 0) {
             return true;
         }
         return false;

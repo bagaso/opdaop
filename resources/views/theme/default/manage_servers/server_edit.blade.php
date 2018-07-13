@@ -269,7 +269,7 @@
                             </div>
                         </div>
 
-                        @if($server->server_access->is_private)
+                        @if($server->server_access->is_private && auth()->user()->can('PRIVATE_SERVER_USER_ADD_REMOVE'))
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Add Private User</h3>
