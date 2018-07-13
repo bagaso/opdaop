@@ -34,13 +34,13 @@
                         <div class="tab-content">
                             <div class="active">
 
-                                @if(auth()->user()->cannot('ACCESS_USER_DOWNLINE', $user->id) || auth()->user()->cannot('MANAGE_USER_OTHER'))
+                                @if(auth()->user()->cannot('ACCESS_USER_DOWNLINE_ID', $user->id) || auth()->user()->cannot('MANAGE_USER_OTHER'))
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission Acess User Downline.
                                     </div>
                                 @endif
-                                @if(auth()->user()->can('ACCESS_USER_DOWNLINE', $user->id) && auth()->user()->can('MANAGE_USER_OTHER'))
+                                @if(auth()->user()->can('ACCESS_USER_DOWNLINE_ID', $user->id) && auth()->user()->can('MANAGE_USER_OTHER'))
 
                                             <div class="panel-body table-responsive">
                                                 <table class="table table-bordered table-hover" id="users-table">
@@ -79,7 +79,7 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@can('ACCESS_USER_DOWNLINE', $user->id)
+@can('ACCESS_USER_DOWNLINE_ID', $user->id)
     @push('styles')
     <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
     @endpush

@@ -36,13 +36,13 @@
                         @include('theme.default.layouts.menu.manage_users_profile')
                         <div class="tab-content">
                             <div class="active">
-                                @cannot('UPDATE_USER_VOUCHER', $user->id)
+                                @cannot('MANAGE_USER_VOUCHER_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission Access User Voucher.
                                     </div>
                                 @endcannot
-                                @can('UPDATE_USER_VOUCHER', $user->id)
+                                @can('MANAGE_USER_VOUCHER_ID', $user->id)
 
                                     @if (session('success'))
                                         <div class="alert alert-success alert-dismissible">
@@ -93,7 +93,7 @@
                     </div>
                     <!-- /.nav-tabs-custom -->
 
-                    @can('UPDATE_USER_VOUCHER', $user->id)
+                    @can('MANAGE_USER_VOUCHER_ID', $user->id)
                         <div class="panel panel-default">
                             <div class="panel-body table-responsive">
                                 <table class="table table-bordered table-hover" id="vouchers-table" style="font-size: small">
@@ -124,7 +124,7 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@can('UPDATE_USER_VOUCHER', $user->id)
+@can('MANAGE_USER_VOUCHER_ID', $user->id)
     @push('styles')
         <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
     @endpush

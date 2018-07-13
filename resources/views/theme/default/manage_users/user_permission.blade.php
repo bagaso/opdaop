@@ -36,13 +36,13 @@
                         @include('theme.default.layouts.menu.manage_users_profile')
                         <div class="tab-content">
                             <div class="active">
-                                @cannot('UPDATE_USER_PERMISSION', $user->id)
+                                @cannot('MANAGE_USER_PERMISSION_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission Edit User Permission.
                                     </div>
                                 @endcannot
-                                @can('UPDATE_USER_PERMISSION', $user->id)
+                                @can('MANAGE_USER_PERMISSION_ID', $user->id)
 
                                     @if (session('success'))
                                         <div class="alert alert-success alert-dismissible">
@@ -106,18 +106,20 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@push('styles')
-    <!-- Select2 -->
-    <link rel="stylesheet" href="/theme/default/bower_components/select2/dist/css/select2.min.css">
-@endpush
+@can('MANAGE_USER_PERMISSION_ID', $user->id)
+    @push('styles')
+        <!-- Select2 -->
+        <link rel="stylesheet" href="/theme/default/bower_components/select2/dist/css/select2.min.css">
+    @endpush
 
-@push('scripts')
-    <!-- Select2 -->
-    <script src="/theme/default/bower_components/select2/dist/js/select2.full.min.js"></script>
-    <script>
-        $(function () {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-        })
-    </script>
-@endpush
+    @push('scripts')
+        <!-- Select2 -->
+        <script src="/theme/default/bower_components/select2/dist/js/select2.full.min.js"></script>
+        <script>
+            $(function () {
+                //Initialize Select2 Elements
+                $('.select2').select2()
+            })
+        </script>
+    @endpush
+@endcan

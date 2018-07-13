@@ -117,7 +117,7 @@ class TransferCreditController extends Controller
             ]);
 
 
-        }, 5);
+        });
         return redirect()->back()->with('success', 'Credit Transferred ('. $request->username .' +' . $request->credits. ' credits)');
     }
 }

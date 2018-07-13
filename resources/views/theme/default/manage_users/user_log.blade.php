@@ -34,13 +34,13 @@
                         <div class="tab-content">
                             <div class="active">
 
-                                @cannot('ACCESS_USER_LOGS', $user->id)
+                                @cannot('ACCESS_USER_LOGS_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission to Access User Logs.
                                     </div>
                                 @endcannot
-                                @can('ACCESS_USER_LOGS', $user->id)
+                                @can('ACCESS_USER_LOGS_ID', $user->id)
 
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
@@ -106,55 +106,57 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@push('styles')
-<link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
-@endpush
+@can('ACCESS_USER_LOGS_ID', $user->id)
+    @push('styles')
+        <link href="//datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    @endpush
 
-@push('scripts')
-    <!-- DataTables -->
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
-    <script>
-        $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+    @push('scripts')
+        <!-- DataTables -->
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+        <script>
+            $(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $('#users-logs-action').DataTable({
+                    order: [ 3, 'desc' ],
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('manage_users.user_log.action', $user->id) }}',
+                        method: 'POST'
+                    },
+                    columns: [
+                        { data: 'user_related', name: 'user_related.username' },
+                        { data: 'action', name: 'action' },
+                        { data: 'from_ip', name: 'from_ip' },
+                        { data: 'created_at', name: 'created_at' },
+                    ]
+                });
+                $('#users-logs-credit').DataTable({
+                    order: [ 7, 'desc' ],
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('manage_users.user_log.credit', $user->id) }}',
+                        method: 'POST'
+                    },
+                    columns: [
+                        { data: 'user_related', name: 'user_related.username' },
+                        { data: 'type', name: 'type' },
+                        { data: 'direction', name: 'direction' },
+                        { data: 'credit_used', name: 'credit_used' },
+                        { data: 'duration', name: 'duration' },
+                        { data: 'credit_before', name: 'credit_before' },
+                        { data: 'credit_after', name: 'credit_after' },
+                        { data: 'created_at', name: 'created_at' }
+                    ]
+                });
             });
-            $('#users-logs-action').DataTable({
-                order: [ 3, 'desc' ],
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('manage_users.user_log.action', $user->id) }}',
-                    method: 'POST'
-                },
-                columns: [
-                    { data: 'user_related', name: 'user_related.username' },
-                    { data: 'action', name: 'action' },
-                    { data: 'from_ip', name: 'from_ip' },
-                    { data: 'created_at', name: 'created_at' },
-                ]
-            });
-            $('#users-logs-credit').DataTable({
-                order: [ 7, 'desc' ],
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('manage_users.user_log.credit', $user->id) }}',
-                    method: 'POST'
-                },
-                columns: [
-                    { data: 'user_related', name: 'user_related.username' },
-                    { data: 'type', name: 'type' },
-                    { data: 'direction', name: 'direction' },
-                    { data: 'credit_used', name: 'credit_used' },
-                    { data: 'duration', name: 'duration' },
-                    { data: 'credit_before', name: 'credit_before' },
-                    { data: 'credit_after', name: 'credit_after' },
-                    { data: 'created_at', name: 'created_at' }
-                ]
-            });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
+@endcan

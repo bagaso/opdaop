@@ -33,13 +33,13 @@
                         @include('theme.default.layouts.menu.manage_users_profile')
                         <div class="tab-content">
                             <div class="active">
-                                @cannot('UPDATE_USER_FREEZE', $user->id)
+                                @cannot('MANAGE_USER_FREEZE_ID', $user->id)
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i> Access Denied!</h4>
                                         No Permission to Edit User Freeze Mode.
                                     </div>
                                 @endcannot
-                                @can('UPDATE_USER_FREEZE', $user->id)
+                                @can('MANAGE_USER_FREEZE_ID', $user->id)
 
                                     @if(!session('success') && ($user->freeze_mode))
                                         <div class="alert alert-warning alert-dismissible">
@@ -51,7 +51,7 @@
                                             <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                             Expired User Cannot Activate Vacation Mode.
                                         </div>
-                                    @elseif(!session('success') && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT', $user->id) && !$user->freeze_mode && $user->freeze_ctr < 1)
+                                    @elseif(!session('success') && auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT_ID', $user->id) && !$user->freeze_mode && $user->freeze_ctr < 1)
                                         <div class="alert alert-warning alert-dismissible">
                                             <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                             Cannot Activate Freeze Mode Limit has been reach.
@@ -94,7 +94,7 @@
                                         @if (!$user->freeze_mode)
                                             <div class="form-group">
                                                 <div class="col-sm-offset-3 col-sm-9">
-                                                    <button type="submit" class="btn btn-danger"{{ ($user->expired_at === 'Expired' || (auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT', $user->id) && $user->freeze_ctr < 1)) ? ' disabled' : '' }}>Submit</button>
+                                                    <button type="submit" class="btn btn-danger"{{ ($user->expired_at === 'Expired' || (auth()->user()->cannot('BYPASS_USER_FREEZE_LIMIT_ID', $user->id) && $user->freeze_ctr < 1)) ? ' disabled' : '' }}>Submit</button>
                                                 </div>
                                             </div>
                                         @endif
@@ -185,29 +185,29 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@push('styles')
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="/theme/default/plugins/iCheck/all.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="/theme/default/plugins/iCheck/square/blue.css">
-@endpush
+@can('MANAGE_USER_FREEZE_ID', $user->id)
+    @push('styles')
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link rel="stylesheet" href="/theme/default/plugins/iCheck/all.css">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="/theme/default/plugins/iCheck/square/blue.css">
+    @endpush
 
-@push('scripts')
-    <!-- bootstrap datepicker -->
-    <script src="/theme/default/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <!-- iCheck -->
-    <script src="/theme/default/plugins/iCheck/icheck.min.js"></script>
-    <script>
-        $(function () {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '15%' // optional
+    @push('scripts')
+        <!-- iCheck -->
+        <script src="/theme/default/plugins/iCheck/icheck.min.js"></script>
+        <script>
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '15%' // optional
+                });
+                //Date picker
+                $('#datepicker').datepicker({
+                    autoclose: true
+                })
             });
-            //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true
-            })
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
+@endcan
