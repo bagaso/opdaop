@@ -270,15 +270,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('MANAGE_USER_SECURITY_ID', function ($user, $id) {
-            if($user->can('MANAGE_USER_PROFILE_ID', $id)) {
+            //if($user->can('MANAGE_USER_PROFILE_ID', $id)) {
                 $data = User::findorfail($id);
-                if($data->isDownline() && (in_array('P014', json_decode($user->permissions->pluck('code'))) || in_array('P057', json_decode($user->permissions->pluck('code'))) || in_array('P077', json_decode($user->permissions->pluck('code'))))) {
+                if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P014', json_decode($user->permissions->pluck('code'))) || in_array('P057', json_decode($user->permissions->pluck('code'))) || in_array('P077', json_decode($user->permissions->pluck('code'))))) {
                     return true;
                 }
-                if(!$data->isDownline() && in_array('P015', json_decode($user->permissions->pluck('code')))) {
+                if($user->can('MANAGE_USER_OTHER') && !$data->isDownline() && in_array('P015', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-            }
+            //}
 //            $data = User::findorfail($id);
 //            if(in_array($user->group_id, [2]) && $data->isDownline() && in_array('P014', json_decode($user->permissions->pluck('code')))) {
 //                return true;
