@@ -28,7 +28,7 @@ class PrivateUserCanAddUser implements Rule
     {
         $user = User::where('username', $value)->first();
 
-        if(auth()->user()->can('PRIVATE_SERVER_USER_ADD_REMOVE', $user->id)) {
+        if(auth()->user()->can('PRIVATE_SERVER_USER_ADD_REMOVE_ID', $user->id)) {
             return true;
         }
         return false;

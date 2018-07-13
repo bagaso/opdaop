@@ -29,7 +29,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body table-responsive">
                             @auth
-                                @if(auth()->user()->can('MANAGER_POST'))
+                                @if(auth()->user()->can('MANAGE_POST'))
                                     <a href="{{ route('news_and_updates.create') }}" class="btn btn-primary margin-bottom">Compose</a>
                                 @endif
                             @endauth

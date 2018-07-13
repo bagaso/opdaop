@@ -30,7 +30,7 @@
                 </li>
             </ul>
             @auth
-                @if(auth()->user()->can('MANAGE_POST', $post->id))
+                @if(auth()->user()->can('MANAGE_POST_ID', $post->id))
                     <a href="{{ route('news_and_updates.edit', $post->id) }}" class="btn btn-primary btn-block"><b>Edit Post</b></a>
                 @endif
             @endauth
