@@ -27,7 +27,7 @@ class DataAllowanceInputRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $data_allowance_type = substr($value, -1, 1);
+        $data_allowance_type = substr($value, -2, 2);
         $this->data_allowance_type = $data_allowance_type;
         $data_allowance_interval = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
         if(in_array($data_allowance_type, ['mb']) && $data_allowance_interval >= 0 && $data_allowance_interval <= 1024) {
@@ -46,10 +46,10 @@ class DataAllowanceInputRule implements Rule
      */
     public function message()
     {
-        if(in_array($this->trial_type, ['h'])) {
+        if(in_array($this->this->data_allowance_type, ['mb'])) {
             return  'Megabytes data allowance base is between is 0 - 1024.';
         }
-        if(in_array($this->trial_type, ['d'])) {
+        if(in_array($this->this->data_allowance_type, ['gb'])) {
             return  'GigaBytes data allowance base is between 0 - 50.';
         }
     }
