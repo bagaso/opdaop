@@ -5,9 +5,10 @@ namespace App\Rules\ManageServers\ServerEdit;
 use App\Server;
 use Illuminate\Contracts\Validation\Rule;
 
-class DataLimitRule implements Rule
+class SubDomainCheckOnlineUserRule implements Rule
 {
     private $server_id;
+
     /**
      * Create a new rule instance.
      *
@@ -28,7 +29,7 @@ class DataLimitRule implements Rule
     public function passes($attribute, $value)
     {
         $server = Server::findorfail($this->server_id);
-        if(((int)$server->limit_bandwidth === (int)$value) || (int)$server->limit_bandwidth !== (int)$value && $server->online_users->count() == 0) {
+        if(($server->server_ip == $value) || $server->server_ip <> $value && $server->online_users->count() == 0) {
             return true;
         }
         return false;

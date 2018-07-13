@@ -4,9 +4,10 @@ namespace App\Rules\ManageServers\ServerEdit;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class WebPortRule implements Rule
+class DataLimitCheckOnlineUserRule implements Rule
 {
     private $server_id;
+
     /**
      * Create a new rule instance.
      *
@@ -26,7 +27,11 @@ class WebPortRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        $server = Server::findorfail($this->server_id);
+        if(($server->server_ip == $value) || $server->server_ip <> $value && $server->online_users->count() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**

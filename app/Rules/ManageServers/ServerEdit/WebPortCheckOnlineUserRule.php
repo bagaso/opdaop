@@ -5,9 +5,10 @@ namespace App\Rules\ManageServers\ServerEdit;
 use App\Server;
 use Illuminate\Contracts\Validation\Rule;
 
-class ServerIpRule implements Rule
+class WebPortCheckOnlineUserRule implements Rule
 {
     private $server_id;
+
     /**
      * Create a new rule instance.
      *

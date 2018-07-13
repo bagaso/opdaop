@@ -4,17 +4,16 @@ namespace App\Rules\ManageServers\ServerEdit;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ManagerPortRule implements Rule
+class DownloadSpeedCheckFormatRule implements Rule
 {
-    private $server_id;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($server_id)
+    public function __construct()
     {
-        $this->server_id = $server_id;
+        //
     }
 
     /**
@@ -36,6 +35,6 @@ class ManagerPortRule implements Rule
      */
     public function message()
     {
-        return 'Users are currently online on the Server.';
+        return 'The validation error message.';
     }
 }

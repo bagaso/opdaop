@@ -2,11 +2,13 @@
 
 namespace App\Rules\ManageServers\ServerEdit;
 
+use App\Server;
 use Illuminate\Contracts\Validation\Rule;
 
-class ServerUPSpeedRule implements Rule
+class UploadSpeedCheckOnlineUserRule implements Rule
 {
     private $server_id;
+
     /**
      * Create a new rule instance.
      *
@@ -26,7 +28,11 @@ class ServerUPSpeedRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        $server = Server::findorfail($this->server_id);
+        if(($server->server_ip == $value) || $server->server_ip <> $value && $server->online_users->count() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
