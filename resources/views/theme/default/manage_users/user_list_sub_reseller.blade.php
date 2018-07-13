@@ -202,6 +202,7 @@
                     .append('</form>')
                     .appendTo($(document.body)).submit();
             });
+            @endcan
             @can('DELETE_USER_DOWNLINE')
             $("#delete_user").click(function () {
                 var rowcollection =  oTable.$("tr.selected");
