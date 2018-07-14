@@ -45,7 +45,7 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [2]) && in_array('P049', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [3]) && in_array('P065', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [3]) && in_array('P089', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [4]) && in_array('P113', json_decode($user->permissions->pluck('code')))) {
@@ -61,7 +61,7 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [2]) && in_array('P048', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [3]) && in_array('P064', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [3]) && in_array('P090', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [4]) && in_array('P114', json_decode($user->permissions->pluck('code')))) {
@@ -158,7 +158,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P002', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P052', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P077', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [4]) && in_array('P102', json_decode($user->permissions->pluck('code')))) {
@@ -182,7 +182,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array('P001', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array('P051', json_decode($user->permissions->pluck('code')))) {
+                if(in_array('P076', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if( in_array('P101', json_decode($user->permissions->pluck('code')))) {
@@ -197,7 +197,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P004', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P053', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P087', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [4]) && in_array('P111', json_decode($user->permissions->pluck('code')))) {
@@ -229,7 +229,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('MANAGE_USER_PROFILE_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P006', json_decode($user->permissions->pluck('code'))) || in_array('P054', json_decode($user->permissions->pluck('code'))) || in_array('P103', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P006', json_decode($user->permissions->pluck('code'))) || in_array('P078', json_decode($user->permissions->pluck('code'))) || in_array('P103', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
             if($user->can('MANAGE_USER_OTHER') && !$data->isDownline() && in_array('P007', json_decode($user->permissions->pluck('code')))) {
@@ -254,7 +254,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('MANAGE_USER_GROUP_ID', function ($user, $id) {
             if($user->can('MANAGE_USER_PROFILE_ID', $id)) {
                 $data = User::findorfail($id);
-                if($data->isDownline() && (in_array('P010', json_decode($user->permissions->pluck('code'))) || in_array('P055', json_decode($user->permissions->pluck('code'))) || in_array('P104', json_decode($user->permissions->pluck('code'))))) {
+                if($data->isDownline() && (in_array('P010', json_decode($user->permissions->pluck('code'))) || in_array('P079', json_decode($user->permissions->pluck('code'))) || in_array('P104', json_decode($user->permissions->pluck('code'))))) {
                     return true;
                 }
                 if(!$data->isDownline() && in_array('P011', json_decode($user->permissions->pluck('code')))) {
@@ -267,7 +267,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('MANAGE_USER_SUBSCRIPTION_ID', function ($user, $id) {
             if($user->can('MANAGE_USER_PROFILE_ID', $id)) {
                 $data = User::findorfail($id);
-                if($data->isDownline() && (in_array('P012', json_decode($user->permissions->pluck('code'))) || in_array('P056', json_decode($user->permissions->pluck('code'))) || in_array('P105', json_decode($user->permissions->pluck('code'))))) {
+                if($data->isDownline() && (in_array('P012', json_decode($user->permissions->pluck('code'))) || in_array('P080', json_decode($user->permissions->pluck('code'))) || in_array('P105', json_decode($user->permissions->pluck('code'))))) {
                     return true;
                 }
                 if(!$data->isDownline() && in_array('P013', json_decode($user->permissions->pluck('code')))) {
@@ -279,7 +279,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('MANAGE_USER_SECURITY_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P014', json_decode($user->permissions->pluck('code'))) || in_array('P057', json_decode($user->permissions->pluck('code'))) || in_array('P106', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P014', json_decode($user->permissions->pluck('code'))) || in_array('P081', json_decode($user->permissions->pluck('code'))) || in_array('P106', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
             if($user->can('MANAGE_USER_OTHER') && !$data->isDownline() && in_array('P015', json_decode($user->permissions->pluck('code')))) {
@@ -293,7 +293,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P016', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P058', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P082', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [4]) && in_array('P107', json_decode($user->permissions->pluck('code')))) {
@@ -308,7 +308,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P017', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P059', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P083', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [4]) && in_array('P108', json_decode($user->permissions->pluck('code')))) {
@@ -327,10 +327,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('TRANSFER_USER_CREDIT_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('TRANSFER_CREDIT_DOWNLINE') && $data->isDownline() && (in_array('P016', json_decode($user->permissions->pluck('code'))) || in_array('P058', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('TRANSFER_CREDIT_DOWNLINE') && $data->isDownline() && (in_array('P016', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
-            if($user->can('TRANSFER_CREDIT_OTHER') && !$data->isDownline()&& (in_array('P017', json_decode($user->permissions->pluck('code'))) || in_array('P059', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('TRANSFER_CREDIT_OTHER') && !$data->isDownline()&& (in_array('P017', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
             return false;
@@ -356,7 +356,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('MANAGE_USER_VOUCHER_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P021', json_decode($user->permissions->pluck('code'))) || in_array('P060', json_decode($user->permissions->pluck('code'))) || in_array('P109', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array('P021', json_decode($user->permissions->pluck('code'))) || in_array('P084', json_decode($user->permissions->pluck('code'))) || in_array('P109', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
             if($user->can('MANAGE_USER_OTHER') && !$data->isDownline() && in_array('P022', json_decode($user->permissions->pluck('code')))) {
@@ -370,7 +370,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P023', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P061', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P085', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [4]) && in_array('P110', json_decode($user->permissions->pluck('code')))) {
@@ -436,7 +436,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('ACCESS_USER_DOWNLINE_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array($user->group_id, [2]) && in_array('P029', json_decode($user->permissions->pluck('code')))) || (in_array($user->group_id, [3]) && in_array('P062', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array($user->group_id, [2]) && in_array('P029', json_decode($user->permissions->pluck('code')))) || (in_array($user->group_id, [3]) && in_array('P086', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
             if($user->can('MANAGE_USER_OTHER') && in_array($user->group_id, [2]) && !$data->isDownline() && in_array('P030', json_decode($user->permissions->pluck('code')))) {
@@ -472,7 +472,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P042', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P063', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P088', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [4]) && in_array('P112', json_decode($user->permissions->pluck('code')))) {
@@ -558,7 +558,7 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [3]) && in_array('P066', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [3]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [4]) && in_array('P115', json_decode($user->permissions->pluck('code')))) {
@@ -583,10 +583,10 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [3]) && in_array('P066', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [3]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [4]) && in_array('P085', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [4]) && in_array('P115', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [5]) && in_array('P129', json_decode($user->permissions->pluck('code')))) {
