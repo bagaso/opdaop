@@ -47,14 +47,24 @@
                             <form action="{{ route('support_tickets.create_ticket.create') }}" method="post">
                                 {{ csrf_field() }}
 
-                                <div class="form-group">
+                                <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
                                     <label for="subject">Subject</label>
-                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject">
+                                    <input type="text" class="form-control" id="subject" name="subject" value="{{ old('subject') }}" placeholder="Enter subject">
+                                    @if ($errors->has('subject'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('subject') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
                                     <label for="message">Message</label>
                                     <textarea id="message" class="textarea" placeholder="Place some text here" name="message"
-                                              style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                              style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('message') }}</textarea>
+                                    @if ($errors->has('message'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('message') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
 
 

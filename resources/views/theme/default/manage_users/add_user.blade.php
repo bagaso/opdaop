@@ -88,7 +88,7 @@
                                                 @if ($errors->has('password'))
                                                     <span class="help-block">
                                                 <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
+                                                </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -98,9 +98,9 @@
                                             <div class="col-sm-9">
                                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
                                                 @if ($errors->has('password_confirmation'))
-                                                    <span class="help-block">
-                                                <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                            </span>
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                                </span>
                                                 @endif
                                             </div>
                                         </div>
