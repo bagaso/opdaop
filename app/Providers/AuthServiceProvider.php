@@ -51,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [4]) && in_array('P084', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [5]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [5]) && in_array('P126', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
@@ -67,7 +67,23 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [4]) && in_array('P083', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [5]) && in_array('P093', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [5]) && in_array('P127', json_decode($user->permissions->pluck('code')))) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('ACCOUNT_FREEZE_MODE', function ($user) {
+            if(in_array($user->group_id, [2])) {
+                return true;
+            }
+            if(in_array($user->group_id, [3])) {
+                return true;
+            }
+            if(in_array($user->group_id, [4])) {
+                return true;
+            }
+            if(in_array($user->group_id, [5]) && in_array('P128', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
@@ -548,7 +564,7 @@ class AuthServiceProvider extends ServiceProvider
             if(in_array($user->group_id, [4]) && in_array('P085', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [5]) && in_array('P094', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [5]) && in_array('P129', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
@@ -573,7 +589,7 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [4]) && in_array('P085', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-                if(in_array($user->group_id, [5]) && in_array('P094', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [5]) && in_array('P129', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
             }
