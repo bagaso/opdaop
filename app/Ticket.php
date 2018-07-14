@@ -14,7 +14,6 @@ class Ticket extends Model
     public function user() {
         return $this->belongsTo('App\User')->withDefault([
             'username' => '###',
-            'group_id' => 1,
         ]);
     }
 

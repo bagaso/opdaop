@@ -219,7 +219,9 @@ class User extends Authenticatable
     }
 
     public function latestRenew() {
-        return $this->hasOne('App\UserCreditLog')->latest();
+        return $this->hasOne('App\UserCreditLog')->latest()->withDefault([
+            'created_at' => 'None',
+        ]);
     }
 
     public function vpn() {
