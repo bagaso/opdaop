@@ -329,7 +329,15 @@
                     </div>
                     <div class="pull-left info">
                         <p>{{ auth()->user()->username }}</p>
-                        <p><span class="label label-{{ auth()->user()->group->class }}">{{ auth()->user()->group->name }}</span></p>
+                        <p>
+                            <span class="label label-{{ auth()->user()->group->class }}">{{ auth()->user()->group->name }}</span>
+                            @can('MANAGE_USER')
+                                <i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>
+                            @endcan
+                            @cannot('MANAGE_USER')
+                                <i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>
+                            @endcannot
+                        </p>
                     </div>
                 @endauth
                 @guest
