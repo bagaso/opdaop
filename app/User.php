@@ -220,7 +220,7 @@ class User extends Authenticatable
 
     public function latestRenew() {
         return $this->hasOne('App\UserCreditLog')->latest()->withDefault([
-            'created_at' => Carbon::now(),
+            'created_at' => null,
         ]);
     }
 
