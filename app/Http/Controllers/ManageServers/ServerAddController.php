@@ -52,7 +52,7 @@ class ServerAddController extends Controller
 
         $server = New Server();
         $server->cf_id = $cloudflare->result->id;
-        $server->server_type = strtoupper($request->server_type);
+        $server->server_type = $request->server_type;
         $server->server_name = $request->server_name;
         $server->server_ip = $request->server_ip;
         $server->sub_domain = strtoupper($request->sub_domain);
