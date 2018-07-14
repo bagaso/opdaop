@@ -28,6 +28,7 @@ class CreditRule implements Rule
      */
     public function passes($attribute, $value)
     {
+        $this->input_credits = $value;
         if($this->input_credits == 0) {
             return false;
         }
