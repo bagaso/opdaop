@@ -7,7 +7,8 @@ use Illuminate\Contracts\Validation\Rule;
 
 class CreditRule implements Rule
 {
-    private $username;
+    private $user;
+    private $input_credits;
     /**
      * Create a new rule instance.
      *
@@ -15,7 +16,7 @@ class CreditRule implements Rule
      */
     public function __construct($username)
     {
-        $this->username = $username;
+        $this->user = User::where('username', $username)->firstorfail();
     }
 
     /**
@@ -27,24 +28,19 @@ class CreditRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $user = User::where('username', $this->username);
-        if($user->exists()) {
-            $user = $user->first();
-            if(in_array($user->group_id, [2]) && $value >= app('settings')->renewal_qualified) {
-                return true;
-            }
-            if(in_array($user->group_id, [3,4]) && $value >= app('settings')->renewal_qualified) {
-                return true;
-            }
-            if(in_array($user->group_id, [5]) && $value >= 1) {
-                return true;
-            }
-            if($user->parent_id !== auth()->user()->id  && auth()->user()->cannot('TRANSFER_CREDIT_OTHER')) {
-                return true;
-            }
+        if($this->input_credits == 0) {
             return false;
         }
-        return true;
+        if($this->user->credits === 'No Limit') {
+            return false;
+        }
+        if ($this->input_credits < 0 && ($this->user->getOriginal('credits') + $this->input_credits) < 0) {
+            return false;
+        }
+        if(auth()->user()->credits === 'No Limit') {
+            return true;
+        }
+        return (auth()->user()->getOriginal('credits') - $this->input_credits) >= 0;
     }
 
     /**
@@ -54,18 +50,15 @@ class CreditRule implements Rule
      */
     public function message()
     {
-        $user = User::where('username', $this->username);
-        if($user->exists()) {
-            $user = $user->first();
-            if(in_array($user->group_id, [2])) {
-                return 'Mimimum for ' . $this->username . ' is ' . app('settings')->renewal_qualified . ' credits.';
-            }
-            if(in_array($user->group_id, [3,4])) {
-                return 'Mimimum for ' . $this->username . ' is ' . app('settings')->renewal_qualified . ' credits.';
-            }
-            if(in_array($user->group_id, [5])) {
-                return 'Mimimum for ' . $this->username . ' is 1 credit.';
-            }
+        if($this->input_credits == 0) {
+            return 'Invalid input credits.';
         }
+        if($this->user->credits === 'No Limit') {
+            return 'User is not allowed to received Credit.';
+        }
+        if ($this->input_credits < 0 && ($this->user->getOriginal('credits') + $this->input_credits) < 0) {
+            return 'User Credit must be a non-negative.';
+        }
+        return 'Insufficient Credit.';
     }
 }

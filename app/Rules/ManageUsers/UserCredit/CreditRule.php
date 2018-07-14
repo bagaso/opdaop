@@ -2,23 +2,22 @@
 
 namespace App\Rules\ManageUsers\UserCredit;
 
+use App\User;
 use Illuminate\Contracts\Validation\Rule;
 
 class CreditRule implements Rule
 {
-    private $account;
     private $user;
     private $input_credits;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($account, $user, $input_credits)
+    public function __construct($user_id)
     {
-        $this->account = $account;
-        $this->user = $user;
-        $this->input_credits = $input_credits;
+        $this->user = User::findorfail($user_id);
     }
 
     /**
@@ -30,6 +29,7 @@ class CreditRule implements Rule
      */
     public function passes($attribute, $value)
     {
+        $this->input_credits = $value;
         if($this->input_credits == 0) {
             return false;
         }
@@ -39,10 +39,10 @@ class CreditRule implements Rule
         if ($this->input_credits < 0 && ($this->user->getOriginal('credits') + $this->input_credits) < 0) {
             return false;
         }
-        if($this->account->credits === 'No Limit') {
+        if(auth()->user()->credits === 'No Limit') {
             return true;
         }
-        return ($this->account->getOriginal('credits') - $this->input_credits) >= 0;
+        return (auth()->user()->getOriginal('credits') - $this->input_credits) >= 0;
     }
 
     /**

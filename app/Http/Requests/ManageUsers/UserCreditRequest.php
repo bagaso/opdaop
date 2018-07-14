@@ -28,15 +28,14 @@ class UserCreditRequest extends FormRequest
      */
     public function rules()
     {
-        $user = User::findorfail($this->id);
         return [
             'credits' => [
                 'bail',
                 'required',
                 'integer',
                 $this->top_up === 'on' ? 'min:1' : (auth()->user()->can('SUBTRACT_CREDIT', $this->id) ? 'min:-20' : 'min:1'),
-                $this->top_up === 'on' ? 'max:3' : 'max:100',
-                new CreditRule(auth()->user(), $user, $this->credits)
+                $this->top_up === 'on' ? 'max:3' : 'max:' . app('settings')->max_credit_transfer,
+                new CreditRule($this->id)
             ]
         ];
     }
