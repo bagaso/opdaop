@@ -39,10 +39,10 @@ class TransferCreditRequest extends FormRequest
                     $query->where('username', $this->username);
                     if(!auth()->user()->isAdmin()) {
                         $query->where('status_id', 2);
-                        $query->where('group_id', '>', auth()->user()->group->id);
+                        //$query->where('group_id', '>', auth()->user()->group->id);
                     }
                 }),
-                new UsernameRule(),
+                new UsernameRule,
             ],
             'credits' => [
                 'bail',

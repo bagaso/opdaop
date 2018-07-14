@@ -141,14 +141,13 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('MANAGE_USER_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($data->group_id <= $user->group_id) {
-                return false;
-            }
-            if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline()) {
-                return true;
-            }
-            if($user->can('MANAGE_USER_OTHER') && !$data->isDownline()) {
-                return true;
+            if($user->id != $data->id && $user->group_id <= $data->group_id) {
+                if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline()) {
+                    return true;
+                }
+                if($user->can('MANAGE_USER_OTHER') && !$data->isDownline()) {
+                    return true;
+                }
             }
             return false;
         });
@@ -289,7 +288,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('TRANSFER_CREDIT_DOWNLINE', function ($user) {
-            if($user->can('MANAGE_USER_DOWNLINE')) {
+            //if($user->can('MANAGE_USER_DOWNLINE')) {
                 if(in_array($user->group_id, [2]) && in_array('P016', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
@@ -299,12 +298,12 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [4]) && in_array('P107', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-            }
+            //}
             return false;
         });
 
         Gate::define('TRANSFER_CREDIT_OTHER', function ($user) {
-            if($user->can('MANAGE_USER_OTHER')) {
+            //if($user->can('MANAGE_USER_OTHER')) {
                 if(in_array($user->group_id, [2]) && in_array('P017', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
@@ -314,12 +313,15 @@ class AuthServiceProvider extends ServiceProvider
                 if(in_array($user->group_id, [4]) && in_array('P108', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
-            }
+            //}
             return false;
         });
 
         Gate::define('TRANSFER_CREDIT', function ($user) {
-            if($user->can('TRANSFER_CREDIT_DOWNLINE') || $user->can('TRANSFER_CREDIT_OTHER')) {
+            if($user->can('MANAGE_USER_DOWNLINE') && $user->can('TRANSFER_CREDIT_DOWNLINE')) {
+                return true;
+            }
+            if($user->can('MANAGE_USER_OTHER') && $user->can('TRANSFER_CREDIT_OTHER')) {
                 return true;
             }
             return false;
@@ -327,11 +329,13 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('TRANSFER_USER_CREDIT_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('TRANSFER_CREDIT_DOWNLINE') && $data->isDownline()) {
-                return true;
-            }
-            if($user->can('TRANSFER_CREDIT_OTHER') && !$data->isDownline()) {
-                return true;
+            if($user->can('MANAGE_USER_ID', $data->id)) {
+                if($user->can('TRANSFER_CREDIT_DOWNLINE') && $data->isDownline()) {
+                    return true;
+                }
+                if($user->can('TRANSFER_CREDIT_OTHER') && !$data->isDownline()) {
+                    return true;
+                }
             }
             return false;
         });
