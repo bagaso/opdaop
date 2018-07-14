@@ -40,7 +40,7 @@ class SellerRenewSummaryController extends Controller
                 return '<span class="label label-' . $user->group->class . '">' . $user->group->name . '</span>';
             })
             ->addColumn('upline', function (User $user) {
-                return $user->upline->username;
+                return (!auth()->user()->isAdmin() && $user->upline->isAdmin()) ? '<span class="label label-' . $user->upline->group->class . '">' . $user->upline->group->name . '</span>' : $user->upline->username;
             })
             ->addColumn('credit_accumulated', function (User $user) {
                 return ($user->previousMonthRenew->sum('credit_used') >= app('settings')->renewal_qualified) ? ($user->previousMonthRenew->sum('credit_used')) : ($user->currentMonthRenew->sum('credit_used'));
