@@ -74,13 +74,13 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('ACCOUNT_FREEZE_MODE', function ($user) {
-            if(in_array($user->group_id, [2])) {
+            if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [3])) {
+            if(in_array($user->group_id, [3]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [4])) {
+            if(in_array($user->group_id, [4]) && in_array('P115', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [5]) && in_array('P128', json_decode($user->permissions->pluck('code')))) {
@@ -327,10 +327,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('TRANSFER_USER_CREDIT_ID', function ($user, $id) {
             $data = User::findorfail($id);
-            if($user->can('TRANSFER_CREDIT_DOWNLINE') && $data->isDownline() && (in_array('P016', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('TRANSFER_CREDIT_DOWNLINE') && $data->isDownline()) {
                 return true;
             }
-            if($user->can('TRANSFER_CREDIT_OTHER') && !$data->isDownline()&& (in_array('P017', json_decode($user->permissions->pluck('code'))))) {
+            if($user->can('TRANSFER_CREDIT_OTHER') && !$data->isDownline()) {
                 return true;
             }
             return false;
@@ -439,7 +439,7 @@ class AuthServiceProvider extends ServiceProvider
             if($user->can('MANAGE_USER_DOWNLINE') && $data->isDownline() && (in_array($user->group_id, [2]) && in_array('P029', json_decode($user->permissions->pluck('code')))) || (in_array($user->group_id, [3]) && in_array('P086', json_decode($user->permissions->pluck('code'))))) {
                 return true;
             }
-            if($user->can('MANAGE_USER_OTHER') && in_array($user->group_id, [2]) && !$data->isDownline() && in_array('P030', json_decode($user->permissions->pluck('code')))) {
+            if($user->can('MANAGE_USER_OTHER') && !$data->isDownline() && in_array('P030', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             return false;
@@ -555,13 +555,13 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('CREATE_TICKET', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [2]) && in_array('P051', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [3]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [3]) && in_array('P092', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
-            if(in_array($user->group_id, [4]) && in_array('P115', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [4]) && in_array('P116', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [5]) && in_array('P129', json_decode($user->permissions->pluck('code')))) {
@@ -580,7 +580,7 @@ class AuthServiceProvider extends ServiceProvider
                 }
             }
             if($user->id == $ticket->user_id) {
-                if(in_array($user->group_id, [2]) && in_array('P050', json_decode($user->permissions->pluck('code')))) {
+                if(in_array($user->group_id, [2]) && in_array('P051', json_decode($user->permissions->pluck('code')))) {
                     return true;
                 }
                 if(in_array($user->group_id, [3]) && in_array('P091', json_decode($user->permissions->pluck('code')))) {

@@ -51,6 +51,6 @@ class UsernameRule implements Rule
      */
     public function message()
     {
-        return 'Cannot Transfer Credit to '. $this->username .'.';
+        return 'Cannot transfer credits to '. $this->username .'.';
     }
 }
