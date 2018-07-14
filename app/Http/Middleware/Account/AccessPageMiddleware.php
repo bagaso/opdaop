@@ -17,7 +17,7 @@ class AccessPageMiddleware
     {
         if($page === 'transfer_credit')
         {
-            if(in_array(auth()->user()->group->id, [1,2,3,4])) {
+            if(auth()->user()->isAdmin() || in_array(auth()->user()->group->id, [2,3,4])) {
                 return $next($request);
             }
         }
