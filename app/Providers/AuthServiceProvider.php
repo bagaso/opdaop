@@ -42,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('ACCOUNT_EXTEND_USING_CREDITS', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P049', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [2]) && in_array('P048', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [3]) && in_array('P089', json_decode($user->permissions->pluck('code')))) {
@@ -58,7 +58,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('APPLY_VOUCHER_TO_ACCOUNT', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P048', json_decode($user->permissions->pluck('code')))) {
+            if(in_array($user->group_id, [2]) && in_array('P049', json_decode($user->permissions->pluck('code')))) {
                 return true;
             }
             if(in_array($user->group_id, [3]) && in_array('P090', json_decode($user->permissions->pluck('code')))) {
