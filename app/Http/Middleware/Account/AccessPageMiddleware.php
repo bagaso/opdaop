@@ -17,10 +17,10 @@ class AccessPageMiddleware
     {
         if($page === 'transfer_credit')
         {
-            if(in_array(auth()->user()->group->id, [5])) {
-                return redirect(route('account.profile'));
+            if(in_array(auth()->user()->group->id, [1,2,3,4])) {
+                return $next($request);
             }
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }

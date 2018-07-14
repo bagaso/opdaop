@@ -22,7 +22,7 @@ class AccessPageMiddleware
         {
 
             if($page == 'add_user') {
-                if(auth()->user()->cannot('MANAGER_USER')) {
+                if(auth()->user()->cannot('CREATE_ACCOUNT')) {
                     return redirect(route('account.profile'));
                 }
             }
@@ -58,7 +58,7 @@ class AccessPageMiddleware
             }
 
             if($page == 'user_profile' || $page == 'user_security' || $page == 'user_credit' || $page == 'user_voucher' || $page == 'user_freeze_mode' || $page == 'user_logs' || $page == 'user_downline' || $page == 'user_duration' || $page == 'user_permission') {
-                if(auth()->user()->cannot('MANAGE_USER', $request->id)) {
+                if(auth()->user()->cannot('MANAGE_USER_ID', $request->id)) {
                     return redirect(route('account.profile'));
                 }
             }

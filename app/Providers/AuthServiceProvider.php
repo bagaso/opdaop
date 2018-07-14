@@ -162,14 +162,16 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('CREATE_ACCOUNT', function ($user) {
-            if(in_array($user->group_id, [2]) && in_array('P001', json_decode($user->permissions->pluck('code')))) {
-                return true;
-            }
-            if(in_array($user->group_id, [3]) && in_array('P051', json_decode($user->permissions->pluck('code')))) {
-                return true;
-            }
-            if(in_array($user->group_id, [4]) && in_array('P071', json_decode($user->permissions->pluck('code')))) {
-                return true;
+            if($user->can('MANAGE_USER')) {
+                if(in_array('P001', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if(in_array('P051', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
+                if( in_array('P071', json_decode($user->permissions->pluck('code')))) {
+                    return true;
+                }
             }
             return false;
         });

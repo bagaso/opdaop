@@ -15,9 +15,9 @@ class AccessPageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->cannot('MANAGE_SITE_SETTINGS')) {
-            return redirect(route('account.profile'));
+        if(auth()->user()->can('MANAGE_SITE_SETTINGS')) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect(route('account.profile'));
     }
 }
