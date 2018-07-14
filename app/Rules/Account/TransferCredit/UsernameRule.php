@@ -32,7 +32,7 @@ class UsernameRule implements Rule
         }
         $this->username = strtolower($value);
         $user = User::where('username', $this->username)->firstorfail();
-        if($user->parent_id !== auth()->user()->id && auth()->user()->can('TRANSFER_USER_CREDIT_ID', $user->id)) {
+        if(auth()->user()->can('TRANSFER_USER_CREDIT_ID', $user->id)) {
             return true;
         }
 //        if(!auth()->user()->isAdmin() && $user->parent_id !== auth()->user()->id && auth()->user()->can('TRANSFER_CREDIT_OTHER')) {
