@@ -332,10 +332,10 @@
                         <p>
                             <span class="label label-{{ auth()->user()->group->class }}">{{ auth()->user()->group->name }}</span>
                             @can('MANAGE_USER')
-                                <i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>
+                                <i class="fa fa-fw fa-check-circle" style="color: #00FF00; text-align: center;"></i>
                             @endcan
                             @cannot('MANAGE_USER')
-                                <i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>
+                                <i class="fa fa-fw fa-times-circle" style="color: #FF0000; text-align: center;"></i>
                             @endcannot
                         </p>
                     </div>
