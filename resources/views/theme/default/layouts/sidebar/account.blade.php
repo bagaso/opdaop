@@ -3,9 +3,18 @@
 
     <h4 class="text-center">{{ auth()->user()->username }}</h4>
 
-    <p class="text-muted text-center"><span class="label label-{{ auth()->user()->group->class }}">{{ auth()->user()->group->name }}</span></p>
+    <p class="text-muted text-center">
+        <span class="label label-{{ auth()->user()->group->class }}">{{ auth()->user()->group->name }}</span>
+        @can('MANAGE_USER')
+            <i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>
+        @endcan
+        @cannot('MANAGE_USER')
+            <i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>
+        @endcannot
+    </p>
 
     <ul class="list-group list-group-unbordered">
+
         <li class="list-group-item">
             <b>Status</b> <a class="pull-right"><span class="label label-{{ auth()->user()->status->class }}">{{ auth()->user()->status->name_get }}</span></a>
         </li>
