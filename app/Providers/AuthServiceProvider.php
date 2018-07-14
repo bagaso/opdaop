@@ -97,8 +97,12 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('MANAGE_USER', function ($user) {
-            if(in_array($user->group_id, [2,3,4])) {
-                return true;
+            if(in_array($user->group_id, [2,3,4]))
+            {
+                if(($user->previousMonthRenew->sum('credit_used') >= app('settings')->renewal_qualified) ? ($user->previousMonthRenew->sum('credit_used')) : ($user->currentMonthRenew->sum('credit_used')) >= app('settings')->renewal_qualified)
+                {
+                    return true;
+                }
             }
             return false;
         });
