@@ -69,6 +69,7 @@ class CreateSettingsTable extends Migration
             $table->string('backup_rackspace_region')->default('');
             $table->string('backup_rackspace_url_type')->default('');
             $table->string('backup_dropbox_token')->default('');
+            $table->string('site_email')->default('');
             $table->timestamps();
         });
     }
