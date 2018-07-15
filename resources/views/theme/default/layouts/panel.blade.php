@@ -142,8 +142,20 @@
                                 <span class="hidden-xs">{{ auth()->user()->username }}</span>
                             </a>
                             <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="{{ auth()->user()->photo ? 'data:image/jpeg;base64,' . auth()->user()->photo : '/img/default.png' }}" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        {{ auth()->user()->fullname }} - <span class="label label-{{ auth()->user()->group->class }}">{{ auth()->user()->group->name }}</span>
+                                        <small>Member since {{ auth()->user()->created_at }}</small>
+                                    </p>
+                                </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
                                     <div class="pull-right">
                                         <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
