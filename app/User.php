@@ -339,7 +339,7 @@ class User extends Authenticatable
         if(!auth()->user()->isAdmin() && $user) {
             return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
         }
-        return $query->where('group_id', '>', $user->group->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
+        return $query->where('group_id', '>', auth()->user()->group->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
     }
 
     public function scopeUsersExpiresThisWeek($query, $user = null)
