@@ -153,7 +153,7 @@
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ auth()->user()->NewUsersThisWeek()->count() }} new members joined this week
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisWeek()->count() }} new members joined this week
                                             </a>
                                         </li>
                                         <li>
