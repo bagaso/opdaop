@@ -17,7 +17,7 @@ class CreatePamGrouplistTable extends Migration
             $table->increments('dbid');
             $table->integer('gid');
             $table->integer('uid');
-            $table->string("username");
+            $table->string('username');
         });
     }
 

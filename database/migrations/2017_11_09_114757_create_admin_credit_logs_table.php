@@ -14,9 +14,9 @@ class CreateAdminCreditLogsTable extends Migration
     public function up()
     {
         Schema::create('admin_credit_logs', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->integer('user_id_from');
-            $table->integer('user_id_to');
+            $table->uuid('id')->unique();
+            $table->integer('user_id_from')->index();
+            $table->integer('user_id_to')->index();
             $table->string('type');
             $table->integer('credit_used');
             $table->string('credit_before_from');
@@ -27,7 +27,7 @@ class CreateAdminCreditLogsTable extends Migration
             $table->timestamp('duration_after')->nullable();
             $table->string('duration');
             $table->timestamps();
-            $table->primary('id');
+            $table->index(['created_at']);
         });
     }
 

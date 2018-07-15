@@ -17,10 +17,10 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->longText('content');
-            $table->integer('user_id');
+            $table->integer('user_id')->index();
             $table->boolean('is_draft')->unsigned()->default(0);
             $table->boolean('is_pinned')->unsigned()->default(0);
-            $table->boolean('is_public')->unsigned()->default(1);
+            $table->boolean('is_public')->unsigned()->default(0);
             $table->timestamps();
         });
     }

@@ -14,8 +14,8 @@ class CreateServerSubscriptionTable extends Migration
     public function up()
     {
         Schema::create('server_subscription', function (Blueprint $table) {
-            $table->integer('server_id')->unsigned();
-            $table->integer('subscription_id')->unsigned();
+            $table->integer('server_id')->index();
+            $table->integer('subscription_id')->index();
         });
     }
 

@@ -14,9 +14,9 @@ class CreateUserCreditLogsTable extends Migration
     public function up()
     {
         Schema::create('user_credit_logs', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->integer('user_id');
-            $table->integer('user_id_related');
+            $table->uuid('id')->unique();
+            $table->integer('user_id')->index();
+            $table->integer('user_id_related')->index();
             $table->string('type');
             $table->string('direction');
             $table->integer('credit_used');
@@ -24,7 +24,7 @@ class CreateUserCreditLogsTable extends Migration
             $table->string('credit_before');
             $table->string('credit_after');
             $table->timestamps();
-            $table->primary('id');
+            $table->index(['created_at']);
         });
     }
 

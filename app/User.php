@@ -334,7 +334,7 @@ class User extends Authenticatable
         return $query->where('group_id', '>', $user->group->id)->where('subscription_id', 4);
     }
 
-    public function scopeNewUsers($query, $user = null)
+    public function scopeNewUsersThisWeek($query, $user = null)
     {
         if(!auth()->user()->isAdmin() && $user) {
             return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('created_at', '>=', Carbon::now()->startOfWeek());

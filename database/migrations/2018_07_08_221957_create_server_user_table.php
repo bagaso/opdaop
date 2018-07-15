@@ -14,8 +14,8 @@ class CreateServerUserTable extends Migration
     public function up()
     {
         Schema::create('server_user', function (Blueprint $table) {
-            $table->integer('server_id');
-            $table->integer('user_id');
+            $table->integer('server_id')->index();
+            $table->integer('user_id')->index();
         });
     }
 

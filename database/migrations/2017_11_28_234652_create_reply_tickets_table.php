@@ -14,10 +14,10 @@ class CreateReplyTicketsTable extends Migration
     public function up()
     {
         Schema::create('reply_tickets', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->unique();
             $table->longText('message');
-            $table->integer('ticket_id');
-            $table->integer('user_id');
+            $table->integer('ticket_id')->index();
+            $table->integer('user_id')->index();
             $table->timestamps();
         });
     }

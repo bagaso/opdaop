@@ -17,8 +17,8 @@ class CreateServerAccessesTable extends Migration
             $table->increments('id');
             $table->string('class');
             $table->string('name');
-            $table->integer('max_users')->unsigned();
-            $table->integer('max_device')->unsigned();
+            $table->integer('max_users')->unsigned()->default(30);
+            $table->integer('max_device')->unsigned()->default(1);
             $table->boolean('is_paid')->unsigned()->default(1);
             $table->boolean('is_private')->unsigned()->default(0);
             $table->boolean('multi_login')->unsigned()->default(0);
