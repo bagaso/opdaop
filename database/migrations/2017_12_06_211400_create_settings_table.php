@@ -55,6 +55,9 @@ class CreateSettingsTable extends Migration
             $table->string('backup_ftp_host')->default('');
             $table->string('backup_ftp_username')->default('');
             $table->string('backup_ftp_password')->default('');
+            $table->string('backup_sftp_host')->default('');
+            $table->string('backup_sftp_username')->default('');
+            $table->string('backup_sftp_password')->default('');
             $table->string('backup_aws_key')->default('');
             $table->string('backup_aws_secret')->default('');
             $table->string('backup_aws_region')->default('');
