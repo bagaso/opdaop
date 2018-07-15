@@ -371,7 +371,7 @@ class User extends Authenticatable
         if(auth()->user()->isAdmin() && $user == null) {
             return $query->where('group_id', '>', auth()->user()->group->id)->whereBetween('expired_at', [Carbon::now(), Carbon::now()->endOfMonth()]);
         }
-        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->whereBeweet('expired_at', [Carbon::now(), Carbon::now()->endOfMonth()]);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->whereBetween('expired_at', [Carbon::now(), Carbon::now()->endOfMonth()]);
     }
 
     public function normalSubscription()
