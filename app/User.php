@@ -264,98 +264,114 @@ class User extends Authenticatable
 
     public function scopeActivePaidUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('expired_at', '>', Carbon::now());
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('expired_at', '>', Carbon::now());
         }
-        return $query->where('group_id', '>', $user->group->id)->where('expired_at', '>', Carbon::now());
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('expired_at', '>', Carbon::now());
     }
 
     public function scopeActiveFreezedUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('free_mode', 1);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('free_mode', 1);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('free_mode', 1);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('free_mode', 1);
     }
 
     public function scopeInActiveUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('status_id', 1);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 1);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('status_id', 1);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 1);
     }
 
     public function scopeActiveUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('status_id', 2);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 2);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('status_id', 2);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 2);
     }
 
     public function scopeSuspendedUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('status_id', 3);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 3);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('status_id', 3);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 3);
     }
 
     public function scopeBronzeUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('subscription_id', 1);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('subscription_id', 1);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('subscription_id', 1);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('subscription_id', 1);
     }
 
     public function scopeSilverUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('subscription_id', 2);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('subscription_id', 2);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('subscription_id', 2);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('subscription_id', 2);
     }
 
     public function scopeGoldUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('subscription_id', 3);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('subscription_id', 3);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('subscription_id', 3);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('subscription_id', 3);
     }
 
     public function scopeDiamondUsers($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('subscription_id', 4);
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('subscription_id', 4);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('subscription_id', 4);
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('subscription_id', 4);
     }
 
     public function scopeNewUsersThisWeek($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
         }
-        return $query->where('group_id', '>', auth()->user()->group->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('created_at', '>=', Carbon::now()->startOfWeek());
+    }
+
+    public function scopeNewUsersThisMonth($query, $user = null)
+    {
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('created_at', '>=', Carbon::now()->startOfMonth());
+        }
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('created_at', '>=', Carbon::now()->startOfMonth());
+    }
+
+    public function scopeNewUsersLastMonth($query, $user = null)
+    {
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()]);
+        }
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()]);
     }
 
     public function scopeUsersExpiresThisWeek($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('expired_at', '<=', Carbon::now()->endOfWeek());
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->whereBetween('expired_at', [Carbon::now(), Carbon::now()->endOfWeek()]);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('expired_at', '<=', Carbon::now()->endOfWeek());
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->whereBetween('expired_at', [Carbon::now(), Carbon::now()->endOfWeek()]);
     }
 
     public function scopeUsersExpiresThisMonth($query, $user = null)
     {
-        if(!auth()->user()->isAdmin() && $user) {
-            return $query->where('group_id', '>', $user->group->id)->where('parent_id', $user->id)->where('expired_at', '<=', Carbon::now()->endOfMonth());
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->whereBetween('expired_at', [Carbon::now(), Carbon::now()->endOfMonth()]);
         }
-        return $query->where('group_id', '>', $user->group->id)->where('expired_at', '<=', Carbon::now()->endOfMonth());
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->whereBeweet('expired_at', [Carbon::now(), Carbon::now()->endOfMonth()]);
     }
 
     public function normalSubscription()

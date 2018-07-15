@@ -153,7 +153,32 @@
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisWeek()->count() }} new members joined this week
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::ActivePaidUsers()->count() }} paid users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisWeek()->count() }} new users joined this week
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisMonth()->count() }} new users joined this month
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::UsersExpiresThisWeek()->count() }} users expires this week
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::UsersExpiresThisMonth()->count() }} users expires this month
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-red"></i> {{ \App\User::SuspendedUsers()->count() }} suspended users
                                             </a>
                                         </li>
                                         <li>
