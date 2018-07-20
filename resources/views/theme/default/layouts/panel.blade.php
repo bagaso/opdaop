@@ -63,8 +63,8 @@
             @auth
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <!-- Notifications: style can be found in dropdown.less -->
-                        <li class="dropdown notifications-menu">
+                        <!-- Tasks: style can be found in dropdown.less -->
+                        <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">10</span>
@@ -164,7 +164,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="#" href="{{ route('account.profile') }}" class="btn btn-default btn-flat">My Account</a>
                                     </div>
                                     <div class="pull-right">
                                         <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
