@@ -402,18 +402,18 @@ Route::get('/openvpn_connect', function (Request $request) {
                 }
 
                 if($special_server_sessions >= 1) {
-                    Log::info('1-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
-                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+                    Log::info('1-Max device reached on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    return 'Max device reached on ' . strtolower($server->server_access->name) . ' Server.';
                 }
 
                 if($account->normalSubscription() && $normal_server_sessions >= 1) {
-                    Log::info('2-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
-                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+                    Log::info('2-Max device reached on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    return 'Max device reached on ' . strtolower($server->server_access->name) . ' Server.';
                 }
 
-                if($account->specialSubscription() && $account->subscription->device >= ($normal_server_sessions + $special_server_sessions)) {
-                    Log::info('3-Max device reached  on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
-                    return 'Max device reached  on ' . strtolower($server->server_access->name) . ' Server.';
+                if($account->specialSubscription() && ($normal_server_sessions + $special_server_sessions) >= $account->subscription->device) {
+                    Log::info('3-Max device reached on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
+                    return 'Max device reached on ' . strtolower($server->server_access->name) . ' Server.';
                 }
             }
 
