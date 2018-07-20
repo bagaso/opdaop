@@ -66,11 +66,11 @@
                         <!-- Tasks: style can be found in dropdown.less -->
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">10</span>
+                                <i class="fa fa-users"></i>
+                                <span class="label label-warning">{{ \App\User::TotalUsers()->count() }}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">User Summary</li>
+                                <li class="header">Users Summary</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
