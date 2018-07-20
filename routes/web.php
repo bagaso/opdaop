@@ -13,8 +13,8 @@
 
 //Route::get('/email', function () {
 //    Mail::send('emails.test', [], function ($message) {
-//        $message->from('admin@email.panelv4.cf', 'VPN Panel v4.0')
-//            ->to('mp3sniff@gmail.comn', 'Receiver Name')
+//        $message->from('admin@email.panelv4.cf', 'sample subject')
+//            ->to('sample@domain.com', 'Receiver Name')
 //            ->subject('sdsd');
 //  });
 //});
@@ -264,7 +264,7 @@ Route::group(['prefix' => 'seller-summary'], function() {
 });
 
 
-Route::get('/vpn_auth', function (Request $request) {
+Route::get('/openvpn_auth', function (Request $request) {
     try {
         $username = $request->username;
         $password = $request->password;
@@ -292,13 +292,13 @@ Route::get('/vpn_auth', function (Request $request) {
     }
 });
 
-Route::get('/sample', function () {
-    $server = Server::findorfail(5);
-    $users = $server->online_users;
-    return $users;
-});
+//Route::get('/sample', function () {
+//    $server = Server::findorfail(5);
+//    $users = $server->online_users;
+//    return $users;
+//});
 
-Route::get('/vpn_auth_connect', function (Request $request) {
+Route::get('/openvpn_connect', function (Request $request) {
     try {
         $username = trim($request->username);
         $server_key = trim($request->server_key);
@@ -449,7 +449,7 @@ Route::get('/vpn_auth_connect', function (Request $request) {
     }
 });
 
-Route::get('/vpn_auth_disconnect', function (Request $request) {
+Route::get('/openvpn_disconnect', function (Request $request) {
     try {
         $username = trim($request->username);
         $server_key = trim($request->server_key);
@@ -471,7 +471,7 @@ Route::get('/vpn_auth_disconnect', function (Request $request) {
 
         $account->save();
 
-        $vpn_history = new HistoryVpn();
+        $vpn_history = new HistoryVpn;
         $vpn_history->user_id = $account->id;
         $vpn_history->protocol = $vpn_session->protocol;
         $vpn_history->user_ip = $vpn_session->user_ip;

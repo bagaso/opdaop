@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\HistoryVpn;
 use App\Server;
 use App\User;
 use Carbon\Carbon;
@@ -131,6 +132,21 @@ class MonitorUserOpenvpnJob implements ShouldQueue
 
                             } else {
                                 $vpn_session = $user->vpn()->where('server_id', $server->id)->firstorfail();
+
+                                $vpn_history = new HistoryVpn;
+                                $vpn_history->user_id = $vpn_session->user_id;
+                                $vpn_history->protocol = $vpn_session->protocol;
+                                $vpn_history->user_ip = $vpn_session->user_ip;
+                                $vpn_history->user_port = $vpn_session->user_port;
+                                $vpn_history->server_name = $server->server_name;
+                                $vpn_history->server_ip = $server->server_ip;
+                                $vpn_history->sub_domain = $server->sub_domain;
+                                $vpn_history->byte_sent = floatval($vpn_session->byte_sent);
+                                $vpn_history->byte_received = floatval($vpn_session->byte_received);
+                                $vpn_history->session_start = Carbon::parse($vpn_session->getOriginal('created_at'));
+                                $vpn_history->session_end = Carbon::now();
+                                $vpn_history->save();
+
                                 $vpn_session->delete();
                             }
 
