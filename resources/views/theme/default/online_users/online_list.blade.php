@@ -119,7 +119,7 @@
         @if(app('settings')->enable_online_users)
             @auth
             @can('MANAGE_ONLINE_USER')
-                <div class="modal modal-danger fade" id="modal-delete_user">
+                <div class="modal modal-danger fade" id="modal-disconnect_user">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
