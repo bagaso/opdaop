@@ -111,12 +111,12 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-warning"></i> {{ \App\User::UsersExpiresThisWeek()->count() }} users expires this week
+                                                <i class="fa fa-users text-yellow"></i> {{ \App\User::UsersExpiresThisWeek()->count() }} users expires this week
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-warning"></i> {{ \App\User::UsersExpiresThisMonth()->count() }} users expires this month
+                                                <i class="fa fa-users text-yellow"></i> {{ \App\User::UsersExpiresThisMonth()->count() }} users expires this month
                                             </a>
                                         </li>
 
