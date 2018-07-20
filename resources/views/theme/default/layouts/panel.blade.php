@@ -81,63 +81,63 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisWeek()->count() }} users joined this week
+                                                <i class="fa fa-users text-warning"></i> {{ \App\User::NewUsersThisWeek()->count() }} users joined this week
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisMonth()->count() }} users joined this month
+                                                <i class="fa fa-users text-warning"></i> {{ \App\User::NewUsersThisMonth()->count() }} users joined this month
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::ActiveUsers()->count() }} active users
+                                                <i class="fa fa-users text-success"></i> {{ \App\User::ActiveUsers()->count() }} active users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::InActiveUsers()->count() }} inactive users
+                                                <i class="fa fa-users text-warning"></i> {{ \App\User::InActiveUsers()->count() }} inactive users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::SuspendedUsers()->count() }} suspended users
+                                                <i class="fa fa-users text-danger"></i> {{ \App\User::SuspendedUsers()->count() }} suspended users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::ActivePaidUsers()->count() }} paid users
+                                                <i class="fa fa-users text-primary"></i> {{ \App\User::ActivePaidUsers()->count() }} paid users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::UsersExpiresThisWeek()->count() }} users expires this week
+                                                <i class="fa fa-users text-warning"></i> {{ \App\User::UsersExpiresThisWeek()->count() }} users expires this week
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::UsersExpiresThisMonth()->count() }} users expires this month
+                                                <i class="fa fa-users text-warning"></i> {{ \App\User::UsersExpiresThisMonth()->count() }} users expires this month
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::BronzeUsers()->count() }} bronze users
+                                                <i class="fa fa-users text-info"></i> {{ \App\User::BronzeUsers()->count() }} bronze users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::SilverUsers()->count() }} silver users
+                                                <i class="fa fa-users text-success"></i> {{ \App\User::SilverUsers()->count() }} silver users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::GoldUsers()->count() }} gold users
+                                                <i class="fa fa-users text-warning"></i> {{ \App\User::GoldUsers()->count() }} gold users
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::DiamondUsers()->count() }} diamond users
+                                                <i class="fa fa-users text-danger"></i> {{ \App\User::DiamondUsers()->count() }} diamond users
                                             </a>
                                         </li>
                                     </ul>
