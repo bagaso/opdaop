@@ -81,12 +81,12 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisWeek()->count() }} new users joined this week
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisWeek()->count() }} users joined this week
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisMonth()->count() }} new users joined this month
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::NewUsersThisMonth()->count() }} users joined this month
                                             </a>
                                         </li>
                                         <li>
