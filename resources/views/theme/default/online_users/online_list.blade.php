@@ -65,7 +65,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" data-toggle="modal" data-target="#modal-disconnect_user">
+                                                        <a href="#" data-toggle="modal" data-target="#modal-delete_user">
                                                             Delete
                                                         </a>
                                                     </li>
@@ -115,6 +115,56 @@
 
         </section>
         <!-- /.content -->
+
+        @if(app('settings')->enable_online_users)
+            @auth
+            @can('MANAGE_ONLINE_USER')
+                <div class="modal modal-danger fade" id="modal-delete_user">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Disconnect User?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-outline" id="disconnect_user">Disconnect</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal delete_user -->
+
+                <div class="modal modal-danger fade" id="modal-delete_user">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Delete User?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-outline" id="force_delete_user">Delete</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal delete_user -->
+            @endcan
+            @endauth
+        @endif
 
     </div>
 
