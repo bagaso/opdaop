@@ -14,7 +14,7 @@ class CreateHistoryVpnsTable extends Migration
     public function up()
     {
         Schema::create('history_vpns', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->unique()->default('uuid()');;
             $table->integer('user_id')->index();
             $table->string('protocol');
             $table->ipAddress('user_ip')->default('0.0.0.0');

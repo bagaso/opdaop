@@ -14,7 +14,7 @@ class CreateAdminCreditLogsTable extends Migration
     public function up()
     {
         Schema::create('admin_credit_logs', function (Blueprint $table) {
-            $table->uuid('id')->unique();
+            $table->uuid('id')->unique()->default('uuid()');;
             $table->integer('user_id_from')->index();
             $table->integer('user_id_to')->index();
             $table->string('type');
