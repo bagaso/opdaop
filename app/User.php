@@ -262,6 +262,38 @@ class User extends Authenticatable
         return $this->freeze_mode == 1;
     }
 
+    public function scopeTotalUsers($query, $user = null)
+    {
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id);
+        }
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id);
+    }
+
+    public function scopeActiveUsers($query, $user = null)
+    {
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 2);
+        }
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 2);
+    }
+
+    public function scopeInActiveUsers($query, $user = null)
+    {
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 1);
+        }
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 1);
+    }
+
+    public function scopeSuspendedUsers($query, $user = null)
+    {
+        if(auth()->user()->isAdmin() && $user == null) {
+            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 3);
+        }
+        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 3);
+    }
+
     public function scopeActivePaidUsers($query, $user = null)
     {
         if(auth()->user()->isAdmin() && $user == null) {
@@ -276,30 +308,6 @@ class User extends Authenticatable
             return $query->where('group_id', '>', auth()->user()->group->id)->where('free_mode', 1);
         }
         return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('free_mode', 1);
-    }
-
-    public function scopeInActiveUsers($query, $user = null)
-    {
-        if(auth()->user()->isAdmin() && $user == null) {
-            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 1);
-        }
-        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 1);
-    }
-
-    public function scopeActiveUsers($query, $user = null)
-    {
-        if(auth()->user()->isAdmin() && $user == null) {
-            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 2);
-        }
-        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 2);
-    }
-
-    public function scopeSuspendedUsers($query, $user = null)
-    {
-        if(auth()->user()->isAdmin() && $user == null) {
-            return $query->where('group_id', '>', auth()->user()->group->id)->where('status_id', 3);
-        }
-        return $query->where('group_id', '>', $user == null ? auth()->user()->group->id : $user->group->id)->where('parent_id', $user == null ? auth()->user()->id : $user->id)->where('status_id', 3);
     }
 
     public function scopeBronzeUsers($query, $user = null)

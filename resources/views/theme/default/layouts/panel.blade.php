@@ -70,13 +70,13 @@
                                 <span class="label label-warning">10</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
+                                <li class="header">User Summary</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::ActivePaidUsers()->count() }} paid users
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::TotalUsers()->count() }} total users
                                             </a>
                                         </li>
                                         <li>
@@ -91,6 +91,26 @@
                                         </li>
                                         <li>
                                             <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::ActiveUsers()->count() }} active users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::InActiveUsers()->count() }} inactive users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::SuspendedUsers()->count() }} suspended users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::ActivePaidUsers()->count() }} paid users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
                                                 <i class="fa fa-users text-aqua"></i> {{ \App\User::UsersExpiresThisWeek()->count() }} users expires this week
                                             </a>
                                         </li>
@@ -99,9 +119,25 @@
                                                 <i class="fa fa-users text-aqua"></i> {{ \App\User::UsersExpiresThisMonth()->count() }} users expires this month
                                             </a>
                                         </li>
+
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-red"></i> {{ \App\User::SuspendedUsers()->count() }} suspended users
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::BronzeUsers()->count() }} bronze users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::SilverUsers()->count() }} silver users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::GoldUsers()->count() }} gold users
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> {{ \App\User::DiamondUsers()->count() }} diamond users
                                             </a>
                                         </li>
                                     </ul>
