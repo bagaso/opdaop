@@ -63,6 +63,7 @@
             @auth
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        @can('MANAGE_USER')
                         <!-- Tasks: style can be found in dropdown.less -->
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -145,6 +146,7 @@
                                 <li class="footer"><a href="#">View all</a></li>
                             </ul>
                         </li>
+                        @endcan
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
