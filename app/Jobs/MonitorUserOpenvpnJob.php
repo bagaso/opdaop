@@ -117,7 +117,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                         } else if($user->normalSubscription() && $normal_server_sessions > 1) {
                                             $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                             dispatch($job);
-                                        } else if($user->specialSubscription() && $user->subscription->device > ($normal_server_sessions + $special_server_sessions)) {
+                                        } else if($user->specialSubscription() && ($normal_server_sessions + $special_server_sessions) > $user->subscription->device) {
                                             $job = (new OpenvpnDisconnectUserJob($user->username, $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                                             dispatch($job);
                                         } else if($server->server_access->is_private) {
