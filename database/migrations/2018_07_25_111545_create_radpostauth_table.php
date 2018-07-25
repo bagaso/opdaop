@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,7 +19,7 @@ class CreateRadpostauthTable extends Migration
             $table->string('UserName', 64)->default('');
             $table->string('pass', 64)->default('');
             $table->string('reply', 32)->default('');
-            $table->timestamp('AuthDate')->default('CURRENT_TIMESTAMP');
+            $table->timestamp('AuthDate')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
