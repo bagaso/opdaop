@@ -45,7 +45,7 @@ class CreateUsersTable extends Migration
             $table->boolean('f_login_ssh')->unsigned()->default(0);
             $table->boolean('f_login_softether')->unsigned()->default(0);
             $table->boolean('f_login_ss')->unsigned()->default(0);
-            $table->string('attributes')->default('Cleartext-Password');
+            $table->string('attribute')->default('Cleartext-Password');
             $table->char('op', 2)->default(':=');
             $table->string('value')->default(''); //password for softether
             $table->timestamp('login_datetime')->nullable();
