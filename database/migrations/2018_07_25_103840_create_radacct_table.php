@@ -24,12 +24,12 @@ class CreateRadacctTable extends Migration
             $table->string('NASPortType', 32)->nullable();
             $table->dateTime('AcctStartTime')->default('0000-00-00 00:00:00');
             $table->dateTime('AcctStopTime')->default('0000-00-00 00:00:00');
-            $table->integer('AcctSessionTime', 12)->nullable();
+            $table->integer('AcctSessionTime')->nullable();
             $table->string('AcctAuthentic', 32)->nullable();
             $table->string('ConnectInfo_start', 50)->nullable();
             $table->string('ConnectInfo_stop', 50)->nullable();
-            $table->bigInteger('AcctInputOctets', 12)->nullable();
-            $table->bigInteger('AcctOutputOctets', 12)->nullable();
+            $table->bigInteger('AcctInputOctets')->nullable();
+            $table->bigInteger('AcctOutputOctets')->nullable();
             $table->string('CalledStationId', 50)->default('');
             $table->string('CallingStationId', 50)->default('');
             $table->string('AcctTerminateCause', 32)->default('');

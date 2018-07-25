@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,7 +15,7 @@ class CreateVouchersTable extends Migration
     public function up()
     {
         Schema::create('vouchers', function (Blueprint $table) {
-            $table->uuid('id')->unique()->default('uuid()');;
+            $table->uuid('id')->unique()->default(DB::raw('uuid()'));
             $table->string('code')->unique();
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('created_user_id');

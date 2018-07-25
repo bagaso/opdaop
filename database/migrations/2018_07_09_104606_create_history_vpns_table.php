@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,7 +15,7 @@ class CreateHistoryVpnsTable extends Migration
     public function up()
     {
         Schema::create('history_vpns', function (Blueprint $table) {
-            $table->uuid('id')->unique()->default('uuid()');;
+            $table->uuid('id')->unique()->default(DB::raw('uuid()'));
             $table->integer('user_id')->index();
             $table->string('protocol');
             $table->ipAddress('user_ip')->default('0.0.0.0');

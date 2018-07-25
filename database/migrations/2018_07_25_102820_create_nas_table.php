@@ -18,7 +18,7 @@ class CreateNasTable extends Migration
             $table->string('nasname', 128)->default('');
             $table->string('shortname', 32)->nullable();
             $table->string('type', 30)->nullable()->default('other');
-            $table->integer('ports', 5);
+            $table->integer('ports')->nullable();
             $table->string('secret', 60)->default('secret');
             $table->string('server', 64)->nullable();
             $table->string('community', 50)->nullable();
