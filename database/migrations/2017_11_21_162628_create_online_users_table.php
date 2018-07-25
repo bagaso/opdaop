@@ -14,7 +14,7 @@ class CreateOnlineUsersTable extends Migration
     public function up()
     {
         Schema::create('online_users', function (Blueprint $table) {
-            $table->uuid('id')->unique()->default('uuid()');;
+            $table->uuid('id')->unique()->default(`uuid()`);
             $table->integer('user_id')->index();
             $table->string('protocol');
             $table->integer('server_id')->index();
