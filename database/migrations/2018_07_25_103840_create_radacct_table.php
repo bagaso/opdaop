@@ -36,8 +36,8 @@ class CreateRadacctTable extends Migration
             $table->string('ServiceType', 32)->nullable();
             $table->string('FramedProtocol', 32)->nullable();
             $table->string('FramedIPAddress', 15)->default('');
-            $table->integer('AcctStartDelay', 12)->nullable();
-            $table->integer('AcctStopDelay', 12)->nullable();
+            $table->integer('AcctStartDelay')->nullable();
+            $table->integer('AcctStopDelay')->nullable();
         });
     }
 
