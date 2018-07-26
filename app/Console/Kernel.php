@@ -45,9 +45,10 @@ class Kernel extends ConsoleKernel
                 if(app('settings')->enable_backup) {
                     $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);
                 }
-                $schedule->command('backup:delete-old-file')->hourly();
+                $schedule->command('backup:delete-old-file')->daily();
                 $schedule->command('logs:action-logs-clean')->hourly();
                 $schedule->command('failed_jobs:truncate')->daily();
+                $schedule->command('history_vpns:delete-old-records')->daily();
             }
         } catch (\Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");
