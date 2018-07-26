@@ -315,8 +315,8 @@ Route::get('/openvpn_connect', function (Request $request) {
 
         if(!$account->isAdmin()) {
 
-            $current = Carbon::now();
-            $dt = Carbon::parse($account->getOriginal('expired_at'));
+            #$current = Carbon::now();
+            #$dt = Carbon::parse($account->getOriginal('expired_at'));
 
             if(!$server->is_active || !$server->server_access->is_active) {
                 if(!$server->is_active) {
