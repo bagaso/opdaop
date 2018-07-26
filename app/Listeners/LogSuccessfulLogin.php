@@ -5,8 +5,6 @@ namespace App\Listeners;
 use App\UserActionLog;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Login;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 

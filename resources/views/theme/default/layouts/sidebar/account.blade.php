@@ -34,7 +34,7 @@
             <b>Last Update</b> <a class="pull-right">{{ auth()->user()->updated_at ?  auth()->user()->updated_at->diffForHumans() : 'Never' }}</a>
         </li>
         <li class="list-group-item">
-            <b>Last Seen</b> <a class="pull-right">{{ Request::cookie('lastlogin_datetime') ? \Carbon\Carbon::parse(Request::cookie('lastlogin_datetime'))->diffForHumans() : 'Never' }} @ {{ Request::cookie('lastlogin_ip') ? Request::cookie('lastlogin_ip') : auth()->user()->login_ip }}</a>
+            <b>Last Seen</b> <a class="pull-right">{{ \Illuminate\Support\Facades\Request::cookie('lastlogin_datetime') ? \Carbon\Carbon::parse(\Illuminate\Support\Facades\Request::cookie('lastlogin_datetime'))->diffForHumans() : 'Never' }} @ {{ \Illuminate\Support\Facades\Request::cookie('lastlogin_ip') ? \Illuminate\Support\Facades\Request::cookie('lastlogin_ip') : auth()->user()->login_ip }}</a>
         </li>
     </ul>
 </div>
