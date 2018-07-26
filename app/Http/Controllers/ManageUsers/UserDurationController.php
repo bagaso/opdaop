@@ -37,11 +37,10 @@ class UserDurationController extends Controller
     {
         $user = User::findorfail($id);
         $date_now = Carbon::now();
-        $user->expired_at = $date_now->lt(Carbon::parse($user->getOriginal('expired_at'))) ? Carbon::parse($user->getOriginal('expired_at'))->addDays($request->days)->addHours($request->hours) : $date_now->addDays($request->days)->addHours($request->hours);
+        $user->expired_at = $date_now->lt(Carbon::parse($user->getOriginal('expired_at'))) ? Carbon::parse($user->getOriginal('expired_at'))->addDays($request->days)->addHours($request->hours) : $date_now->copy()->addDays($request->days)->addHours($request->hours);
         $user->save();
 
         if($user->wasChanged()) {
-            $date_now = Carbon::now();
             DB::table('user_action_logs')->insert([
                 [
                     'id' => Uuid::uuid4()->toString(),

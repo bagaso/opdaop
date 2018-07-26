@@ -50,7 +50,7 @@ class SecurityController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => $account->id,
                     'user_id_related' => $account->id,
-                    'action' => 'You have Updated your Password.',
+                    'action' => 'You have updated your password.',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,

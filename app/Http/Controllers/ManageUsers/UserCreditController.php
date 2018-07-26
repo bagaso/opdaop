@@ -51,15 +51,13 @@ class UserCreditController extends Controller
 
             if($request->top_up === 'on') {
                 User::where('id', $user->id)->update([
-                    'expired_at' => $date_now->lt(Carbon::parse($user->getOriginal('expired_at'))) ? Carbon::parse($user->getOriginal('expired_at'))->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)) : $date_now->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)),
+                    'expired_at' => $date_now->lt(Carbon::parse($user->getOriginal('expired_at'))) ? Carbon::parse($user->getOriginal('expired_at'))->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)) : $date_now->copy()->addSeconds((2595600 * $request->credits) / intval($user->subscription->cost)),
                 ]);
             } else {
                 User::where('id', $user->id)->update([
                     'credits' => ($user->getOriginal('credits') + $request->credits),
                 ]);
             }
-
-            $date_now = Carbon::now();
 
             if(in_array($user->group->id, [2,3,4]) && is_null($user->seller_first_applied_credit)) {
                 User::where('id', $user->id)->update(['seller_first_applied_credit' => $date_now]);
@@ -118,7 +116,7 @@ class UserCreditController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => auth()->user()->id,
                     'user_id_related' => $user->id,
-                    'action' => $request->top_up ? 'You have TOP-UP a User. (Amount: ' . $request->credits . ')' : 'Credit Transferred. (Amount: '. $request->credits .')',
+                    'action' => $request->top_up ? 'You have top-up a user. (Amount: ' . $request->credits . ')' : 'Credit transferred. (Amount: '. $request->credits .')',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
@@ -127,7 +125,7 @@ class UserCreditController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => $user->id,
                     'user_id_related' => auth()->user()->id,
-                    'action' => $request->top_up ? 'Your Account was TOP-UP. (Amount: ' . $request->credits . ')' : 'Credit Received. (Amount: '. $request->credits .')',
+                    'action' => $request->top_up ? 'Your account was top-up. (Amount: ' . $request->credits . ')' : 'Credit received. (Amount: '. $request->credits .')',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,

@@ -100,7 +100,7 @@ class TransferCreditController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => auth()->user()->id,
                     'user_id_related' => $user->id,
-                    'action' => 'Credit Transferred. (Amount: '. $request->credits .')',
+                    'action' => 'Credit transferred. (Amount: '. $request->credits .')',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
@@ -109,13 +109,12 @@ class TransferCreditController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => $user->id,
                     'user_id_related' => auth()->user()->id,
-                    'action' => 'Credit Received. (Amount: '. $request->credits .')',
+                    'action' => 'Credit received. (Amount: '. $request->credits .')',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
                 ]
             ]);
-
 
         });
         return redirect()->back()->with('success', 'Credit Transferred ('. $request->username .' +' . $request->credits. ' credits)');

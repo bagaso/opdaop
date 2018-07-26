@@ -42,7 +42,7 @@ class DurationController extends Controller
 
             User::where('id', auth()->user()->id)->update([
                 'credits' => $account->cannot('UNLIMITED_CREDIT') ? $account->getOriginal('credits') - $request->credits : $account->getOriginal('credits'),
-                'expired_at' => $date_now->lt(Carbon::parse($account->getOriginal('expired_at'))) ? Carbon::parse($account->getOriginal('expired_at'))->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)) : $date_now->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)),
+                'expired_at' => $date_now->lt(Carbon::parse($account->getOriginal('expired_at'))) ? Carbon::parse($account->getOriginal('expired_at'))->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)) : $date_now->copy()->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost)),
             ]);
 
             $duration = Carbon::parse($date_now)->addSeconds((2595600 * $request->credits) / intval($account->subscription->cost))->diffInDays() . ' Day(s)';
@@ -100,7 +100,7 @@ class DurationController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => $account->id,
                     'user_id_related' => $account->id,
-                    'action' => 'You have Extended your Subscription.',
+                    'action' => 'You have extended your subscription.',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,

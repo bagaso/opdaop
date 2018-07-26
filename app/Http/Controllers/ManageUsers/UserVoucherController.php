@@ -44,12 +44,12 @@ class UserVoucherController extends Controller
                 'user_id' => $id,
                 'updated_at' => $date_now
             ]);
-            $current = Carbon::now();
+
             $expired_at = Carbon::parse($user->getOriginal('expired_at'));
-            if($current->lt($expired_at)) {
+            if($date_now->lt($expired_at)) {
                 $new_expired_at = $expired_at->addSeconds(2595600 / intval($user->subscription->cost));
             } else {
-                $new_expired_at = $current->addSeconds(2595600  / intval($user->subscription->cost));
+                $new_expired_at = $date_now->copy()->addSeconds(2595600  / intval($user->subscription->cost));
             }
             User::where('id', $id)->update([
                 'expired_at' => $new_expired_at,
@@ -60,7 +60,7 @@ class UserVoucherController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => auth()->user()->id,
                     'user_id_related' => $user->id,
-                    'action' => 'You have Applied Voucher to User.',
+                    'action' => 'You have applied voucher to user.',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
@@ -69,7 +69,7 @@ class UserVoucherController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => $user->id,
                     'user_id_related' => auth()->user()->id,
-                    'action' => 'Voucher Applied to your Account.',
+                    'action' => 'Voucher applied to your account.',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,

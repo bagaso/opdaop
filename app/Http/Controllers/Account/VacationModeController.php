@@ -65,13 +65,13 @@ class VacationModeController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => $account->id,
                     'user_id_related' => $account->id,
-                    'action' => 'You have Disabled Freeze.',
+                    'action' => 'You have disabled freeze.',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
                 ]
             ]);
-        }, 5);
+        });
         return redirect()->back()->with('success', 'Vacation Mode Deactivated.');
     }
 }

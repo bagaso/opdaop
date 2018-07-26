@@ -7,9 +7,10 @@ use App\Http\Requests\Account\ApplyVoucherRequest;
 use App\User;
 use App\Voucher;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
+use Ramsey\Uuid\Uuid;
 
 class VouchersController extends Controller
 {
@@ -36,18 +37,31 @@ class VouchersController extends Controller
     public function apply(ApplyVoucherRequest $request)
     {
         DB::transaction(function () use ($request) {
+            $date_now = Carbon::now();
             Voucher::where('code', $request->voucher)->update([
                 'user_id' => auth()->user()->id,
+                'updated_at' => $date_now
             ]);
-            $current = Carbon::now();
             $expired_at = Carbon::parse(auth()->user()->getOriginal('expired_at'));
-            if($current->lt($expired_at)) {
+            if($date_now->lt($expired_at)) {
                 $new_expired_at = $expired_at->addSeconds(2595600 / intval(auth()->user()->subscription->cost));
             } else {
-                $new_expired_at = $current->addSeconds(2595600  / intval(auth()->user()->subscription->cost));
+                $new_expired_at = $date_now->copy()->addSeconds(2595600  / intval(auth()->user()->subscription->cost));
             }
             User::where('id', auth()->user()->id)->update([
                 'expired_at' => $new_expired_at,
+            ]);
+
+            DB::table('user_action_logs')->insert([
+                [
+                    'id' => Uuid::uuid4()->toString(),
+                    'user_id' => auth()->user()->id,
+                    'user_id_related' => auth()->user()->id,
+                    'action' => 'You have applied voucher to your account.',
+                    'from_ip' => Request::getClientIp(),
+                    'created_at' => $date_now,
+                    'updated_at' => $date_now,
+                ]
             ]);
         });
         return redirect()->back()->with('success', 'Voucher Applied.');

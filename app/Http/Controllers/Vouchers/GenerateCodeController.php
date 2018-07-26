@@ -81,7 +81,7 @@ class GenerateCodeController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'user_id' => auth()->user()->id,
                     'user_id_related' => auth()->user()->id,
-                    'action' => 'You have Generated a Voucher. (Amount: '. $request->credit .')',
+                    'action' => 'You have generated a voucher. (Amount: '. $request->credit .')',
                     'from_ip' => Request::getClientIp(),
                     'created_at' => $date_now,
                     'updated_at' => $date_now,
