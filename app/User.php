@@ -222,6 +222,10 @@ class User extends Authenticatable
             ->orderBy('created_at', 'desc');
     }
 
+    public function accumulatedCredit() {
+        return $this->previousMonthRenew() >= app('settings')->renewal_qualified ? $this->previousMonthRenew();
+    }
+
     public function latestRenew() {
         return $this->hasOne('App\UserCreditLog')
             ->where('direction', '=', 'IN')
