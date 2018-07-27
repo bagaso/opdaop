@@ -221,7 +221,10 @@ class User extends Authenticatable
     }
 
     public function latestRenew() {
-        return $this->hasOne('App\UserCreditLog')->latest()->withDefault([
+        return $this->hasOne('App\UserCreditLog')
+            ->where('direction', '=', 'IN')
+            ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
+            ->latest()->withDefault([
             'created_at' => null,
         ]);
     }
