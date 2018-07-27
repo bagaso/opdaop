@@ -43,13 +43,13 @@ class SellerRenewSummaryController extends Controller
                 return (!auth()->user()->isAdmin() && $user->upline->isAdmin()) ? '<span class="label label-' . $user->upline->group->class . '">' . $user->upline->group->name . '</span>' : $user->upline->username;
             })
             ->addColumn('credit_accumulated', function (User $user) {
-                return $user->accumulatedCredit;
+                return $user->accumulatedCredit();
             })
             ->addColumn('latest_renew', function (User $user) {
                 return $user->latestRenew->created_at;
             })
             ->addColumn('status', function (User $user) {
-                return $user->seller_status ? '<i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>' : '<i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>';
+                return $user->seller_status() ? '<i class="fa fa-fw fa-check-circle" style="color: #1e8011; text-align: center;"></i>' : '<i class="fa fa-fw fa-times-circle" style="color: #80100c; text-align: center;"></i>';
             })
             ->rawColumns(['group', 'status'])
             ->make(true);
