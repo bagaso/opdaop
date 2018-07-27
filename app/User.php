@@ -207,6 +207,7 @@ class User extends Authenticatable
     public function previousMonthRenew() {
         return $this->hasMany('App\UserCreditLog')
             ->where('direction', '=', 'IN')
+            ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
             ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
             ->orderBy('created_at', 'desc');
     }
@@ -214,6 +215,7 @@ class User extends Authenticatable
     public function currentMonthRenew() {
         return $this->hasMany('App\UserCreditLog')
             ->where('direction', '=', 'IN')
+            ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->orderBy('created_at', 'desc');
     }
