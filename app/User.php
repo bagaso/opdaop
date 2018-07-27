@@ -209,7 +209,6 @@ class User extends Authenticatable
             ->where('direction', '=', 'IN')
             ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
             ->whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])
-            //->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
             ->orderBy('created_at', 'desc');
     }
 
@@ -218,7 +217,6 @@ class User extends Authenticatable
             ->where('direction', '=', 'IN')
             ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
             ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-            //->whereMonth('created_at', '=', Carbon::now()->month)
             ->orderBy('created_at', 'desc');
     }
 
