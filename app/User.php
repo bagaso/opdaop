@@ -223,7 +223,7 @@ class User extends Authenticatable
     }
 
     public function accumulatedCredit() {
-        return $this->previousMonthRenew() >= app('settings')->renewal_qualified ? $this->previousMonthRenew();
+        return $this->previousMonthRenew() >= app('settings')->renewal_qualified ? $this->previousMonthRenew() : 0;
     }
 
     public function latestRenew() {
