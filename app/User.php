@@ -227,7 +227,7 @@ class User extends Authenticatable
     }
 
     public function seller_status() {
-        return $this->accumulatedCredit >= app('settings')->renewal_qualified;
+        return $this->accumulatedCredit >= app('settings')->renewal_qualified ? 1 : 0;
     }
 
     public function latestRenew() {
