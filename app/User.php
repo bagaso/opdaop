@@ -208,7 +208,8 @@ class User extends Authenticatable
         return $this->hasMany('App\UserCreditLog')
             ->where('direction', '=', 'IN')
             ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
-            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+            ->whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])
+            //->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
             ->orderBy('created_at', 'desc');
     }
 
@@ -216,7 +217,8 @@ class User extends Authenticatable
         return $this->hasMany('App\UserCreditLog')
             ->where('direction', '=', 'IN')
             ->whereIn('type', ['TRANSFER-01', 'TRANSFER-02'])
-            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            //->whereMonth('created_at', '=', Carbon::now()->month)
             ->orderBy('created_at', 'desc');
     }
 
