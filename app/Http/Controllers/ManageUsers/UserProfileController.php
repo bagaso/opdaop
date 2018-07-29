@@ -62,7 +62,7 @@ class UserProfileController extends Controller
         $user->max_users = $request->max_users ? $request->max_users : $user->max_users;
         $user->status_id = $request->status;
         $user->subscription_id = $request->subscription ? $request->subscription : $user->subscription_id;
-        $user->expired_at = $user->paidSubscription() ? ($user->subscription_id <> $user_subscription->id ? $date_now->copy()->addSeconds((($date_now->diffInSeconds($expired_at) * intval($user->subscription->cost)) / intval($user_subscription->cost))) : $expired_at) : $expired_at;
+        $user->expired_at = !$user->paidSubscription() ? ($user->subscription_id <> $user_subscription->id ? $date_now->copy()->addSeconds((($date_now->diffInSeconds($expired_at) * intval($user->subscription->cost)) / intval($user_subscription->cost))) : $expired_at) : $expired_at;
         $user->save();
         if($old_group_id <> ($request->group ? $request->group : $old_group_id)) {
             $permissions = Permission::where([['group_id', ($request->group ? $request->group : $user->group_id)], ['is_default', 1]])->pluck('id');
