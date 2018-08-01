@@ -50,6 +50,8 @@ class CreateUsersTable extends Migration
             $table->string('value')->default(''); //password for softether
             $table->timestamp('login_datetime')->nullable();
             $table->string('login_ip')->default('0.0.0.0');
+            $table->timestamp('last_login_datetime')->nullable();
+            $table->string('last_login_ip')->default('0.0.0.0');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

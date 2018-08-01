@@ -31,9 +31,11 @@ class LogSuccessfulLogin
         if($event->user->status_id !== 3) {
             $now = Carbon::now();
             $from_ip = Request::getClientIp();
-            Cookie::queue('lastlogin_datetime', $event->user->login_datetime, 525600 * 5);
-            Cookie::queue('lastlogin_ip', $event->user->login_ip, 525600 * 5);
+            #Cookie::queue('lastlogin_datetime', $event->user->login_datetime, 525600 * 5);
+            #Cookie::queue('lastlogin_ip', $event->user->login_ip, 525600 * 5);
             $event->user->timestamps = false;
+            $event->user->last_login_datetime = $event->user->login_datetime;
+            $event->user->last_login_ip = $event->user->login_ip;
             $event->user->login_datetime = $now;
             $event->user->login_ip = Request::getClientIp();
             $event->user->timestamps = false;

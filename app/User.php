@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'expired_at', 'deleted_at', 'freeze_start', 'login_datetime',
+        'expired_at', 'deleted_at', 'freeze_start', 'login_datetime', 'last_login_datetime',
     ];
 
     protected $casts = [
