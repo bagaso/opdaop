@@ -494,3 +494,18 @@ Route::get('/openvpn_disconnect', function (Request $request) {
     }
 });
 
+Route::get('/server-status', function () {
+    try {
+        $servers = Server::all();
+        $list = array();
+        foreach ($servers as $server) {
+            $list[]['Server'] = $server->server_name;
+            $list[]['Limit'] = $server->limit_bandwidth ? 'Yes' : 'No';
+            $list[]['Status'] = $server->is_active ? 'Online' : 'Offline';
+        }
+        return response()->json($list);
+    } catch (ModelNotFoundException $ex) {
+        return '{"":""}';
+    }
+});
+
