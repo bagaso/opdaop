@@ -40,7 +40,7 @@ class BackupClean extends Command
     public function handle()
     {
         $files = Storage::disk(app('settings')->backup_disks)->files(app('settings')->backup_directory);
-        if($files->count() > 3) {
+        if(count($files) > 3) {
             foreach ($files as $file) {
                 $file_dt = Carbon::createFromTimestamp(Storage::disk(app('settings')->backup_disks)->lastModified($file));
                 $dt = Carbon::now();

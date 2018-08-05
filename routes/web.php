@@ -548,8 +548,3 @@ Route::get('/contact/android/{username}', function($username) {
     ], 200);
 });
 
-Route::get('/files', function() {
-    $files = Storage::disk(app('settings')->backup_disks)->files(app('settings')->backup_directory);
-    echo count($files);
-});
-
