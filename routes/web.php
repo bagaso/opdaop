@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 Auth::routes();
 
@@ -545,5 +546,10 @@ Route::get('/contact/android/{username}', function($username) {
         'email' => $upline->email,
         'contact' => $upline->contact,
     ], 200);
+});
+
+Route::get('/files', function() {
+    $files = Storage::disk(app('settings')->backup_disks)->files(app('settings')->backup_directory);
+    echo $files->count();
 });
 
