@@ -505,9 +505,45 @@ Route::get('/server-status', function () {
             $list['Server Status'][$ctr]['Status'] = $server->is_active ? 'Online' : 'Offline';
             $ctr++;
         }
-        return response()->json($list);
+        return response()->json($list, 200);
     } catch (ModelNotFoundException $ex) {
         return '{"":""}';
     }
+});
+
+Route::get('/duration/pc/{username}', function($username) {
+    $account = User::where('username', $username)->firstorfail();
+
+    return response()->json([
+        'duration' => $account->expired_at
+    ], 200);
+});
+
+Route::get('/duration/android/{username}', function($username) {
+    $account = \App\User::where('username', $username)->firstorfail();
+
+    if($account->expired_at == 'No Limit') {
+        return response()->json([
+            'premium' => -1,
+            'vip' => null,
+        ], 200);
+    } else {
+        return response()->json([
+            'premium' => Carbon::now()->gte(Carbon::parse($account->getOriginal('expired_at'))) ? 0 : Carbon::parse($account->getOriginal('expired_at'))->diffInSeconds(Carbon::now()),
+            'vip' => null,
+        ], 200);
+    }
+});
+
+Route::get('/contact/android/{username}', function($username) {
+    $account = \App\User::where('username', $username)->firstorfail();
+
+    $upline = \App\User::findorfail($account->upline->id);
+
+    return response()->json([
+        'fullname' => $upline->fullname,
+        'email' => $upline->email,
+        'contact' => $upline->contact,
+    ], 200);
 });
 
