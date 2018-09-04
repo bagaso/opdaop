@@ -144,6 +144,9 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                 }
 
                             } else {
+
+                                Log::info('AAA');
+                                
                                 $vpn_session = $user->vpn()->where('server_id', $server->id)->firstorfail();
 
                                 $vpn_history = new HistoryVpn;
@@ -161,8 +164,6 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                 $vpn_history->save();
 
                                 $vpn_session->delete();
-
-                                Log::info('AAA');
                             }
 
                         } catch (ModelNotFoundException $ex) {
