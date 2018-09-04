@@ -161,6 +161,8 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                 $vpn_history->save();
 
                                 $vpn_session->delete();
+
+                                Log::info('AAA');
                             }
 
                         } catch (ModelNotFoundException $ex) {
