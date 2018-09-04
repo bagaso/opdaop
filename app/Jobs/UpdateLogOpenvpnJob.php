@@ -51,12 +51,10 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                             $user = User::where('username', $log['CommonName'])->firstorfail();
                             $real_address = explode(":", $log['RealAddress']);
                             $vpn_session = $user->vpn()->where('server_id', $server->id)->firstorfail();
-                            Log::info('update_log - ' . $vpn_session->user_id);
                             $vpn_session->byte_sent = floatval($log['BytesSent']) ? floatval($log['BytesSent']) : 0;
                             $vpn_session->byte_received = floatval($log['BytesReceived']) ? floatval($log['BytesReceived']) : 0;
                             $vpn_session->save();
                         } catch (ModelNotFoundException $ex) {
-                            Log::info('update_log - ' . $user->username);
                             $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                             dispatch($job);
                         }
