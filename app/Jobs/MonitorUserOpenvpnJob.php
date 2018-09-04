@@ -146,7 +146,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                             } else {
 
                                 Log::info('AAA');
-                                
+
                                 $vpn_session = $user->vpn()->where('server_id', $server->id)->firstorfail();
 
                                 $vpn_history = new HistoryVpn;

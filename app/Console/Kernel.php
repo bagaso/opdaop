@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
             DB::connection()->getPdo();
             if(Schema::hasTable('settings')) {
                 $schedule->command('update_log:openvpn')->everyMinute();
-                $schedule->command('monitor_user:openvpn')->everyMinute();
+                //$schedule->command('monitor_user:openvpn')->everyMinute();
                 if(app('settings')->enable_backup) {
                     $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);
                 }
