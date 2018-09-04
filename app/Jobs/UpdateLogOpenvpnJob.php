@@ -57,6 +57,7 @@ class UpdateLogOpenvpnJob implements ShouldQueue
                         } catch (ModelNotFoundException $ex) {
                             $job = (new OpenvpnDisconnectUserJob($log['CommonName'], $server->server_ip, $server->manager_port))->onConnection(app('settings')->queue_driver)->onQueue('disconnect_user');
                             dispatch($job);
+                            Log::info('update_log');
                         }
                     }
 
