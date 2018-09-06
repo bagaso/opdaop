@@ -2,6 +2,7 @@
 
 namespace App\Rules\ManageUsers\DeleteUser;
 
+use App\OnlineUser;
 use Illuminate\Contracts\Validation\Rule;
 
 class DeleteUsers implements Rule
@@ -27,6 +28,10 @@ class DeleteUsers implements Rule
     {
         foreach($value as $user_id) {
             if(auth()->user()->cannot('DELETE_USER_ID', $user_id)) {
+                return false;
+            }
+            $online_user = OnlineUser::where('user_id', $user_id);
+            if($online_user->count() > 0) {
                 return false;
             }
         }
