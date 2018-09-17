@@ -88,4 +88,8 @@ class Server extends Model
         return $query->whereIn('server_access_id', [3, 4]);
     }
 
+    public function isSpecialServer()
+    {
+        return in_array($this->server_access_id, [3,4]);
+    }
 }

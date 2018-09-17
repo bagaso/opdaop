@@ -402,7 +402,7 @@ Route::get('/openvpn_connect', function (Request $request) {
                     }
                 }
 
-                if($special_server_sessions >= 1) {
+                if($server->isSpecialServer() && $special_server_sessions >= 1) {
                     Log::info('1-Max device reached on ' . strtolower($server->server_access->name) . ' Server: ' . $username);
                     return 'Max device reached on ' . strtolower($server->server_access->name) . ' Server.';
                 }
