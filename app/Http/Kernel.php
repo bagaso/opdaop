@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckUserIfSuspendedMiddleware::class,
             'throttle:30,1',
+            'bindings',
         ],
 
         'api' => [
