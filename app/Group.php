@@ -17,7 +17,7 @@ class Group extends Model
         parent::boot();
 
         static::addGlobalScope('id', function (Builder $builder) {
-            $builder->where('id', '>', auth()->user()->group_id);
+            $builder->where('id1', '>', auth()->user()->group_id);
         });
     }
 }
