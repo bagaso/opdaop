@@ -17,7 +17,7 @@ class DeleteIdleUserOpenvpn extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'delete_idle:delete';
 
     /**
      * The console command description.
