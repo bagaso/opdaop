@@ -39,6 +39,6 @@ class HistoryVpnClean extends Command
      */
     public function handle()
     {
-        DB::table('history_vpns')->whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])->delete();
+        DB::table('history_vpns')->whereBetween('session_end', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])->delete();
     }
 }

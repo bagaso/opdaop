@@ -27,7 +27,6 @@ class CreateHistoryVpnsTable extends Migration
             $table->double('byte_received')->default(0)->unsigned();        //Upload
             $table->timestamp('session_start');
             $table->timestamp('session_end');
-            $table->timestamps();
         });
     }
 
