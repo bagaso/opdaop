@@ -52,6 +52,14 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.s3.bucket', app('settings')->backup_aws_bucket ? app('settings')->backup_aws_bucket : '');
                     }
 
+                    if(app('settings')->backup_disks == 'wasabi') {
+                        Config::set('filesystems.disks.wasabi.key', 'HLBXHJJROU3USI564EJD');
+                        Config::set('filesystems.disks.wasabi.secret', 'fBeDOpyIOeuLU8TXviOdFCrrIVLIYTLXpnQY9C73');
+                        Config::set('filesystems.disks.wasabi.endpoint', 'http://s3.wasabisys.com');
+                        Config::set('filesystems.disks.wasabi.region', 'us-west-1');
+                        Config::set('filesystems.disks.wasabi.bucket', 'vpn-panel');
+                    }
+
                     if(app('settings')->backup_disks == 'rackspace') {
                         Config::set('filesystems.disks.rackspace.username', app('settings')->backup_rackspace_username ? app('settings')->backup_rackspace_username : '');
                         Config::set('filesystems.disks.rackspace.key', app('settings')->backup_rackspace_key ? app('settings')->backup_rackspace_key : '');
@@ -68,6 +76,11 @@ class AppServiceProvider extends ServiceProvider
                     Config::set('backup.backup.name', app('settings')->backup_directory);
                     Config::set('backup.backup.gzip_database_dump', app('settings')->backup_gzip_database_dump ? app('settings')->backup_gzip_database_dump : '');
                     Config::set('backup.backup.destination.filename_prefix', app('settings')->backup_filename_prefix ? app('settings')->backup_filename_prefix : '');
+
+                    if(app('settings')->backup_disks == 'wasabi') {
+                        app('settings')->backup_disks = 's3';
+                    }
+
                     Config::set('backup.backup.destination.disks', app('settings')->backup_disks ? app('settings')->backup_disks : '');
                     Config::set('backup.backup.notifications.mail.to', app('settings')->site_email ? app('settings')->site_email : '');
                     $monitor[] = [
