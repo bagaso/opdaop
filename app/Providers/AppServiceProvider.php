@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.wasabi.key', 'NYMALNIYGLEDUJ4591BD');
                         Config::set('filesystems.disks.wasabi.secret', 'qKM7FbcEe4Ji5WAYa5eAVOEH34TyBl5HtolsAuqY');
                         Config::set('filesystems.disks.wasabi.region', 'us-east-1');
-                        Config::set('filesystems.disks.wasabi.bucket', 'vpn-panel');
+                        Config::set('filesystems.disks.wasabi.bucket', 'vpn-backup');
                         Config::set('filesystems.disks.wasabi.root', '/');
                     }
 
