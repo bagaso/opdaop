@@ -64,18 +64,12 @@ return [
         ],
 
         'wasabi' => [
-            'driver' => 's3',
-            'credentials' => [
-                'key' => '',
-                'secret' => '',
-            ],
-            'key'    =>  '',
+            'driver' => 'wasabi',
+            'key' => '',
             'secret' => '',
-            'endpoint' => '',
-            'profile' => '',
             'region' => '',
             'bucket' => '',
-            'version' => '',
+            'root' => '',
         ],
 
         'rackspace' => [
