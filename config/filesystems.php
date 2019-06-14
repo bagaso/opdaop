@@ -65,6 +65,10 @@ return [
 
         'wasabi' => [
             'driver' => 's3',
+            'credentials' => [
+                'key' => '',
+                'secret' => '',
+            ],
             'key'    =>  '',
             'secret' => '',
             'endpoint' => '',
