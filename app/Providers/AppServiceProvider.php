@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
                     Config::set('backup.backup.destination.filename_prefix', app('settings')->backup_filename_prefix ? app('settings')->backup_filename_prefix : '');
 
                     if(app('settings')->backup_disks == 'wasabi') {
-                        app('settings')->backup_disks = 's3';
+                        //app('settings')->backup_disks = 's3';
                     }
 
                     Config::set('backup.backup.destination.disks', app('settings')->backup_disks ? app('settings')->backup_disks : '');
