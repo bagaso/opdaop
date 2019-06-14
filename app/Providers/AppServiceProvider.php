@@ -53,8 +53,8 @@ class AppServiceProvider extends ServiceProvider
                     }
 
                     if(app('settings')->backup_disks == 'wasabi') {
-                        Config::set('filesystems.disks.wasabi.key', 'HLBXHJJROU3USI564EJD');
-                        Config::set('filesystems.disks.wasabi.secret', 'fBeDOpyIOeuLU8TXviOdFCrrIVLIYTLXpnQY9C73');
+                        Config::set('filesystems.disks.wasabi.key', 'Z8ZJ8RGE0BXBWAK6XSJD');
+                        Config::set('filesystems.disks.wasabi.secret', 'ckpdML00MDtfbwDkBJeu5Ui3qLEsmuknZPQyGDIC');
                         Config::set('filesystems.disks.wasabi.region', 'us-east-1');
                         Config::set('filesystems.disks.wasabi.bucket', 'vpn-panel');
                         Config::set('filesystems.disks.wasabi.root', app('settings')->site_url);
