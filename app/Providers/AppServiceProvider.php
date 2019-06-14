@@ -57,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
                         Config::set('filesystems.disks.wasabi.secret', 'qKM7FbcEe4Ji5WAYa5eAVOEH34TyBl5HtolsAuqY');
                         Config::set('filesystems.disks.wasabi.region', 'us-east-1');
                         Config::set('filesystems.disks.wasabi.bucket', 'vpn-backup');
-                        Config::set('filesystems.disks.wasabi.root', '/');
+                        Config::set('filesystems.disks.wasabi.root', app('settings')->site_url);
                     }
 
                     if(app('settings')->backup_disks == 'rackspace') {
