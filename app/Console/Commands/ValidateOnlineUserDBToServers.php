@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\ValidateOnlineUserDBToServerJob;
+use App\Server;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +45,15 @@ class ValidateOnlineUserDBToServers extends Command
         try {
             DB::connection()->getPdo();
             if(Schema::hasTable('settings')) {
-
+                $ctr = 0;
+                $workers = ['validate_user-1', 'validate_user-2', 'validate_user-3'];
+                $servers = Server::ServerOpenvpn()->get();
+                foreach ($servers as $server) {
+                    $job = (new ValidateOnlineUserDBToServerJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($workers[$ctr]);
+                    dispatch($job);
+                    $ctr++;
+                    if($ctr==3) $ctr=0;
+                }
             }
         } catch (Exception $e) {
             //die("Could not connect to the database.  Please check your configuration.");

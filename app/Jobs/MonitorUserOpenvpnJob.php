@@ -132,6 +132,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
 
                             } else {
 
+                                /*
                                 $vpn_session = $user->vpn()->where('server_id', $server->id)->firstorfail();
 
                                 $vpn_history = new HistoryVpn;
@@ -149,6 +150,7 @@ class MonitorUserOpenvpnJob implements ShouldQueue
                                 $vpn_history->save();
 
                                 $vpn_session->delete();
+                                */
                             }
 
                         } catch (ModelNotFoundException $ex) {
