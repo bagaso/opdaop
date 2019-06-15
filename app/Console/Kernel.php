@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
                 }
                 $schedule->command('backup:delete-old-file')->daily();
                 $schedule->command('logs:action-logs-clean')->hourly();
-                $schedule->command('failed_jobs:truncate')->daily();
+                $schedule->command('queue:flush')->daily(); // delete all failed jobs
                 $schedule->command('history_vpns:delete-old-records')->daily();
             }
         } catch (\Exception $e) {
