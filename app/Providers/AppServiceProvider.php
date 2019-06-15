@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
                     Config::set('backup.backup.destination.filename_prefix', app('settings')->backup_filename_prefix ? app('settings')->backup_filename_prefix : '');
 
                     Config::set('backup.backup.destination.disks', app('settings')->backup_disks ? app('settings')->backup_disks : '');
-                    Config::set('notifications.mail.to', app('settings')->site_email ? app('settings')->site_email : '');
+                    Config::set('backup.notifications.mail.to', app('settings')->site_email ? app('settings')->site_email : '');
                     $monitor[] = [
                         'name' => app('settings')->backup_directory,
                         'disks' => [
