@@ -39,6 +39,9 @@ class HistoryVpnClean extends Command
      */
     public function handle()
     {
-        DB::table('history_vpns')->whereBetween('session_end', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])->delete();
+        $duration_type = substr(app('settings')->vpn_history_lifespan, -1, 1);
+        $duration_interval = (int) filter_var(app('settings')->vpn_history_lifespan, FILTER_SANITIZE_NUMBER_INT);
+        $life_span = (($duration_type == 'd') ? $duration_interval * (3660 * 24) : 0) + (($duration_type == 'm') ? $duration_interval * (3600 * 24 * 30) : 0) + (($duration_type == 'y') ? $duration_interval * (3600 * 24 * 30 * 12) : 0);
+        DB::table('history_vpns')->where('session_end', '<=', Carbon::now()->subSeconds($life_span))->delete();
     }
 }
