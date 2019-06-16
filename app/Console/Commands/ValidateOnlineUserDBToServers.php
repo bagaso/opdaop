@@ -51,6 +51,7 @@ class ValidateOnlineUserDBToServers extends Command
                 foreach ($servers as $server) {
                     $job = (new ValidateOnlineUserDBToServerJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($workers[$ctr]);
                     dispatch($job);
+                    dispatch($job)->delay(now()->addSeconds(30));
                     $ctr++;
                     if($ctr==3) $ctr=0;
                 }
