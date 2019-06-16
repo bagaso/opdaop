@@ -42,7 +42,6 @@ class Kernel extends ConsoleKernel
             if(Schema::hasTable('settings')) {
                 $schedule->command('update_log:openvpn')->everyMinute();
                 $schedule->command('monitor_user:openvpn')->everyMinute();
-                $schedule->command('validate:online-userdb-to-servers')->everyMinute();
                 //$schedule->command('delete_idle:delete')->everyMinute();
                 if(app('settings')->enable_backup) {
                     $schedule->command('backup:run --only-db')->cron(app('settings')->backup_cron);

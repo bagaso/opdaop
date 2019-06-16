@@ -46,13 +46,14 @@ class MonitorUserOpenvpn extends Command
             DB::connection()->getPdo();
             if(Schema::hasTable('settings')) {
                 $ctr = 0;
-                $workers = ['monitor_user-1', 'monitor_user-2', 'monitor_user-3'];
+                $workers = ['monitor_user-1', 'monitor_user-2', 'monitor_user-3', 'monitor_user-4', 'monitor_user-5', 'monitor_user-6'];
                 $servers = Server::ServerOpenvpn()->get();
                 foreach ($servers as $server) {
                     $job = (new MonitorUserOpenvpnJob($server->id))->onConnection(app('settings')->queue_driver)->onQueue($workers[$ctr]);
                     dispatch($job);
+                    dispatch($job)->delay(now()->addSeconds(35));
                     $ctr++;
-                    if($ctr==3) $ctr=0;
+                    if($ctr==6) $ctr=0;
                 }
             }
         } catch (Exception $e) {
