@@ -53,11 +53,10 @@ class AppServiceProvider extends ServiceProvider
                     }
 
                     if(app('settings')->backup_disks == 'wasabi') {
-                        Config::set('filesystems.disks.wasabi.key', 'NYMALNIYGLEDUJ4591BD');
-                        Config::set('filesystems.disks.wasabi.secret', 'qKM7FbcEe4Ji5WAYa5eAVOEH34TyBl5HtolsAuqY');
-                        Config::set('filesystems.disks.wasabi.region', 'us-west-1');
-                        Config::set('filesystems.disks.wasabi.bucket', 'vpn-backup');
-                        //Config::set('filesystems.disks.wasabi.root', '/');
+                        Config::set('filesystems.disks.wasabi.key', app('settings')->backup_wasabi_key ? app('settings')->backup_wasabi_key : '');
+                        Config::set('filesystems.disks.wasabi.secret', app('settings')->backup_wasabi_secret ? app('settings')->backup_wasabi_secret : '');
+                        Config::set('filesystems.disks.wasabi.region', app('settings')->backup_wasabi_region ? app('settings')->backup_wasabi_region : '');
+                        Config::set('filesystems.disks.wasabi.bucket', app('settings')->backup_wasabi_bucket ? app('settings')->backup_wasabi_bucket : '');
                     }
 
                     if(app('settings')->backup_disks == 'rackspace') {

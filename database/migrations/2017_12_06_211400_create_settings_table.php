@@ -63,6 +63,10 @@ class CreateSettingsTable extends Migration
             $table->string('backup_aws_secret')->default('');
             $table->string('backup_aws_region')->default('');
             $table->string('backup_aws_bucket')->default('');
+            $table->string('backup_wasabi_key')->default('');
+            $table->string('backup_wasabi_secret')->default('');
+            $table->string('backup_wasabi_region')->default('');
+            $table->string('backup_wasabi_bucket')->default('');
             $table->string('backup_rackspace_username')->default('');
             $table->string('backup_rackspace_key')->default('');
             $table->string('backup_rackspace_container')->default('');
